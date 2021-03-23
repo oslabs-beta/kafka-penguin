@@ -1,12 +1,22 @@
 const { Kafka } = require('kafkajs');
 require('dotenv').config();
+
+run();
+
 async function run() {
-  try{
+  try {
     const kafka = new Kafka({
       'clientId': 'myapp',
       'brokers': [process.env.KAFKA_BOOTSTRAP_SERVER],
+      ssl: true,
+      sasl: {
+        mechanism: 'plain',
+        username: process.env.KAFKA_USERNAME,
+        password: process.env.KAFKA_PASSWORD
+      } 
+     
     })
-
+    console.log('test')
     const consumer = kafka.consumer({'groupId': 'test'});
     console.log('connecting...')
 
@@ -14,13 +24,10 @@ async function run() {
     console.log('connected!');
 
     await consumer.subscribe({
-      'topic': 'animals',
+      'topic': 'test-topic',
       'fromBeginning': true, 
     }) 
-    await consumer.subscribe({
-      'topic': 'countries',
-      'fromBeginning': true, 
-    }) 
+
     await consumer.run({
       'eachMessage': async result => {
         console.log(`Received message ${result.message.value} on partition ${result.partition}`)

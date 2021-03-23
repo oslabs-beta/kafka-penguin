@@ -30,7 +30,9 @@ async function run() {
         // configEntries : [{ name: 'cleanup.policy', value: 'compact' }],   
       }]
     })
-    console.log('created successfully! ', await admin.fetchTopicMetadata())
+  
+    console.log('created successfully! ', await admin.fetchTopicMetadata().partitions)
+    console.log('created successfully! ', await admin.fetchTopicOffsets('test1'))
     await admin.disconnect()
   } catch (ex) {
     console.error('Error caught: ', ex)

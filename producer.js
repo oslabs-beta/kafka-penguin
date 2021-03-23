@@ -16,6 +16,7 @@ async function run() {
         username: process.env.KAFKA_USERNAME,
         password: process.env.KAFKA_PASSWORD
       } 
+     
     })
     const producer = kafka.producer();
     await producer.connect() 

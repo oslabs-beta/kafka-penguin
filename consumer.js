@@ -1,5 +1,5 @@
 const { Kafka } = require('kafkajs');
-
+require('dotenv').config();
 async function run() {
   try{
     const kafka = new Kafka({

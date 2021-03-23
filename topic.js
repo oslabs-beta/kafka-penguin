@@ -27,15 +27,16 @@ async function run() {
     await admin.createTopics({
       waitForLeaders: true,  
       topics: [{
-        topic: 'esers3',
+        topic: 'test-topic',
         numPartitions: 1,
-        replicationFactor : 6,
+        // replicationFactor : 6,
         replicaAssignment : [{ partition: 0, replicas: [0,1,2] }],
         // configEntries : [{ name: 'cleanup.policy', value: 'compact' }],   
       }]
     })
   
-    console.log('created successfully! ', await admin.fetchTopicMetadata())
+    console.log('created successfully! ', await admin.fetchTopicMetadata().partitions)
+    console.log('created successfully! ', await admin.fetchTopicOffsets('test1'))
     await admin.disconnect()
   } catch (ex) {
     console.error('Error caught: ', ex)

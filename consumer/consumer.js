@@ -3,7 +3,7 @@ require('dotenv').config();
 
 run();
 
-async function run() {
+export async function run() {
   try {
     const kafka = new Kafka({
       'clientId': 'myapp',
@@ -16,6 +16,7 @@ async function run() {
       } 
      
     })
+
     console.log('test')
     const consumer = kafka.consumer({'groupId': 'test'});
     console.log('connecting...')
@@ -40,4 +41,3 @@ async function run() {
     // process.exit(0);  
   }
 }
-

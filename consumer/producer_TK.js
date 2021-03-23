@@ -42,13 +42,13 @@ async function run() {
     })
     console.log('message 2 sent');
     
-    await producer.send({
-      topic: 'wrong-topic',
-      messages: [
-        {value: 'message 3'}
-      ]
-    })
-    console.log('message 3 sent');
+    // await producer.send({
+    //   topic: 'wrong-topic',
+    //   messages: [
+    //     {value: 'message 3'}
+    //   ]
+    // })
+    // console.log('message 3 sent');
 
     await producer.send({
       topic: 'test-topic',

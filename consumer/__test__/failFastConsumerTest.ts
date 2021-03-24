@@ -1,39 +1,24 @@
 
-// const {
-//     secureRandom,
-//     createCluster,
-//     createTopic,
-//     createModPartitioner,
-//     newLogger,
-//     waitFor,
-//     waitForMessages,
-//     waitForNextEvent,
-//     testIfKafkaAtLeast_0_11,
-//     waitForConsumerToJoinGroup,
-//     generateMessages,
-//   } = require('./__testHelpersConsumer')
-
   //create test admin and require
-  import admin from './testAdmin'
-  // //create test producer and require
-  // // const testProducer = require('./testProducer');
-  // // //create test consumer and require
-  // // const testConsumer = require('./testConsumer');
-   async function connect() {
-     await admin.connect();    
-    }
+  import kafka from '../client'
+  
+  const admin = kafka.admin();
+  const consumer = kafka.consumer();
+  const producer = kafka.producer();
 
-    connect();
-
-   console.log('connect successful')
-
-   async function disconnect() {
+  const adminConnect = async () => {
+    await admin.connect();    
+  }
+  const adminDisconnect = async () => {
     await admin.disconnect();
-   }
+  }
 
-   disconnect();
+   adminConnect();
+   console.log('connect successful');
 
-   console.log('disconnected bruh')
+
+   adminDisconnect();
+   console.log('disconnected bruh');
 
 //test to see if receiving messages
 

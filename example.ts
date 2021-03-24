@@ -14,11 +14,11 @@ const failfast = allStrategies.failfastSource;
 //what changes to make to client.producer so that failfast is implemented by default
 
     //INSTANTIATING PRODUCERclwar
-        
         //const producer = client.producer(failfastSetting) ---> set num of retries
             //Ex: const producer = testClient.producer(failfast.failfastProducerClient)
-        const testProducer = testClient.producer(failfast.failfastProducerClient(0))
-        const failFastProducerConnect = failfast.failfastProducerConnect(testProducer.connect, testProducer.disconnect, testProducer.send, {
+        const FFP = new failfast.FailFastProducer(0)
+        const testProducer = testClient.producer(FFP.FFPClient())
+        const failFastProducerConnect = FFP.FFPConnect(testProducer.connect, testProducer.disconnect, testProducer.send, {
             topic: 'wrong-topic',
             messages: [
               {
@@ -26,7 +26,7 @@ const failfast = allStrategies.failfastSource;
                 value: 'Hello World'
               }
             ]
-        }, 0) //---> returns function which has timer built in
+        }) //---> returns function which has timer built in
         
         failFastProducerConnect()
             .then(() => console.log('itworked!'))

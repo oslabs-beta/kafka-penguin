@@ -52,3 +52,9 @@ producerConnect()
   .catch(() => console.log('Not connected'));
 
 
+//specifics needed for producer to use failfast strategy
+    //
+    //1. AT INSTANTION - retry: retries --- default is 0
+    //2. SetInterval to timeout producer after failed processing
+
+    

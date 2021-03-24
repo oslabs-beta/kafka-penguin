@@ -4,7 +4,7 @@ require('dotenv').config();
 run();
 
 async function run() {
-  try {
+  
     const kafka = new Kafka({
       clientId: 'myapp',
       brokers: [process.env.KAFKA_BOOTSTRAP_SERVER],
@@ -40,11 +40,10 @@ async function run() {
         console.log(`Received message ${result.message.value} on partition ${result.partition}`)
       }
     })
-  } catch (ex) {
-    console.error(ex)
   }
-  finally {
-    // process.exit(0);  
-  }
+  .then(() => console.log('success'))
+  .catch (ex => console.error(ex))
+  .finally(() => // process.exit(0); )
+      
 }
 

@@ -1,17 +1,20 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   plugins: [new MiniCssExtractPlugin()],
-  entry: path.join(__dirname, './client/kafka.ts'),
+  entry: path.join(__dirname, './client/index.tsx'),
   devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
-  mode: process.env.NODE_ENV,
+  target:"web",
+  mode: "development",
   devServer: {
-    publicPath: '/build/',
+    publicPath: '/',
+    contentBase: '/client/components',
+    hot:true,
     proxy: [
       {
         context: ['/auth', '/secret', '/posts', '/comments'],
@@ -22,6 +25,13 @@ module.exports = {
   },
   module: {
     rules: [
+      // {
+      //   test: /\.html$/,
+      //   exclude: [/node_modules/, require.resolve('./client/components/index.html')],
+      //   use: {
+      //       loader: 'file-loader',
+      //   },
+    // },
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
@@ -34,8 +44,8 @@ module.exports = {
         },
       }, 
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
+        test: /\.(ts|tsx)$/,
+        use: 'awesome-typescript-loader',
         exclude: /node_modules/,
       },
       {
@@ -51,4 +61,14 @@ module.exports = {
     resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './client/components/index.html'),
+      filename: 'index.html',
+      inject: 'body'
+    }),
+    // new MiniCssExtractPlugin({
+    //   filename: "./src/yourfile.css",
+    // }),
+  ],
 };

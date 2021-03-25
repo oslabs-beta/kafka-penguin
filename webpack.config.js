@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   plugins: [new MiniCssExtractPlugin()],
-  entry: path.join(__dirname, '/kafka.ts'),
+  entry: path.join(__dirname, './client/kafka.ts'),
   devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, 'build'),

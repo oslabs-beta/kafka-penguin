@@ -28,22 +28,7 @@ const consumerRun = async () => {
     eachMessage: async  (result: { message: { value: any; }; partition: any; }) => {    
       console.log(`Received message ${result.message.value} on partition ${result.partition}`)
     }
-<<<<<<< HEAD
-
-    await consumer.run({
-
-      eachMessage: async  (result:ResultObj) => {    
-        console.log(`Received message ${result.message.value} on partition ${result.partition}`)
-      }
-    })
-  }
-  .then(() => console.log('success'))
-  .catch (ex => console.error(ex))
-  .finally(() => // process.exit(0); )
-      
-=======
   })
->>>>>>> 6a2a8cef06d601751f8d5dbee9a24a2aa97930e3
 }
 //executing function calls
 consumerConnect()

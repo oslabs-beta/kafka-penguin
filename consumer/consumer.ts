@@ -4,28 +4,10 @@ import kafka from './client'
 
 const consumer = kafka.consumer({groupId: 'test'});
 
-<<<<<<< HEAD
-async function run() {
-  
-    const kafka = new Kafka({
-      clientId: 'myapp',
-      brokers: [process.env.KAFKA_BOOTSTRAP_SERVER],
-      ssl: true,
-      sasl: {
-        mechanism: 'plain',
-        username: process.env.KAFKA_USERNAME,
-        password: process.env.KAFKA_PASSWORD
-      }     
-    })
-
-    const consumer = kafka.consumer({groupId: 'test'});
-    console.log('connecting...')
-=======
 const consumerConnect = async () => {
   await consumer.connect()
   console.log('Connected')
 }
->>>>>>> 6a2a8cef06d601751f8d5dbee9a24a2aa97930e3
 
 const consumerSubscribe = async () => {
   await consumer.subscribe({

@@ -44,8 +44,13 @@ module.exports = {
         },
       }, 
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.(tsx)$/,
         use: 'awesome-typescript-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(ts)$/,
+        use: 'ts-node',
         exclude: /node_modules/,
       },
       {

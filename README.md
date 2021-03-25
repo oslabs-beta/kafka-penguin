@@ -37,4 +37,21 @@ const failfast = allStrategies.failfastSource;
         
         failFastProducerConnect()
             .then(() => console.log('itworked!'))
+            
+            
+                //consumer instantiate
+        const FFC = new failfast.FailFastConsumer()
+        const testConsumer = testClient.consumer()
+        //consumer connect
+        const testConsumerExecute = async () => { 
+          await testConsumer.connect()
+        //ONLY CHANGE TO CONSUMER IS WHEN .SUBSCRIBE IS INVOKED
+         //consumer subscribe ==> topic + fromBeginning === false
+        await testConsumer.subscribe(FFC.FFCSubscribe('topic'))
+        await testConsumer.run({})
+        await testConsumer.disconnect()
+        }
+       
+        testConsumerExecute()
+        
 

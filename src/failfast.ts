@@ -1,23 +1,8 @@
-const SetIntervalSource =  require('set-interval');
-// const client = require('./clientConfig.ts')
-// class FailFastStrategy {
-//   constructor () {
-      
-//     }
 
-//   consumer () {
-    
-//     }
-
-//   producer () {
-
-//   }
-// }
 interface messageValue {
   topic: string,
   messages: object[],
 }
-
 
 // create FailFast Class
 class FailFast {
@@ -25,8 +10,8 @@ class FailFast {
    //  Mock user flow:
     // const failfast = new FailFast(0, client obj)
   retry: number;
-  client: object; 
-  constructor(num: number, kafkaJSClient: object) {
+  client: any; 
+  constructor(num: number, kafkaJSClient: any) {
     this.retry = num,
     this.client = kafkaJSClient
   }
@@ -39,7 +24,7 @@ class FailFast {
     return this.client.producer(options)
   }
       // -> clientobj.producer(retry# )
-      // await producdr.connect()
+      // await producer.connect()
   connect() { 
     return this.client.connect()
   }
@@ -58,45 +43,45 @@ class FailFast {
 
 
 
-class FailFastProducer {
-  retry: number;
-  constructor (recountNum: number) {
-    this.retry = recountNum - 1;
-  }
+// class FailFastProducer {
+//   retry: number;
+//   constructor (recountNum: number) {
+//     this.retry = recountNum - 1;
+//   }
 
-  connect (connector: () => any, 
-  disconnector: () => void, 
-  sender: (arg0: any) => Promise<any>, 
-  message: any) {
-      const errorMessageWrongTopic = () => {
-        return sender(message)
-        .then((res: any) => console.log('This is our res ', res))
-            //{ retry: { retries: 0 }} from producer client
-        .catch((e: { retryCount?: any; }) => {
-            console.log('IM A CATCH==========')
-          // kill       process once it hits recount target
-          //  if (e.retryCount >= 0 ) {
-            console.log(`disconnect after ${this.retry + 1} times!`);
-            disconnector();
-            //  SetIntervalSource.clear('sayMyName');
-            // }
-        })
-      }
-      //return a function that has timer built in
-      return async () => {
-        await connector();
-        // SetIntervalSource.start(errorMessageWrongTopic, 7000, 'sayMyName')
-        errorMessageWrongTopic()
-        // Swap out different message/error types here
-      };
-  }
+//   connect (connector: () => any, 
+//   disconnector: () => void, 
+//   sender: (arg0: any) => Promise<any>, 
+//   message: any) {
+//       const errorMessageWrongTopic = () => {
+//         return sender(message)
+//         .then((res: any) => console.log('This is our res ', res))
+//             //{ retry: { retries: 0 }} from producer client
+//         .catch((e: { retryCount?: any; }) => {
+//             console.log('IM A CATCH==========')
+//           // kill       process once it hits recount target
+//           //  if (e.retryCount >= 0 ) {
+//             console.log(`disconnect after ${this.retry + 1} times!`);
+//             disconnector();
+//             //  SetIntervalSource.clear('sayMyName');
+//             // }
+//         })
+//       }
+//       //return a function that has timer built in
+//       return async () => {
+//         await connector();
+//         // SetIntervalSource.start(errorMessageWrongTopic, 7000, 'sayMyName')
+//         errorMessageWrongTopic()
+//         // Swap out different message/error types here
+//       };
+//   }
   
-  FFPClient () {
-    return {retry: { retries: this.retry }};
-  }
-}
+//   FFPClient () {
+//     return {retry: { retries: this.retry }};
+//   }
+// }
 
 
 module.exports = {
-  FailFastProducer
+  FailFast,
 };

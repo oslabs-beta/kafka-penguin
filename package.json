@@ -1,6 +1,6 @@
 {
-  "name": "kafka-penguin",
-  "version": "1.0.0",
+  "name": "@kafka-penguin/kafka-penguin",
+  "version": "0.1.0",
   "description": "",
   "main": "kafka.ts",
   "scripts": {

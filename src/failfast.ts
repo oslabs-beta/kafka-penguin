@@ -13,13 +13,58 @@ const SetIntervalSource =  require('set-interval');
 
 //   }
 // }
+interface messageValue {
+  topic: string,
+  messages: object[],
+}
+
+
+// create FailFast Class
+class FailFast {
+  // Create  method that returns object with all producer methods
+   //  Mock user flow:
+    // const failfast = new FailFast(0, client obj)
+  retry: number;
+  client: object; 
+  constructor(num: number, kafkaJSClient: object) {
+    this.retry = num,
+    this.client = kafkaJSClient
+  }
+    // const producer = failfast.producer()
+  producer() {
+    const options = {
+      retry:
+        { retries: this.retry }
+    }
+    return this.client.producer(options)
+  }
+      // -> clientobj.producer(retry# )
+      // await producdr.connect()
+  connect() { 
+    return this.client.connect()
+  }
+      //  await producer.send({ message object })
+  
+  send(message: messageValue) {
+    return this.client.send(message)
+    .then((res: any) => { console.log('This is our res ', res) })
+    .catch((e: { retryCount?: any }) => {
+      console.log(`disconnect after ${this.retry + 1} times!`);
+      this.client.disconnect();
+    })
+  } 
+
+}
+
+
+
 class FailFastProducer {
   retry: number;
   constructor (recountNum: number) {
     this.retry = recountNum - 1;
   }
 
-  FFPConnect (connector: () => any, 
+  connect (connector: () => any, 
   disconnector: () => void, 
   sender: (arg0: any) => Promise<any>, 
   message: any) {

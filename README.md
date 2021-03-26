@@ -1,1 +1,1 @@
-# superK
+# kafka-penguin

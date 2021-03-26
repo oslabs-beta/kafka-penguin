@@ -18,7 +18,7 @@ const failfast = allStrategies.failfastSource;
             //Ex: const producer = testClient.producer(failfast.failfastProducerClient)
         const FFP = new failfast.FailFastProducer(0)
         const testProducer = testClient.producer(FFP.FFPClient())
-        const failFastProducerConnect = FFP.FFPConnect(testProducer.connect, testProducer.disconnect, testProducer.send, {
+        const failFastProducerConnect = FFP.connect(testProducer.connect, testProducer.disconnect, testProducer.send, {
             topic: 'wrong-topic',
             messages: [
               {

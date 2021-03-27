@@ -1,18 +1,12 @@
-const SetIntervalSource =  require('set-interval');
-// const client = require('./clientConfig.ts')
-// class FailFastStrategy {
-//   constructor () {
-      
-//     }
 
-//   consumer () {
-    
-//     }
+class FailFastConsumer {
+  constructor () {
+  }
+  FFCSubscribe (topic: string) {
+    return {topic: topic, fromBeginning: false}
+  }
+}
 
-//   producer () {
-
-//   }
-// }
 class FailFastProducer {
   retry: number;
   constructor (recountNum: number) {
@@ -26,21 +20,17 @@ class FailFastProducer {
       const errorMessageWrongTopic = () => {
         return sender(message)
         .then((res: any) => console.log('This is our res ', res))
-            //{ retry: { retries: 0 }} from producer client
         .catch((e: { retryCount?: any; }) => {
-            console.log('IM A CATCH==========')
-          // kill       process once it hits recount target
-          //  if (e.retryCount >= 0 ) {
+            //console.log('IM A CATCH==========')
             console.log(`disconnect after ${this.retry + 1} times!`);
             disconnector();
-            //  SetIntervalSource.clear('sayMyName');
-            // }
+
+
         })
       }
       //return a function that has timer built in
       return async () => {
         await connector();
-        // SetIntervalSource.start(errorMessageWrongTopic, 7000, 'sayMyName')
         errorMessageWrongTopic()
         // Swap out different message/error types here
       };
@@ -53,5 +43,7 @@ class FailFastProducer {
 
 
 module.exports = {
-  FailFastProducer
+  FailFastProducer,
+  FailFastConsumer
+
 };

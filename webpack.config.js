@@ -1,79 +1,41 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+// /* eslint-disable @typescript-eslint/no-var-requires */
+// /* eslint-disable no-undef */
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+
 module.exports = {
-  plugins: [new MiniCssExtractPlugin()],
-  entry: path.join(__dirname, './client/index.tsx'),
-  devtool: 'inline-source-map',
-  output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js',
-  },
-  target:"web",
-  mode: "development",
-  devServer: {
-    publicPath: '/',
-    contentBase: '/client/components',
-    hot:true,
-    proxy: [
-      {
-        context: ['/auth', '/secret', '/posts', '/comments'],
-        target: 'http://localhost:3000',
-      },
-    ],
-    // hot: true,
-  },
-  module: {
-    rules: [
-      // {
-      //   test: /\.html$/,
-      //   exclude: [/node_modules/, require.resolve('./client/components/index.html')],
-      //   use: {
-      //       loader: 'file-loader',
-      //   },
-    // },
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-            plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-syntax-jsx']
-          },
-        },
-      }, 
-      {
-        test: /\.(tsx)$/,
-        use: 'awesome-typescript-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.(ts)$/,
-        use: 'ts-node',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-      },
-    ],
-  },
+    entry: {
+        app: ['./client/index.tsx'],
+        vendor: ['react', 'react-dom']
+    },
+    output: {
+        path: path.resolve(__dirname, 'build'),
+        filename: 'js/[name].bundle.js'
+    },
+    devtool: 'source-map',
     resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './client/components/index.html'),
-      filename: 'index.html',
-      inject: 'body'
-    }),
-    // new MiniCssExtractPlugin({
-    //   filename: "./src/yourfile.css",
-    // }),
-  ],
-};
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
+    },
+    devServer: {
+        contentBase: './build',
+        port: 8000,
+        proxy: {
+            '/': 'http://localhost:3000'
+          }
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(ts|js)x?$/,
+                exclude: '/node_modules',
+                loader: 'babel-loader'
+            }
+        ]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, './client/index.html')
+        })
+    ]
+}

@@ -2,24 +2,10 @@ const penguinjs = require('./index.ts')
 const devClient = require('./clientConfig.ts')
 
 
-// const failfast = allStrategies.failfastSource;
-// const FFP = new failfast.FailFastProducer(0)
-// const testProducer = testClient.producer(FFP.FFPClient())
-// const failFastProducerConnect = FFP.connect(testProducer.connect, testProducer.disconnect, testProducer.send, {
-//     topic: 'wrong-topic',
-//         messages: [
-//               {
-//                 key: 'firstkey',
-//                 value: 'Hello World'
-//               }
-//             ]
-//         }) 
-        
-//         failFastProducerConnect()
-//             .then(() => console.log('itworked!'))
 const strategies = penguinjs.failfast
+// Initilize strategy-- passing in your kafkjs client and # of retries
 const newStrategy = new strategies.FailFast(2, devClient) 
-// console.log('newStrategy: ', newStrategy);
+
 const message = {
   topic: 'wrong-topic',
     messages: [
@@ -28,8 +14,9 @@ const message = {
       }
     ]
 }
-
+// Initialize producer from strategy
 const producer = newStrategy.producer();
+
 producer.connect()
   .then(() => console.log('Connected!'))
   .then(() => producer.send(message))

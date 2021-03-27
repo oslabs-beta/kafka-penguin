@@ -1,9 +1,9 @@
 
+
 interface messageValue {
   topic: string,
   messages: object[],
 }
-
 class FailFast {
   retry: number;
   client: any; 
@@ -24,6 +24,7 @@ class FailFast {
     this.innerProducer = this.client.producer(options);
     // Return curr FailFast instance instead of a producer
     return this;
+
   }
 
   connect() { 

@@ -18,6 +18,24 @@ const devClient = require('./clientConfig.ts')
 //         failFastProducerConnect()
 //             .then(() => console.log('itworked!'))
 const strategies = penguinjs.failfast
-const newStrategy = new strategies.FailFast(0, devClient) 
-console.log('newStrategy: ', newStrategy);   
+const newStrategy = new strategies.FailFast(2, devClient) 
+// console.log('newStrategy: ', newStrategy);
+const message = {
+  topic: 'wrong-topic',
+    messages: [
+      {key: "hello",
+       value: "world",
+      }
+    ]
+}
+
 const producer = newStrategy.producer();
+console.log('producer:', producer)
+ producer.connect()
+.then(()=> producer.send(message))
+.then (()=> console.log('Message sent!'))
+.catch((e: any) => console.log('error: ', e.message))
+
+// producer.send(message);
+
+

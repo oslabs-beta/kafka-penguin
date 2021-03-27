@@ -4,7 +4,7 @@ const client = require('./clientConfig.ts')
 
 // set up
 let recountNum = 0;
-const producer = client.producer({ retry: { retries: recountNum }});
+// const producer = client.producer({ retry: { retries: recountNum }});
 
 //Default Message that works
 const sendMessage = () =>  {

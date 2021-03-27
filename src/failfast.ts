@@ -11,9 +11,11 @@ class FailFast {
     // const failfast = new FailFast(0, client obj)
   retry: number;
   client: any; 
+  innerProducer: any;
   constructor(num: number, kafkaJSClient: any) {
-    this.retry = num,
-    this.client = kafkaJSClient
+    this.retry = num;
+    this.client = kafkaJSClient;
+    this.innerProducer = null;
   }
     // const producer = failfast.producer()
   producer() {
@@ -21,21 +23,23 @@ class FailFast {
       retry:
         { retries: this.retry }
     }
-    return this.client.producer(options)
+    this.innerProducer = this.client.producer(options);
+
+    return this;
   }
       // -> clientobj.producer(retry# )
       // await producer.connect()
   connect() { 
-    return this.client.connect()
+    return this.innerProducer.connect()
   }
       //  await producer.send({ message object })
   
   send(message: messageValue) {
-    return this.client.send(message)
+    return this.innerProducer.send(message)
     .then((res: any) => { console.log('This is our res ', res) })
     .catch((e: { retryCount?: any }) => {
       console.log(`disconnect after ${this.retry + 1} times!`);
-      this.client.disconnect();
+      this.innerProducer.disconnect();
     })
   } 
 

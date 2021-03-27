@@ -30,12 +30,12 @@ const message = {
 }
 
 const producer = newStrategy.producer();
-console.log('producer:', producer)
- producer.connect()
-.then(()=> producer.send(message))
-.then (()=> console.log('Message sent!'))
-.catch((e: any) => console.log('error: ', e.message))
+producer.connect()
+  .then(() => console.log('Connected!'))
+  .then(() => producer.send(message))
+  .catch((e: any) => console.log("error: ", e.message))
 
-// producer.send(message);
+ 
+
 
 

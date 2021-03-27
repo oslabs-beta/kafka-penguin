@@ -1,14 +1,22 @@
-import * as React from "react";
+import * as React from 'react';
 import { Switch, Route, Router, Link, useLocation } from 'react-router-dom';
 import ClientLogin from './components/ClientLogin'
 import MainContainer from './containers/MainContainer';
-
-export interface HelloWorldProps {
-  userName: string;
-  library: string;
-}
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
 const App = () => {
+  const drawerWidth = 100;
+
+  const useStyles = makeStyles((theme: Theme) => 
+    createStyles({   
+      container: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+    })
+  );
 
   const [redirect, setRedirect] = React.useState(false);
 
@@ -29,19 +37,23 @@ const App = () => {
     );
   }
 
-    return (
-      <div className="router">
-            <Switch>
-              {main}
-              <Route exact path="/">
-                <ClientLogin setRedirect={setRedirect} />
-              </Route>
-              <Route exact path='/main'>
-                <MainContainer setRedirect={setRedirect}/>
-              </Route>
-            </Switch>
+  const classes = useStyles();
+
+  return (
+    <Container maxWidth="sm">
+      <div className={classes.container}>
+        <Switch>
+          {main}
+          <Route exact path="/">
+            <ClientLogin setRedirect={setRedirect} />
+          </Route>
+          <Route exact path='/main'>
+            <MainContainer setRedirect={setRedirect}/>
+          </Route>
+        </Switch>
       </div>
-    )
+    </Container>
+  )
   
   
 }

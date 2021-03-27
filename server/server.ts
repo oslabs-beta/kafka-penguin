@@ -16,21 +16,21 @@ app.use('/topic', topicRouter)
 
 //Error Handling & Global error handler
 app.get('*', (req, res) => {
-    return res.status(404).json();
-  });
+  return res.status(404).json();
+});
   
-// app.use((err, req, res, next) => {
-// const defaultErr = {
-//     log: 'Express error handler caught unknown middleware error',
-//     status: 500,
-//     message: 'An error occurred',
-// };
-// const error = { ...defaultErr, ...err };
-// return res.status(error.status).json(error.message);
-// });
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: 'An error occurred',
+  };
+  const error = { ...defaultErr, ...err };
+  return res.status(error.status).json(error.message);
+});
 
 //Set up a listener to a specific port here
-console.log(PORT)
+
 app.listen(PORT)
 
 

@@ -7,6 +7,6 @@ const deadLetterQueueSource = require('./src/deadLetterQueue.ts');
 
 // export default strategies
 module.exports = {
-    failfast,
-    deadLetterQueueSource,
+  failfast,
+  deadLetterQueueSource,
 }

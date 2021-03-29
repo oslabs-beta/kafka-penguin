@@ -8,7 +8,7 @@ Accelerated by [OS Labs](https://github.com/oslabs-beta/) and developed by [Ziya
 
 **WIP: This project is not ready for use as of yet**
 
-##Installation
+## Installation
 
 Download @kafka-penguin/kafka-penguin from npm in your terminal with `@kafka-penguin/kafka-penguin`
 

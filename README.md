@@ -12,7 +12,7 @@ Accelerated by [OS Labs](https://github.com/oslabs-beta/) and developed by [Ziya
 
 Download @kafka-penguin/kafka-penguin from npm in your terminal with `@kafka-penguin/kafka-penguin`
 
-###Installing KakfkaJS:
+### Installing KakfkaJS:
 
 if not already installed locally, install KafkaJS:
 
@@ -28,7 +28,7 @@ Learn more about using KafkaJS on their official site:
 - [Example Producer](https://kafka.js.org/docs/producer-example)
 - [Example Consumer](https://kafka.js.org/docs/consumer-example)
 
-###Configuring your client:
+### Configuring your client:
 
 ```javascript
 const { Kafka } = require('kafkajs')
@@ -48,7 +48,7 @@ const kafka = new Kafka({
 
 module.exports = kafka;
 ```
-####Usage:
+#### Usage:
 
 ```javascript
 const penguinjs = require('./index.ts')

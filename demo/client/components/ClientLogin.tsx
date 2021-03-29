@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { Switch, Route, Router, Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import { Button, TextField } from '@material-ui/core';
 
 type ClientLoginProps = {
-    setRedirect: Function
+    setRedirect: (arg: boolean) => void
 }
 
-const ClientLogin = ({setRedirect}: ClientLoginProps) => {
+const ClientLogin: React.FC<ClientLoginProps> = ({setRedirect}: ClientLoginProps) => {
 
   const [brokers, brokersOnChange] = useState('');
   const [username, usernameOnChange] = useState('');
@@ -30,11 +29,9 @@ const ClientLogin = ({setRedirect}: ClientLoginProps) => {
     <div className='ClientLoginContainer'>
 
       <form 
-        id='inputs' 
-        // className={classes.root} 
+        id='inputs'  
         noValidate>
         <TextField
-          // className={classes.textfield}
           label='Enter Brokers'
           helperText='required'
           required
@@ -44,7 +41,6 @@ const ClientLogin = ({setRedirect}: ClientLoginProps) => {
           }}
         />
         <TextField
-          // className={classes.textfield}
           label='Enter Username'
           helperText='required'
           required
@@ -54,7 +50,6 @@ const ClientLogin = ({setRedirect}: ClientLoginProps) => {
           }}
         />
         <TextField
-          // className={classes.textfield}
           label='Enter Password'
           helperText='required'
           required

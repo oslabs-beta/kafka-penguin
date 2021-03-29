@@ -30,13 +30,15 @@ class FailFast {
   connect() { 
     return this.innerProducer.connect()
   }
-
+  disconnect() {
+    return this.innerProducer.disconnect()
+  }
   send(message: messageValue) {
     return this.innerProducer.send(message)
-    .catch((e: { retryCount?: any }) => {
-      console.log(`FailFast stopped producer after ${this.retry + 1} times!`);
-      this.innerProducer.disconnect();
-    })
+      .catch((e: { retryCount?: any }) => {
+        console.log(`FailFast stopped producer after ${this.retry + 1} times!`);
+        this.innerProducer.disconnect();
+      })
   } 
 }
 

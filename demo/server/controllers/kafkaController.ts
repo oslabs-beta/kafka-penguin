@@ -2,18 +2,17 @@ import { Kafka } from 'kafkajs';
 import { RequestHandler } from 'express';
 
 const makeClient: RequestHandler =  (req, res, next) => {
-  console.log('Inside of makeClient');
+  const brokers = !req.body.brokers ? process.env.KAFKA_BOOTSTRAP_SERVER : req.body.brokers
   const kafka = new Kafka({
     clientId: 'makeClient',
-    brokers: [req.body.brokers],
+    brokers: [brokers],
     ssl: true,
     sasl: {
       mechanism: 'plain',
-      username: req.body.username,
-      password: req.body.password
-    } 
+      username: !req.body.username ? process.env.KAFKA_USERNAME : req.body.username,
+      password: !req.body.password ? process.env.KAFKA_PASSWORD : req.body.password
+    },
   })
-  console.log('Kafka is', kafka);
   res.locals.kafka = kafka;
   return next()  
 }

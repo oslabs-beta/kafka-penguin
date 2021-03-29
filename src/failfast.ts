@@ -1,49 +1,47 @@
 
-class FailFastConsumer {
-  constructor () {
-  }
-  FFCSubscribe (topic: string) {
-    return {topic: topic, fromBeginning: false}
-  }
-}
 
-class FailFastProducer {
+interface messageValue {
+  topic: string,
+  messages: object[],
+}
+class FailFast {
   retry: number;
-  constructor (recountNum: number) {
-    this.retry = recountNum - 1;
+  client: any; 
+  innerProducer: any;
+  constructor(num: number, kafkaJSClient: any) {
+    this.retry = num;
+    this.client = kafkaJSClient;
+    this.innerProducer = null;
   }
 
-  FFPConnect (connector: () => any, 
-  disconnector: () => void, 
-  sender: (arg0: any) => Promise<any>, 
-  message: any) {
-      const errorMessageWrongTopic = () => {
-        return sender(message)
-        .then((res: any) => console.log('This is our res ', res))
-        .catch((e: { retryCount?: any; }) => {
-            //console.log('IM A CATCH==========')
-            console.log(`disconnect after ${this.retry + 1} times!`);
-            disconnector();
+  producer() {
+    const options = {
+      retry:
+        { retries: this.retry }
+    }
+    // Create a producer from client passing in retry options
+    // Save to FailFast class
+    this.innerProducer = this.client.producer(options);
+    // Return curr FailFast instance instead of a producer
+    return this;
 
+  }
 
-        })
-      }
-      //return a function that has timer built in
-      return async () => {
-        await connector();
-        errorMessageWrongTopic()
-        // Swap out different message/error types here
-      };
+  connect() { 
+    return this.innerProducer.connect()
   }
-  
-  FFPClient () {
-    return {retry: { retries: this.retry }};
+  disconnect() {
+    return this.innerProducer.disconnect()
   }
+  send(message: messageValue) {
+    return this.innerProducer.send(message)
+      .catch((e: { retryCount?: any }) => {
+        console.log(`FailFast stopped producer after ${this.retry + 1} times!`);
+        this.innerProducer.disconnect();
+      })
+  } 
 }
-
 
 module.exports = {
-  FailFastProducer,
-  FailFastConsumer
-
+  FailFast,
 };

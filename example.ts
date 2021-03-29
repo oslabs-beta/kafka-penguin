@@ -1,7 +1,5 @@
-
 const penguinjs = require('./index.ts')
 const devClient = require('./clientConfig.ts')
-
 
 const strategies = penguinjs.failfast
 // Initilize strategy-- passing in your kafkjs client and # of retries
@@ -15,6 +13,7 @@ const message = {
       }
     ]
 }
+
 // Initialize producer from strategy
 const producer = newStrategy.producer();
 

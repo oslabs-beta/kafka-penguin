@@ -1,57 +1,78 @@
+<p align="center"><img src="./demo/client/assets/penguin.svg" width='500' style="margin-top: 10px; margin-bottom: -10px;"></p>
+
 # Kafka-Penguin
 
-[![Build Status](https://travis-ci.com/Nevon/kafkajs-dlq.svg?branch=master)](https://travis-ci.com/Nevon/kafkajs-dlq)
-[![npm version](https://badge.fury.io/js/kafkajs-dlq.svg)](https://badge.fury.io/js/kafkajs-dlq)
+Kafka-Penguin is an easy-to-use, light weight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast. 
 
-[KafkaJS](https://github.com/tulios/kafkajs) plugin to handle message
-processing failures by failing fast. 
-
-> Failing fast is a easy-to-use, light weight KafkaJS library for message processing. It provides 
-> developers with a single strategy for immediately resolving any data flow issues from the different 
-> microservices that rely on Kafka.  
+Accelerated by [OS Labs](https://github.com/oslabs-beta/) and developed by [Ziyad El Baz](https://github.com/zelbaz946), [Kushal Talele](https://github.com/ktrane1), [Timeo Williams](https://github.com/timeowilliams) and [Ausar English](https://github.com/ausarenglish).
 
 **WIP: This project is not ready for use as of yet**
 
-## Usage
+## Installation
+
+Download @kafka-penguin/kafka-penguin from npm in your terminal with `@kafka-penguin/kafka-penguin`
+
+### Installing KakfkaJS:
+
+if not already installed locally, install KafkaJS:
+
+```sh
+npm install kafkajs
+# yarn add kafkajs
+```
+
+Learn more about using KafkaJS on their official site:
+- [Getting Started](https://kafka.js.org/docs/getting-started)
+- [A Brief Intro to Kafka](https://kafka.js.org/docs/introduction)
+- [Configuring KafkaJS](https://kafka.js.org/docs/configuration)
+- [Example Producer](https://kafka.js.org/docs/producer-example)
+- [Example Consumer](https://kafka.js.org/docs/consumer-example)
+
+### Configuring your client:
 
 ```javascript
-const allStrategies  = require('./index.ts');
-const testClient = require('./clientConfig.ts')
+const { Kafka } = require('kafkajs')
+require('dotenv').config();
 
-const failfast = allStrategies.failfastSource;
+// Create the client with the broker list
+const kafka = new Kafka({
+  clientId: 'fail-fast-producer',
+  brokers: [process.env.KAFKA_BOOTSTRAP_SERVER],
+  ssl: true,
+  sasl: {
+    mechanism: 'plain',
+    username: process.env.KAFKA_USERNAME,
+    password: process.env.KAFKA_PASSWORD,
+  },
+})
 
-    //INSTANTIATING PRODUCER
-        //const producer = client.producer(failfastSetting) ---> set num of retries
-            //Ex: const producer = testClient.producer(failfast.failfastProducerClient)
-        const FFP = new failfast.FailFastProducer(0)
-        const testProducer = testClient.producer(FFP.FFPClient())
-        const failFastProducerConnect = FFP.FFPConnect(testProducer.connect, testProducer.disconnect, testProducer.send, {
-            topic: 'wrong-topic',
-            messages: [
-              {
-                key: 'firstkey',
-                value: 'Hello World'
-              }
-            ]
-        }) //---> returns function which has timer built in
-        
-        failFastProducerConnect()
-            .then(() => console.log('itworked!'))
-            
-            
-                //consumer instantiate
-        const FFC = new failfast.FailFastConsumer()
-        const testConsumer = testClient.consumer()
-        //consumer connect
-        const testConsumerExecute = async () => { 
-          await testConsumer.connect()
-        //ONLY CHANGE TO CONSUMER IS WHEN .SUBSCRIBE IS INVOKED
-         //consumer subscribe ==> topic + fromBeginning === false
-        await testConsumer.subscribe(FFC.FFCSubscribe('topic'))
-        await testConsumer.run({})
-        await testConsumer.disconnect()
-        }
-       
-        testConsumerExecute()
-        
+module.exports = kafka;
+```
+#### Usage:
 
+```javascript
+const penguinjs = require('./index.ts')
+const devClient = require('./clientConfig.ts')
+
+const strategies = penguinjs.failfast
+// Initialize strategy-- passing in your kafkjs client and # of retries
+const newStrategy = new strategies.FailFast(2, devClient) 
+
+const message = {
+  topic: 'wrong-topic',
+    messages: [
+      {key: "hello",
+       value: "world",
+      }
+    ]
+}
+
+// Initialize producer from strategy
+const producer = newStrategy.producer();
+
+producer.connect()
+  .then(() => console.log('Connected!'))
+  .then(() => producer.send(message))
+  .catch((e: any) => console.log("error: ", e.message))
+  
+```

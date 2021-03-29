@@ -16,6 +16,7 @@ const message = {
     }
   ]
 }
+
 // Initialize producer from strategy
 const producer = newStrategy.producer();
 

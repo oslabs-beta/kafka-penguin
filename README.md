@@ -6,9 +6,9 @@
 [KafkaJS](https://github.com/tulios/kafkajs) plugin to handle message
 processing failures by failing fast. 
 
-> Failing fast is a strategy that allows developers to immediately resolve issues
-> from within and immediately resolve any data flow issues from the different 
-> microservices that rely on Kafka. 
+> Failing fast is a easy-to-use, light weight KafkaJS library for message processing. It provides 
+> developers with a single strategy for immediately resolving any data flow issues from the different 
+> microservices that rely on Kafka.  
 
 **WIP: This project is not ready for use as of yet**
 

@@ -14,19 +14,16 @@ const App: React.FC = () => {
       container: {
         display: 'flex',
         alignItems: 'center',
-        // justifyContent: 'center',
         justifyContent: 'flex-end',
         flexDirection: 'column',
-        // backgroundColor: theme.palette.background.default
       },
     })
   );
 
-  const [redirect, setRedirect] = React.useState(true);
+  const [redirect, setRedirect] = useState(true);
 
   let main
-
-  // if required port addresses are given, user is redirected automatically to the Cluster Overview
+  
   if (!redirect) {
     main = (
       <Route exact path='/'>

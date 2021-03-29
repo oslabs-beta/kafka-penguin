@@ -4,8 +4,11 @@ import { Switch, Route, Router, Link, useLocation } from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 import Topic from '../components/Topic'
 
-const TopicsContainer = () => {
+//Accept passed down props from MainContainer
 
+
+const TopicsContainer = (props) => {
+    
 }
 
 

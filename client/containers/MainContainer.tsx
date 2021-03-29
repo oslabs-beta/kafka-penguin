@@ -3,12 +3,17 @@ import { useState, useEffect } from 'react';
 import { Switch, Route, Router, Link, useLocation } from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 import TopicsContainer from "./TopicsContainer";
+import Topic from "../components/Topic"
 
 
 
 
 type MainContainerProps = {
     setRedirect: Function
+}
+
+type topic = {
+    topic: string
 }
 
 const MainContainer = ({setRedirect}:MainContainerProps) => {
@@ -26,7 +31,7 @@ const MainContainer = ({setRedirect}:MainContainerProps) => {
               .then(data => data.json())
               .then(data => {
                   const topicData = data.topics.reduce((acc, cur) => {
-                      acc.push(cur.name)
+                      acc.push(<Topic topic= {cur.name} />)
                       return acc
                   }, [])
                   changeTopicsArray(topicData)
@@ -36,8 +41,8 @@ const MainContainer = ({setRedirect}:MainContainerProps) => {
     }, [])
 
     return(
-        <div className = "MainContainer">This is MainContainer
-                    {topicsArray}
+        <div className = "MainContainer">
+                  {topicsArray} 
         </div>
     )
 }

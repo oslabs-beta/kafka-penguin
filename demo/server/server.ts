@@ -1,20 +1,29 @@
 import express = require('express');
 import path = require('path');
-const app = express();
-import topicRouter from './routes/topic';
+import dotenv = require('dotenv')
+//routers
+import topicRouter from './routes/topic'
+import strategyRouter from './routes/strategy';
+
+
 const PORT = 3000;
-//POST Login page details
+const app = express();
+dotenv.config()
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(
+  '/assets',
+  express.static(path.resolve(__dirname, '../client/assets/'))
+);
 
-//GET Login page details
 app.get('/', (req,res)=> res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
 
 console.log('inside server')
-app.use('/topic', topicRouter)
 
-//Error Handling & Global error handler
+app.use('/topic', topicRouter)
+app.use('/strategy', strategyRouter)
+
 app.get('*', (req, res) => {
   return res.status(404).json();
 });
@@ -28,8 +37,6 @@ app.use((err, req, res, next) => {
   const error = { ...defaultErr, ...err };
   return res.status(error.status).json(error.message);
 });
-
-//Set up a listener to a specific port here
 
 app.listen(PORT)
 

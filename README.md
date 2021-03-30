@@ -91,9 +91,7 @@ producer.connect()
   .catch((e: any) => console.log("error: ", e.message))
 ```
 
-Run the command below in the terminal and see the strategy in action!
 
-```bash
-node example.js
-```
+
+
 

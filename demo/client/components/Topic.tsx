@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FC } from 'react';
 import { Card, CardContent, Typography, createStyles, makeStyles } from '@material-ui/core';
 
 type Props = {
@@ -6,10 +7,10 @@ type Props = {
       name: string,
       partitions: number
     },
-    key: number
+    id: number,
 }
 
-const Topic: React.FC<Props> = ({topicInfo, key}: Props) => {
+const Topic: FC<Props> = ({topicInfo, id}: Props) => {
 
   const useStyles = makeStyles(() => 
     createStyles({
@@ -25,7 +26,7 @@ const Topic: React.FC<Props> = ({topicInfo, key}: Props) => {
   const classes = useStyles();
 
   return(
-    <Card key={key} className={classes.root} >
+    <Card key={id} className={classes.root} >
       {/* <ListItemText primary={topicInfo.name} secondary={`partitions: ${topicInfo.partitions}`}/> */}
       <CardContent>
         <Typography variant='body2' align='center' noWrap={true}>

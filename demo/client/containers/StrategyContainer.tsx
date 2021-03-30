@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FC } from 'react';
 import { createStyles, makeStyles, Button, Container } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>
@@ -27,7 +28,7 @@ type Props = {
   ) => void,
 };
 
-const StrategyContainer: React.FC<Props> = ({handleFailFast, handleDLQ, handleIgnore}: Props) => {
+const StrategyContainer: FC<Props> = ({handleFailFast, handleDLQ, handleIgnore}: Props) => {
   //After the user clicks on the button FF or DLQ,
   //we will render the associated strategy data 
   //to them in a div below

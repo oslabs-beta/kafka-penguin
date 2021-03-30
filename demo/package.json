@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack serve --open",
     "build": "webpack --mode production",
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --config webpack.config.js --mode development\" \"nodemon demo/server/server.ts\"",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --config webpack.config.js --mode development\" \"nodemon server/server.ts\"",
     "test": "jest",
     "lint": "eslint . --ext .ts"
   },

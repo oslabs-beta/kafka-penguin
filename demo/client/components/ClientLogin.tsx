@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import { Button, TextField } from '@material-ui/core';
 
 type ClientLoginProps = {
     setRedirect: (arg: boolean) => void
 }
 
-const ClientLogin: React.FC<ClientLoginProps> = ({setRedirect}: ClientLoginProps) => {
+const ClientLogin: FC<ClientLoginProps> = ({setRedirect}: ClientLoginProps) => {
 
   const [brokers, brokersOnChange] = useState('');
   const [username, usernameOnChange] = useState('');

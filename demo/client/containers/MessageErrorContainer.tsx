@@ -1,20 +1,17 @@
 import * as React from 'react';
+import { FC } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core';
 import {Container, Typography, TextField, Theme, Paper} from '@material-ui/core';
 import Error from '../components/Error'
+import Message from '../components/Message'
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
-    root: {
-      '& .MuiTextField-root': {
-        margin: theme.spacing(1),
-        width: '20em',
-      },
-    },
     paper: {
-      margin: theme.spacing(1),
-      width: '30em',
-      height: '20em',
+      display: 'flex',
+      '& > *': {
+        margin: theme.spacing(1),
+      },
     },
     containerVertical: {
       display: 'flex',
@@ -34,61 +31,50 @@ const useStyles = makeStyles((theme: Theme) =>
 type Props = {
   changeMessage: (update: string) => void,
   changeTopic: (update: string) => void,
+  changeRetries: (update: number) => void,
   updateError: Array<string>
 }
 
-const MessageErrorContainer: React.FC<Props> = ({changeMessage, changeTopic, updateError}: Props) => {
+const MessageErrorContainer: FC<Props> = ({changeMessage, changeTopic, updateError, changeRetries }: Props) => {
   const classes = useStyles();
 
   const errors = updateError.map((error: string, i: number) => {
     return (
-      <Error key={i} errorMessage={error} />
+      <Error key={i} errorMessage={error}/>
     )
   })
   return (
     <Container className={classes.containerHorizontal}>
-      {/* <Grid container spacing ={3}>
-        <Grid item sm={6}> */}
       <Container className={classes.containerVertical}>
-        {/* <Typography variant="h6" color='textSecondary'>Test your cluster</Typography> */}
-        <form className={classes.root} noValidate autoComplete="off">
-          <TextField
-            id="outlined-multiline-static"
-            label="Topic"
-            multiline
-            rows={1} 
-            variant="outlined"
-            onChange={event => {
-              changeTopic(event.target.value)
-            }}
-          />
-          <TextField
-            id="outlined-multiline-static"
-            label="Message"
-            multiline
-            rows={5}
-            variant="outlined"
-            onChange={event => {
-              changeMessage(event.target.value)
-            }}
-          />
-        </form>
+        <Typography 
+          variant='h5' 
+          align='center'
+          gutterBottom
+        >Publish
+        </Typography>
+        <Message 
+          changeTopic={changeTopic} 
+          changeMessage={changeMessage} 
+          changeRetries={changeRetries} 
+        />
       </Container>
       <Container className={classes.containerVertical}>
-        {/* </Grid>   
-        <Grid item sm={6}> */}
-        <Typography variant='h5' align='center'>
-          Error log
+        <Typography 
+          variant='h5' 
+          align='center'
+          gutterBottom
+        >Log
         </Typography>
-        <Paper variant='outlined' className={classes.paper}>
-          <Typography variant='body2'>
+        <Paper   
+          variant='outlined' 
+          className={classes.paper}>
+          <Typography 
+            component={'div'} 
+            variant='body2'>
             {errors}
           </Typography>
         </Paper>
- 
       </Container>
-      {/* </Grid>
-      </Grid> */}
     </Container>
   )
 }

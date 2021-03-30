@@ -16,7 +16,6 @@ const useStyles = makeStyles(() =>
   })
 );
 
-
 const App: FC = () => {
   const [redirect, setRedirect] = useState(true);
   
@@ -41,8 +40,7 @@ const App: FC = () => {
   return (
 
     <Container className={classes.container} maxWidth='md'>
-      <Typography variant='h1' gutterBottom>kafka-penguin<img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img></Typography>
-      
+      <Typography variant='h1' gutterBottom>kafka-penguin<img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img></Typography>    
       <Switch>
         {main}
         < Route exact path="/" >

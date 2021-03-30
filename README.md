@@ -1,10 +1,12 @@
-# superK
+# kafka
 
 
 
 ## Kafka-Penguin
 
-Kafka-Penguin is an easy-to-use, lightweight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast.
+Kafka-Penguin is an easy-to-use, lightweight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast.  
+  
+For more information on KafkaJS, check out [Getting Started](https://kafka.js.org/docs/getting-started).
 
 Accelerated by [OS Labs](https://github.com/oslabs-beta/) and developed by [Ziyad El Baz](https://github.com/zelbaz946), [Kushal Talele](https://github.com/ktrane1), [Timeo Williams](https://github.com/timeowilliams) and [Ausar English](https://github.com/ausarenglish).
 
@@ -12,23 +14,14 @@ Accelerated by [OS Labs](https://github.com/oslabs-beta/) and developed by [Ziya
 
 ### Installation
 
-Download `kafka-penguin` from npm in your terminal with 
+Download `kafka-penguin` from npm in your terminal with :
 
 ```bash
 npm install kafka-penguin
 ```
 
-#### Installing KakfkaJS:
+#### 
 
-if not already installed locally, install `kafkajs`
-
-```bash
-npm install kafkajs
-```
-
-Learn more about using KafkaJS on their official site:
-
-* [Getting Started](https://kafka.js.org/docs/getting-started)
 * [A Brief Intro to Kafka](https://kafka.js.org/docs/introduction)
 * [Configuring KafkaJS](https://kafka.js.org/docs/configuration)
 * [Example Producer](https://kafka.js.org/docs/producer-example)

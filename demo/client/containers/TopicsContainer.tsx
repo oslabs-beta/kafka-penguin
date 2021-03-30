@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FC } from 'react';
 import { createStyles, makeStyles, Container } from '@material-ui/core';
 import Topic from '../components/Topic';
 
@@ -20,10 +21,10 @@ type Props = {
     }>
 };
 
-const TopicsContainer: React.FC<Props> = ({topicsInfo}: Props) => {
+const TopicsContainer: FC<Props> = ({topicsInfo}: Props) => {
 
   const topicsMapped = topicsInfo.map((topicInfo, i) => {
-    return <Topic key={i} topicInfo={topicInfo} />
+    return <Topic key={i} topicInfo={topicInfo} id={i} />
   })
 
   const classes = useStyles();

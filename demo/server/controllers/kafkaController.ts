@@ -2,6 +2,7 @@ import { Kafka } from 'kafkajs';
 import { RequestHandler } from 'express';
 
 const makeClient: RequestHandler =  (req, res, next) => {
+
   const brokers = !req.body.brokers ? process.env.KAFKA_BOOTSTRAP_SERVER : req.body.brokers
   const kafka = new Kafka({
     clientId: 'makeClient',

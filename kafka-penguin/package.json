@@ -1,9 +1,9 @@
 {
-  "name": "@kafka-penguin/kafka-penguin",
-  "version": "0.1.0",
+  "name": "kafka-penguin",
+  "version": "0.1.1",
 "description" : "Kafka-Penguin is an easy-to-use, light weight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast. ",
 
-  "main": "client/index.tsx",
+  "main": "./index.ts",
   "scripts": {
     "start": "webpack serve --open",
     "build": "webpack --mode production",
@@ -19,6 +19,7 @@
     "@babel/plugin-transform-runtime": "^7.13.10",
     "kafkajs": "^1.15.0",
     "regenerator-runtime": "^0.13.7",
+    "typescript" : "^4.2.3",
     "util": "^0.12.3"
   },
   "devDependencies": {

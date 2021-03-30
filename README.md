@@ -8,27 +8,35 @@ Accelerated by [OS Labs](https://github.com/oslabs-beta/) and developed by [Ziya
 
 **WIP: This project is not ready for use as of yet**
 
-## Installation
+### Installation
 
-Download @kafka-penguin/kafka-penguin from npm in your terminal with `@kafka-penguin/kafka-penguin`
+Download `kafka-penguin` from npm in your terminal with 
 
-### Installing KakfkaJS:
+```bash
+npm install kafka-penguin
+```
 
-if not already installed locally, install KafkaJS:
+#### Installing KakfkaJS:
 
-```sh
+if not already installed locally, install `kafkajs`
+
+```bash
 npm install kafkajs
-# yarn add kafkajs
 ```
 
 Learn more about using KafkaJS on their official site:
-- [Getting Started](https://kafka.js.org/docs/getting-started)
-- [A Brief Intro to Kafka](https://kafka.js.org/docs/introduction)
-- [Configuring KafkaJS](https://kafka.js.org/docs/configuration)
-- [Example Producer](https://kafka.js.org/docs/producer-example)
-- [Example Consumer](https://kafka.js.org/docs/consumer-example)
 
-### Configuring your client:
+* [Getting Started](https://kafka.js.org/docs/getting-started)
+* [A Brief Intro to Kafka](https://kafka.js.org/docs/introduction)
+* [Configuring KafkaJS](https://kafka.js.org/docs/configuration)
+* [Example Producer](https://kafka.js.org/docs/producer-example)
+* [Example Consumer](https://kafka.js.org/docs/consumer-example)
+
+#### Configuring your client:
+
+The example shown below is used w/ sasl. 
+
+`clientConfig.js`
 
 ```javascript
 const { Kafka } = require('kafkajs')
@@ -37,27 +45,32 @@ require('dotenv').config();
 // Create the client with the broker list
 const kafka = new Kafka({
   clientId: 'fail-fast-producer',
-  brokers: [process.env.KAFKA_BOOTSTRAP_SERVER],
+  brokers: [],
   ssl: true,
   sasl: {
     mechanism: 'plain',
-    username: process.env.KAFKA_USERNAME,
-    password: process.env.KAFKA_PASSWORD,
+    username: 'username',
+    password: 'password',
   },
 })
 
 module.exports = kafka;
 ```
-#### Usage:
+
+**Usage:**
+
+`example.js`
 
 ```javascript
-const penguinjs = require('./index.ts')
-const devClient = require('./clientConfig.ts')
+const kafkaPenguin = require('kafka-penguin')
+//Import your kafkajs client from another file
+const devClient = require('./clientConfig.js')
 
 const strategies = penguinjs.failfast
-// Initialize strategy-- passing in your kafkjs client and # of retries
+// Initialize strategy-- passing in the # of retries and your kafkjs client
 const newStrategy = new strategies.FailFast(2, devClient) 
 
+//Create a wrong topic message 
 const message = {
   topic: 'wrong-topic',
     messages: [
@@ -67,12 +80,18 @@ const message = {
     ]
 }
 
-// Initialize producer from strategy
+// Initialize producer from the failfast strategy
 const producer = newStrategy.producer();
 
 producer.connect()
   .then(() => console.log('Connected!'))
   .then(() => producer.send(message))
   .catch((e: any) => console.log("error: ", e.message))
-  
 ```
+
+Run the command below in the terminal and see the strategy in action!
+
+```bash
+node example.js
+```
+

@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: {
-    app: ['./demo/client/index.tsx'],
+    app: ['./client/index.tsx'],
     vendor: ['react', 'react-dom']
   },
   output: {
@@ -34,7 +34,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './demo/client/index.html')
+      template: path.resolve(__dirname, './client/index.html')
     })
   ]
 }

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState, useEffect, FC } from 'react';
-// import { Switch, Route, Router, Link, useLocation } from 'react-router-dom';
 import { Button, Container, createStyles, makeStyles, Backdrop, CircularProgress, Theme } from '@material-ui/core';
 import TopicsContainer from './TopicsContainer';
 import StrategyContainer from './StrategyContainer';
@@ -16,6 +15,7 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
   const [message, changeMessage] = useState('');
   const [topic, changeTopic] = useState('')
   const [error, changeError] = useState([])
+  const [retries, changeRetries] = useState(1)
   const [open, setOpen] = useState(false);
 
   const useStyles = makeStyles((theme:Theme) =>
@@ -47,6 +47,9 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
   useEffect(() => {
     handleClose()
   }, [error])
+  useEffect(() => {
+    handleClose()
+  }, [topicsArray])
 
   const handleFailFast = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
@@ -55,7 +58,7 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
     fetch('/strategy/failfast', {
       method: 'POST',
       headers: {'Content-Type': 'Application/JSON'},
-      body: JSON.stringify({topic: topic, message: message})
+      body: JSON.stringify({topic: topic, message: message, retries: retries})
     })
       .then(data => data.json())
       .then(errors => {
@@ -71,8 +74,10 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
   };
   
   const getTopics = () => {
+    if (topicsArray.length > 0) return;
+    handleToggle();
+    //FOR TRIALING WITH USER TOPICS, CREATE PAGE WITH
     const userDetails = localStorage.getItem('userDetails')
- 
     fetch('/topic/getTopics', {
       method: 'POST',
       headers: { 'Content-Type': 'Application/JSON' },
@@ -97,6 +102,7 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
       <MessageErrorContainer 
         changeMessage={changeMessage} 
         changeTopic={changeTopic} 
+        changeRetries={changeRetries}
         updateError={error}
       />
       <Container className={classes.container}>
@@ -121,9 +127,5 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
     </div>
   )
 }
-
-
-
-
 
 export default MainContainer;

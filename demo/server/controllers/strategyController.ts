@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 import { Kafka, logLevel } from 'kafkajs';
-const penguinjs = require('../../../index');
+const kafkapenguin = require('kafka-penguin');
 import dotenv = require('dotenv')
 dotenv.config();
 //cache to store error logs
@@ -22,11 +22,11 @@ const strategyKafka = new Kafka({
     password: process.env.KAFKA_PASSWORD
   },
   logLevel: logLevel.ERROR,
-  logCreator: MyLogCreator, 
+  logCreator: MyLogCreator,
 });
 
-const failfast: RequestHandler = (req, res, next) => { 
-  const strategies = penguinjs.failfast;
+const failfast: RequestHandler = (req, res, next) => {
+  const strategies = kafkapenguin.failfast;
   const newStrategy = new strategies.FailFast(req.body.retries - 1, strategyKafka);
   const producer = newStrategy.producer();
   const message = {
@@ -41,8 +41,8 @@ const failfast: RequestHandler = (req, res, next) => {
   producer.connect()
     .then(() => console.log('Connected'))
     .then(() => producer.send(message))
-    .then(() => {  
-      if (ERROR_LOG.length > 0) {
+    .then(() => {
+      if (ERROR_LOG.length) {
         const plural = req.body.retries > 1 ? 'times' : 'time'
         ERROR_LOG.push(`kafka-penguin: FailFast stopped producer after ${req.body.retries} ${plural}!`)
         res.locals.error = [...ERROR_LOG]

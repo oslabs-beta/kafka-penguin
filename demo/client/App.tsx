@@ -10,12 +10,11 @@ const useStyles = makeStyles(() =>
     container: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'flex-end',
+      // justifyContent: 'flex-end',
       flexDirection: 'column',
     },
   })
 );
-
 
 const App: FC = () => {
   const [redirect, setRedirect] = useState(true);

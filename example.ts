@@ -1,4 +1,4 @@
-const penguinjs = require('./index.ts')
+const penguinjs = require('kafka-penguin')
 const devClient = require('./clientConfig.ts')
 
 

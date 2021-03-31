@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { FC } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core';
-import {Container, Typography, TextField, Theme, Paper} from '@material-ui/core';
+import {Container, Typography, Theme, Paper} from '@material-ui/core';
 import Error from '../components/Error'
 import Message from '../components/Message'
+import { useErrorContext } from '../context/ErrorContext'
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
@@ -28,16 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-type Props = {
-  changeMessage: (update: string) => void,
-  changeTopic: (update: string) => void,
-  changeRetries: (update: number) => void,
-  updateError: Array<string>
-}
-
-const MessageErrorContainer: FC<Props> = ({changeMessage, changeTopic, updateError, changeRetries }: Props) => {
+const MessageErrorContainer: FC = () => {
   const classes = useStyles();
-
+  const updateError = useErrorContext();
+  
   const errors = updateError.map((error: string, i: number) => {
     return (
       <Error key={i} errorMessage={error}/>
@@ -53,9 +48,6 @@ const MessageErrorContainer: FC<Props> = ({changeMessage, changeTopic, updateErr
         >Publish
         </Typography>
         <Message 
-          changeTopic={changeTopic} 
-          changeMessage={changeMessage} 
-          changeRetries={changeRetries} 
         />
       </Container>
       <Container className={classes.containerVertical}>

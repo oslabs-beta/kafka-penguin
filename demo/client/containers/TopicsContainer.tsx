@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { FC } from 'react';
-import { createStyles, makeStyles, Container } from '@material-ui/core';
+import { useTopicsContext, useTopicsContextUpdate } from '../context/TopicContext'
+import { useBackdropUpdateContext } from '../context/BackDropContext'
+import { createStyles, makeStyles, Container, Button } from '@material-ui/core';
 import Topic from '../components/Topic';
 
 const useStyles = makeStyles(() =>
@@ -11,29 +13,40 @@ const useStyles = makeStyles(() =>
       justifyContent: 'center',
 
     },
+    button: {
+      margin: '1rem 1rem 1rem 1rem'
+    },
   })
 );
 
-type Props = {
-    topicsInfo: Array<{
-      name: string,
-      partitions: number
-    }>
-};
-
-const TopicsContainer: FC<Props> = ({topicsInfo}: Props) => {
-
-  const topicsMapped = topicsInfo.map((topicInfo, i) => {
+const TopicsContainer: FC = () => {
+  const backdropUpdate = useBackdropUpdateContext()
+  const getTopics = useTopicsContextUpdate()
+  const topics = useTopicsContext()
+  const topicsMapped = topics.map((topicInfo, i) => {
     return <Topic key={i} topicInfo={topicInfo} id={i} />
   })
 
   const classes = useStyles();
 
   return (  
-    <Container className = {classes.container}>
-      {topicsMapped}
+    <Container>
+      <Container className={classes.container}>
+        <Button
+          className={classes.button}
+          color='secondary'
+          variant='outlined'
+          onClick={() => {
+            backdropUpdate.handleToggle();
+            getTopics()
+          }}
+        >Load Demo Topics
+        </Button>
+      </Container>
+      <Container className = {classes.container}>
+       {topicsMapped}
+      </Container>  
     </Container>
-   
   )
 }
 

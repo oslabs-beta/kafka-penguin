@@ -2,15 +2,16 @@ import * as React from 'react';
 import { useState, FC } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import ClientLogin from './components/ClientLogin'
-import MainContainer from './containers/MainContainer';
+import { MainContainer } from './containers/MainContainer';
 import { createStyles, makeStyles, Typography, Container } from '@material-ui/core';
+import { BackdropProvider } from './context/BackDropContext'
 
 const useStyles = makeStyles(() =>
   createStyles({
     container: {
       display: 'flex',
       alignItems: 'center',
-      // justifyContent: 'flex-end',
+      justifyContent: 'flex-end',
       flexDirection: 'column',
     },
   })
@@ -40,14 +41,20 @@ const App: FC = () => {
   return (
 
     <Container className={classes.container} maxWidth='md'>
-      <Typography variant='h1' gutterBottom>kafka-penguin<img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img></Typography>    
+      <Typography 
+      variant='h1' 
+      gutterBottom>kafka-penguin
+        <img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img>
+      </Typography>    
       <Switch>
-        {main}
-        < Route exact path="/" >
+        <BackdropProvider>
+          {main}
+        </BackdropProvider>    
+        <Route exact path="/" >
           <ClientLogin setRedirect={setRedirect} />
         </Route >
-        <Route exact path='/main'>
-          <MainContainer setRedirect={setRedirect} />
+        <Route exact path='/main'>      
+            <MainContainer setRedirect={setRedirect} />
         </Route>
       </Switch>
       {/* <Typography variant='body2' color='textSecondary'> 

@@ -1,12 +1,14 @@
 ---
-description: Current standard
+description: >-
+  A readme style for kafka-penguin based of of the package, supertest:
+  https://github.com/visionmedia/supertest
 ---
 
-# Kafka-Penguin
-
-
+# SuperTest -&gt; Kafka-Penguin Readme
 
 ## Kafka-Penguin
+
+### About
 
 Kafka-Penguin is an easy-to-use, lightweight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast.  
   
@@ -16,53 +18,23 @@ Accelerated by [OS Labs](https://github.com/oslabs-beta/) and developed by [Ziya
 
 **WIP: This project is not ready for use as of yet**
 
-### Installation
+### Getting Started
 
-Download `kafka-penguin` from npm in your terminal with :
+Install kafka-penguin as an npm module and save it to your package.json file as a development dependency:
 
 ```bash
 npm install kafka-penguin
 ```
 
-#### 
+Once installed it can now be referenced by simply calling `require('kafka-penguin');`
 
-* [A Brief Intro to Kafka](https://kafka.js.org/docs/introduction)
-* [Configuring KafkaJS](https://kafka.js.org/docs/configuration)
-* [Example Producer](https://kafka.js.org/docs/producer-example)
-* [Example Consumer](https://kafka.js.org/docs/consumer-example)
+### Example
 
-#### Configuring your client:
-
-The example shown below is used w/ sasl. 
-
-`clientConfig.js`
+Kafka-penguin works with any Kafka client, here is an example with the client exported from another file:
 
 ```javascript
-const { Kafka } = require('kafkajs')
-require('dotenv').config();
-
-// Create the client with the broker list
-const kafka = new Kafka({
-  clientId: 'fail-fast-producer',
-  brokers: [],
-  ssl: true,
-  sasl: {
-    mechanism: 'plain',
-    username: 'username',
-    password: 'password',
-  },
-})
-
-module.exports = kafka;
-```
-
-**Usage:**
-
-`example.js`
-
-```javascript
-const kafkaPenguin = require('kafka-penguin')
 //Import your kafkajs client from another file
+const kafkaPenguin = require('kafka-penguin');
 const devClient = require('./clientConfig.js')
 
 const strategies = penguinjs.failfast
@@ -88,7 +60,13 @@ producer.connect()
   .catch((e: any) => console.log("error: ", e.message))
 ```
 
+### API
 
+You may use any of the kafka-penguin methods:
 
+#### .FailFast\(retry, Kafka client\)
 
+`retry`: Pass in the number of retries, which will be used to retry connections and API calls to Kafka \(when using producers or consumers\).
+
+devClient
 

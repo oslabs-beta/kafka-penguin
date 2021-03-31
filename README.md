@@ -1,8 +1,4 @@
----
-description: Current standard
----
-
-# Kafka-Penguin
+# kafka
 
 
 

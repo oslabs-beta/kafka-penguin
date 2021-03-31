@@ -37,7 +37,7 @@ Kafka-penguin works with any Kafka client, here is an example with the client ex
 const kafkaPenguin = require('kafka-penguin');
 const devClient = require('./clientConfig.js')
 
-const strategies = penguinjs.failfast
+const strategies = kafkaPenguin.failfast
 // Initialize strategy-- passing in the # of retries and your kafkjs client
 const newStrategy = new strategies.FailFast(2, devClient) 
 
@@ -64,9 +64,9 @@ producer.connect()
 
 You may use any of the kafka-penguin methods:
 
-#### .FailFast\(retry, Kafka client\)
+#### .FailFast\(retry, Kafka-client\)
 
 `retry`: Pass in the number of retries, which will be used to retry connections and API calls to Kafka \(when using producers or consumers\).
 
-devClient
+`Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username , and password.  
 

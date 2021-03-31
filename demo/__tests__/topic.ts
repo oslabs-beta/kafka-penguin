@@ -18,18 +18,15 @@ describe("Static router tests", () => {
           .expect('Content-Type', "application/json; charset=utf-8")
           .expect(200)
           .expect(res => {
-            res.body.topics.hasOwnProperty('name').toBe(true);
-            res.body.topics.hasOwnProperty('partitions').toBe(true);
+            res.body.topics.forEach(topic => {
+              expect(topic.hasOwnProperty('name')).toBe(true)
+              expect(topic.hasOwnProperty('partitions')).toBe(true)
+              expect(typeof topic.name === 'string').toBe(true)
+              expect(Array.isArray(topic.partitions)).toBe(true)
+            })
             done()
           })
           .end(done)
     });
   
-    it("Serves files from assets directory", (done) => {
-      request(server)     
-          .get('/assets/penguin.svg')
-          .expect('Content-Type', 'image/svg+xml')
-          .expect(200)
-          .end(done)
-    });
   })

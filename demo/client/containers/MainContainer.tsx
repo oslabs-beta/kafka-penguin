@@ -15,7 +15,7 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
   const [message, changeMessage] = useState('');
   const [topic, changeTopic] = useState('')
   const [error, changeError] = useState([])
-  const [retries, changeRetries] = useState(1)
+  const [retries, changeRetries] = useState(2)
   const [open, setOpen] = useState(false);
 
   const useStyles = makeStyles((theme: Theme) =>

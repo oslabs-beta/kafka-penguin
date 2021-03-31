@@ -11,6 +11,6 @@
       "preserveConstEnums": true
   },
   "include": [
-      "./demo/client/**/*"
+      "./client/**/*"
   ]
 }

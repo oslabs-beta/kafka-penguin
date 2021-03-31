@@ -1,4 +1,4 @@
 # Table of contents
 
-* [superK](README.md)
+* [Readme](README.md)
 

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState, FC } from 'react';
-import { Container, createStyles, makeStyles, Backdrop, CircularProgress, Theme } from '@material-ui/core';
 import TopicsContainer from './TopicsContainer';
 import StrategyContainer from './StrategyContainer';
 import MessageErrorContainer from './MessageErrorContainer'
@@ -8,6 +7,7 @@ import { TopicsProvider } from '../context/TopicContext'
 import { MessageProvider } from '../context/MessageContext'
 import { ErrorProvider } from '../context/ErrorContext'
 import { useBackdropContext, useBackdropUpdateContext } from '../context/BackDropContext'
+import { Container, createStyles, makeStyles, Backdrop, CircularProgress, Theme } from '@material-ui/core';
 
 type Props = {
   setRedirect: (value: boolean) => void
@@ -40,7 +40,7 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
   const backdropUpdate = useBackdropUpdateContext()
 
   return (
-    <div className="MainContainer">
+    <Container>
       <ErrorProvider>
        <MessageProvider>
         <MessageErrorContainer
@@ -63,7 +63,7 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
       >
         <CircularProgress color='secondary' />
       </Backdrop>
-    </div>
+    </Container>
   )
 }
 

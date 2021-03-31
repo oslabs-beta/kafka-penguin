@@ -6,7 +6,7 @@ import {Typography} from '@material-ui/core';
 const useStyles = makeStyles(() => 
   createStyles({
     root: {
-      padding: '1em 1em 1em 1em'
+      padding: '0em 1em 1em 1em'
     }
   })
 )

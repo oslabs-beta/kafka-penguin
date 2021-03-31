@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { FC } from 'react';
-import { createStyles, makeStyles, Button, Container } from '@material-ui/core';
 import { useErrorUpdateContext } from '../context/ErrorContext'
 import { useMessageContext } from '../context/MessageContext'
 import { useBackdropUpdateContext } from '../context/BackDropContext'
+import { createStyles, makeStyles, Button, Container } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -36,7 +36,7 @@ const StrategyContainer: FC = () => {
         color='primary'
         variant='contained'
         onClick={() => {
-          backdropUpdate.handleToggle();
+          if (message.message && message.topic) backdropUpdate.handleToggle()
           handleClicks.handleFailFast(message);
         }}
       >

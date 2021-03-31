@@ -2,7 +2,7 @@ import server  from '../server/app';
 import request from 'supertest';
 
 describe("Strategy tests", () => {
-  //check topic router to topics/getTopics/ end point
+
   const messageValid = {
     topic: 'test1',
     message: 'Hello world',

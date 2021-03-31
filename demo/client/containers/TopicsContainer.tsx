@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { FC } from 'react';
+import Topic from '../components/Topic';
 import { useTopicsContext, useTopicsContextUpdate } from '../context/TopicContext'
 import { useBackdropUpdateContext } from '../context/BackDropContext'
 import { createStyles, makeStyles, Container, Button } from '@material-ui/core';
-import Topic from '../components/Topic';
 
 const useStyles = makeStyles(() =>
   createStyles({

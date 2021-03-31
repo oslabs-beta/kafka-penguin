@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { FC } from 'react';
-import { createStyles, makeStyles } from '@material-ui/core';
-import {Container, Typography, Theme, Paper} from '@material-ui/core';
 import Error from '../components/Error'
 import Message from '../components/Message'
 import { useErrorContext } from '../context/ErrorContext'
+import {Container, Typography, Theme, Paper, createStyles, makeStyles} from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
@@ -17,14 +16,11 @@ const useStyles = makeStyles((theme: Theme) =>
     containerVertical: {
       display: 'flex',
       flexDirection: 'column',
-      alignContent: 'center',
-      justifyContent: 'flex-start'
+      justifyContent: 'flex-start',
     },
     containerHorizontal: {
       display: 'flex',
       justifyContent:'center',
-      alignItems: 'center',
-      alignContent:'center'
     }
   })
 )
@@ -58,7 +54,7 @@ const MessageErrorContainer: FC = () => {
         >Log
         </Typography>
         <Paper   
-          variant='outlined' 
+          variant='outlined'
           className={classes.paper}>
           <Typography 
             component={'div'} 

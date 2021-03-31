@@ -4,7 +4,7 @@ import dotenv = require('dotenv')
 dotenv.config();
 
 describe("Static router tests", () => {
-    //check topic router to topics/getTopics/ end point
+
     const userDetails = {
       brokers: process.env.KAFKA_BOOTSTRAP_SERVER,
       username: process.env.KAFKA_USERNAME,

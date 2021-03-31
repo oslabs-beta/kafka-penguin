@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { FC } from 'react'
-import { Typography, TextField, makeStyles, createStyles, Theme, Slider } from '@material-ui/core'
 import { useMesageUpdateContext } from '../context/MessageContext'
+import { Typography, TextField, makeStyles, createStyles, Theme, Slider } from '@material-ui/core'
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
       '& .MuiTextField-root': {
         margin: theme.spacing(1),
         width: '20em',
+        marginTop: '0'
       },
     },
   })

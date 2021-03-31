@@ -22,15 +22,7 @@ const theme = createMuiTheme({
   typography: {
     fontSize: 14,
     fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Montserrat"',
-      'Roboto',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-  
+      'Montserrat',
     ].join(','),
   },
 

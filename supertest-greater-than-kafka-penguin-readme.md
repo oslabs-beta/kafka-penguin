@@ -68,5 +68,5 @@ You may use any of the kafka-penguin methods:
 
 `retry`: Pass in the number of retries, which will be used to retry connections and API calls to Kafka \(when using producers or consumers\).
 
-`Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username , and password.  
+`Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username, and password.  
 

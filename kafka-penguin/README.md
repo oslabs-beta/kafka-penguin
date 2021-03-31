@@ -1,4 +1,4 @@
-<p align="center"><img src="./demo/client/assets/penguin.svg" width='500' style="margin-top: 10px; margin-bottom: -10px;"></p>
+<p align="center"><img src="../demo/client/assets/penguin.svg" width='500' style="margin-top: 10px; margin-bottom: -10px;"></p>
 
 # Kafka-Penguin
 

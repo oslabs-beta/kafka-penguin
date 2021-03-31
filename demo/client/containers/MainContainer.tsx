@@ -18,13 +18,13 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
   const [retries, changeRetries] = useState(1)
   const [open, setOpen] = useState(false);
 
-  const useStyles = makeStyles((theme:Theme) =>
+  const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       container: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection:'column',
+        flexDirection: 'column',
       },
       button: {
         margin: '1rem 1rem 1rem 1rem'
@@ -47,6 +47,7 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
   useEffect(() => {
     handleClose()
   }, [error])
+
   useEffect(() => {
     handleClose()
   }, [topicsArray])
@@ -57,8 +58,8 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
     handleToggle()
     fetch('/strategy/failfast', {
       method: 'POST',
-      headers: {'Content-Type': 'Application/JSON'},
-      body: JSON.stringify({topic: topic, message: message, retries: retries})
+      headers: { 'Content-Type': 'Application/JSON' },
+      body: JSON.stringify({ topic: topic, message: message, retries: retries })
     })
       .then(data => data.json())
       .then(errors => {
@@ -72,9 +73,8 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
   const handleIgnore = (e: { preventDefault: () => void; }) => {
     e.preventDefault()
   };
-  
+
   const getTopics = () => {
-    if (topicsArray.length > 0) return;
     handleToggle();
     //FOR TRIALING WITH USER TOPICS, CREATE PAGE WITH
     const userDetails = localStorage.getItem('userDetails')
@@ -87,7 +87,7 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
       .then(data => {
         const topicData = data.topics.reduce((acc, cur) => {
           acc.push({
-            name: cur.name, 
+            name: cur.name,
             partitions: cur.partitions.length
           })
           return acc
@@ -95,13 +95,13 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
         changeTopicsArray(topicData)
       })
   }
-  
+
   const classes = useStyles();
   return (
-    <div className="MainContainer">   
-      <MessageErrorContainer 
-        changeMessage={changeMessage} 
-        changeTopic={changeTopic} 
+    <div className="MainContainer">
+      <MessageErrorContainer
+        changeMessage={changeMessage}
+        changeTopic={changeTopic}
         changeRetries={changeRetries}
         updateError={error}
       />
@@ -111,12 +111,12 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
           handleDLQ={handleDLQ}
           handleIgnore={handleIgnore}
         />
-        <Button        
+        <Button
           className={classes.button}
           color='secondary'
           variant='outlined'
-          onClick={getTopics}         
-        >Load Demo Topics</Button>       
+          onClick={getTopics}
+        >Load Demo Topics</Button>
       </Container>
       <Container className={classes.container}>
         <TopicsContainer topicsInfo={topicsArray} />

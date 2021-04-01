@@ -1,5 +1,8 @@
 import * as React from 'react';
 import { FC } from 'react';
+import { useErrorUpdateContext } from '../context/ErrorContext'
+import { useMessageContext } from '../context/MessageContext'
+import { useBackdropUpdateContext } from '../context/BackDropContext'
 import { createStyles, makeStyles, Button, Container } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>
@@ -16,23 +19,15 @@ const useStyles = makeStyles(() =>
   })
 );
 
-type Props = {
-  handleFailFast: (e: 
-    {preventDefault: () => void}
-  ) => void,
-  handleDLQ: (e: 
-    {preventDefault: () => void}
-  ) => void,
-  handleIgnore: (e: 
-    {preventDefault: () => void}
-  ) => void,
-};
-
-const StrategyContainer: FC<Props> = ({handleFailFast, handleDLQ, handleIgnore}: Props) => {
+const StrategyContainer: FC = () => {
   //After the user clicks on the button FF or DLQ,
   //we will render the associated strategy data 
   //to them in a div below
+  const message = useMessageContext();
+  const handleClicks = useErrorUpdateContext()
+  const backdropUpdate = useBackdropUpdateContext()
   const classes = useStyles();
+  
   return (
     <Container className={classes.container}>
       
@@ -40,7 +35,10 @@ const StrategyContainer: FC<Props> = ({handleFailFast, handleDLQ, handleIgnore}:
         className={classes.button}
         color='primary'
         variant='contained'
-        onClick={handleFailFast}
+        onClick={() => {
+          if (message.message && message.topic) backdropUpdate.handleToggle()
+          handleClicks.handleFailFast(message);
+        }}
       >
         FailFast
       </Button>
@@ -48,7 +46,7 @@ const StrategyContainer: FC<Props> = ({handleFailFast, handleDLQ, handleIgnore}:
         className={classes.button}
         color='primary'
         variant='contained'
-        onClick={handleDLQ}
+        onClick={handleClicks.handleDLQ}
       >
         DLQ
       </Button>
@@ -56,7 +54,7 @@ const StrategyContainer: FC<Props> = ({handleFailFast, handleDLQ, handleIgnore}:
         className={classes.button}
         color='primary'
         variant='contained'
-        onClick={handleIgnore}
+        onClick={handleClicks.handleIgnore}
       >
         Ignore
       </Button>

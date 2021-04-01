@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-      "types": ["jest", "node"],
+      "types": ["jest", "node", "reflect-metadata"],
+      "typeRoots": ["./types", "./node_modules/@types"],
       "target": "ES5",
       "module": "commonJS",
       "jsx": "react",

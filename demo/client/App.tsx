@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { useState, FC } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import ClientLogin from './components/ClientLogin'
+import { FC } from 'react';
+import { Switch, Route} from 'react-router-dom';
+import DocsContainer from './containers/DocsContainer'
 import { MainContainer } from './containers/MainContainer';
-import { BackdropProvider } from './context/BackDropContext'
+import { BackdropProvider } from './context/BackDropContext';
+import GlobalNavBar from './components/GlobalNavBar'
 import { createStyles, makeStyles, Typography, Container } from '@material-ui/core';
+import LandingBody from './components/LandingBody';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -18,48 +20,38 @@ const useStyles = makeStyles(() =>
 );
 
 const App: FC = () => {
-  const [redirect, setRedirect] = useState(true);
   
-  let main
-
-  if (!redirect) {
-    main = (
-      <Route exact path='/'>
-        <ClientLogin setRedirect={setRedirect} />
-      </Route>
-    );
-  } else {
-    main = (
-      <Route exact path='/'>
-        <MainContainer setRedirect={setRedirect} />
-      </Route>
-    );
-  }
-
   const classes = useStyles();
 
   return (
-
     <Container className={classes.container} maxWidth='md'>
+      <GlobalNavBar />
       <Typography 
-      variant='h1' 
-      gutterBottom>kafka-penguin
+        variant='h1' 
+        gutterBottom>kafka-penguin
         <img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img>
-      </Typography>    
-      <Switch>
-        <BackdropProvider>
-          {main}
-        </BackdropProvider>    
-        <Route exact path="/" >
-          <ClientLogin setRedirect={setRedirect} />
-        </Route >
-        <Route exact path='/main'>      
-            <MainContainer setRedirect={setRedirect} />
-        </Route>
-      </Switch>
-      {/* <Typography variant='body2' color='textSecondary'> 
-      Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-      </Typography> */}
+      </Typography> 
+        <Switch>      
+          <Route 
+            exact path='/demo' 
+            component={ () => {
+                return (
+                <BackdropProvider>
+                  <MainContainer />
+                </BackdropProvider>  
+            )
+            }}></Route>   
+          <Route 
+            exact path="/docs" 
+            component={
+              () => <DocsContainer/>
+          }></Route>      
+          <Route 
+            exact path="/" 
+            component={
+              () => <LandingBody/>
+            }></Route>     
+        </Switch>
     </Container>
   )
 }

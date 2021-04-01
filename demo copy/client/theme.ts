@@ -2,7 +2,6 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { cyan, amber } from '@material-ui/core/colors'
 
 const theme = createMuiTheme({
-  // spacing: factor => `${0.25 * factor}rem`,
   palette: {
     primary: {
       light: '##72cff8',
@@ -23,9 +22,18 @@ const theme = createMuiTheme({
   typography: {
     fontSize: 14,
     fontFamily: [
-      'Montserrat',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Montserrat"',
+      'Roboto',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+  
     ].join(','),
   },
+
 });
 
 export default theme

@@ -1,6 +1,10 @@
+---
+description: >-
+  A readme style for kafka-penguin based of of the package, supertest:
+  https://github.com/visionmedia/supertest
+---
 
-<p align="center"><img src="./demo/client/assets/penguin.svg" width='500' style="margin-top: 10px; margin-bottom: -10px;"></p>
-
+# SuperTest -&gt; Kafka-Penguin Readme
 
 ## Kafka-Penguin
 
@@ -65,3 +69,4 @@ You may use any of the kafka-penguin methods:
 `retry`: Pass in the number of retries, which will be used to retry connections and API calls to Kafka \(when using producers or consumers\).
 
 `Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username, and password.  
+

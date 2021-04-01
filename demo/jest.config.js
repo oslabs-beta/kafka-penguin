@@ -1,11 +1,8 @@
 module.exports = {
-    clearMocks: true,
-    moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
-    roots: [
-        "<rootDir>/__tests__"
-    ],
-    testEnvironment: "node",
+    roots: ['<rootDir>/__tests__'],
     transform: {
-        '^.+\\.tsx?$': 'ts-jest'
+      '^.+\\.tsx?$': 'ts-jest',
     },
-};
+    testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
+    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  }

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { FC } from 'react'
-import { useMesageUpdateContext } from '../context/MessageContext'
 import { Typography, TextField, makeStyles, createStyles, Theme, Slider } from '@material-ui/core'
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -9,19 +8,19 @@ const useStyles = makeStyles((theme: Theme) =>
       '& .MuiTextField-root': {
         margin: theme.spacing(1),
         width: '20em',
-        marginTop: '0',
-       
       },
     },
-    textfield: {
-       paddingBottom: '1rem'
-    }
   })
 )
 
-const Message: FC = () => {
+type Props = {
+  changeMessage: (update: string) => void,
+  changeTopic: (update: string) => void,
+  changeRetries: (update: number) => void,
+}
+
+const Message: FC<Props> = ({changeTopic, changeMessage, changeRetries}: Props) => {
   const classes = useStyles()
-  const messageUpdate = useMesageUpdateContext()
   return (
     <form className={classes.root} noValidate autoComplete="off">
       <TextField
@@ -31,7 +30,7 @@ const Message: FC = () => {
         rows={1} 
         variant="outlined"
         onChange={event => {
-          messageUpdate.changeTopic(event.target.value)
+          changeTopic(event.target.value)
         }}
       />
       <TextField
@@ -41,13 +40,13 @@ const Message: FC = () => {
         rows={5}
         variant="outlined"
         onChange={event => {
-          messageUpdate.changeMessage(event.target.value)
+          changeMessage(event.target.value)
         }}
       />
       <Slider
         defaultValue={2}
         onChange={(event, value: number) => {
-          messageUpdate.changeRetries(value)
+          changeRetries(value)
         }}
         aria-labelledby="discrete-slider"
         valueLabelDisplay="auto"

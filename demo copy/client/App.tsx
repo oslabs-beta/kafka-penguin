@@ -3,6 +3,7 @@ import { useState, FC } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import ClientLogin from './components/ClientLogin'
 import MainContainer from './containers/MainContainer';
+import LandingPageContainer from './containers/LandingPageContainer'
 import { createStyles, makeStyles, Typography, Container } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>
@@ -18,14 +19,16 @@ const useStyles = makeStyles(() =>
 
 const App: FC = () => {
   const [redirect, setRedirect] = useState(true);
-  
+    // const setRedirect = true;
   let main
 
-  if (!redirect) {
+  if (redirect) {
     main = (
       <Route exact path='/'>
-        <ClientLogin setRedirect={setRedirect} />
-      </Route>
+      <LandingPageContainer setRedirect = {setRedirect} />
+
+        {/* /* <ClientLogin setRedirect={setRedirect} /> */}
+      </Route> 
     );
   } else {
     main = (
@@ -44,7 +47,9 @@ const App: FC = () => {
       <Switch>
         {main}
         < Route exact path="/" >
-          <ClientLogin setRedirect={setRedirect} />
+          < LandingPageContainer setRedirect ={setRedirect} />
+          {/* <ClientLogin setRedirect={setRedirect} /> */}
+
         </Route >
         <Route exact path='/main'>
           <MainContainer setRedirect={setRedirect} />

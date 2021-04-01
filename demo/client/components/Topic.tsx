@@ -27,7 +27,6 @@ const Topic: FC<Props> = ({topicInfo, id}: Props) => {
 
   return(
     <Card key={id} className={classes.root} >
-      {/* <ListItemText primary={topicInfo.name} secondary={`partitions: ${topicInfo.partitions}`}/> */}
       <CardContent>
         <Typography variant='body2' align='center' noWrap={true}>
           {topicInfo.name}

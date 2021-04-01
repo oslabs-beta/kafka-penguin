@@ -4,12 +4,15 @@ const kafkapenguin = require('kafka-penguin');
 import dotenv = require('dotenv')
 dotenv.config();
 //cache to store error logs
-let ERROR_LOG = []
+let ERROR_LOG = [];
 
 const MyLogCreator = logLevel => ({ namespace, level, label, log }) => {
   //also availabe on log object => timestamp, logger, message and more
   const { error, correlationId } = log
-  ERROR_LOG.push(`[${namespace}] Logger: kafka-penguin ${label}: ${error} correlationId: ${correlationId}`)
+  if (correlationId) {
+    ERROR_LOG.push(`[${namespace}] Logger: kafka-penguin ${label}: ${error} correlationId: ${correlationId}`)
+  }
+  
 }
 //new kafka instance with logCreator added
 const strategyKafka = new Kafka({
@@ -26,6 +29,7 @@ const strategyKafka = new Kafka({
 });
 
 const failfast: RequestHandler = (req, res, next) => {
+
   const strategies = kafkapenguin.failfast;
   const newStrategy = new strategies.FailFast(req.body.retries - 1, strategyKafka);
   const producer = newStrategy.producer();
@@ -38,15 +42,16 @@ const failfast: RequestHandler = (req, res, next) => {
       }
     ]
   };
-  producer.connect()
+ producer.connect()
     .then(() => console.log('Connected'))
     .then(() => producer.send(message))
     .then(() => {
-      if (ERROR_LOG.length) {
-        const plural = req.body.retries > 1 ? 'times' : 'time'
-        ERROR_LOG.push(`kafka-penguin: FailFast stopped producer after ${req.body.retries} ${plural}!`)
+      if (ERROR_LOG.length > 0) {
+        const plural = ERROR_LOG.length > 1 ? 'times' : 'time'
+        ERROR_LOG.push(`kafka-penguin: FailFast stopped producer after ${ERROR_LOG.length} ${plural}!`)
         res.locals.error = [...ERROR_LOG]
-      } else res.locals.error = ['kafka-penguin: Message produced successfully']
+      } else {res.locals.error = ['kafka-penguin: Message produced successfully']};
+
       ERROR_LOG = [];
       return next();
     })

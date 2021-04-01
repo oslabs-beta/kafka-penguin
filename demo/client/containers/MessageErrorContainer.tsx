@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { FC } from 'react';
-import { createStyles, makeStyles } from '@material-ui/core';
-import {Container, Typography, TextField, Theme, Paper} from '@material-ui/core';
 import Error from '../components/Error'
 import Message from '../components/Message'
+import { useErrorContext } from '../context/ErrorContext'
+import {Container, Typography, Theme, Paper, createStyles, makeStyles} from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
@@ -16,28 +16,19 @@ const useStyles = makeStyles((theme: Theme) =>
     containerVertical: {
       display: 'flex',
       flexDirection: 'column',
-      alignContent: 'center',
-      justifyContent: 'flex-start'
+      justifyContent: 'flex-start',
     },
     containerHorizontal: {
       display: 'flex',
       justifyContent:'center',
-      alignItems: 'center',
-      alignContent:'center'
     }
   })
 )
 
-type Props = {
-  changeMessage: (update: string) => void,
-  changeTopic: (update: string) => void,
-  changeRetries: (update: number) => void,
-  updateError: Array<string>
-}
-
-const MessageErrorContainer: FC<Props> = ({changeMessage, changeTopic, updateError, changeRetries }: Props) => {
+const MessageErrorContainer: FC = () => {
   const classes = useStyles();
-
+  const updateError = useErrorContext();
+  
   const errors = updateError.map((error: string, i: number) => {
     return (
       <Error key={i} errorMessage={error}/>
@@ -53,9 +44,6 @@ const MessageErrorContainer: FC<Props> = ({changeMessage, changeTopic, updateErr
         >Publish
         </Typography>
         <Message 
-          changeTopic={changeTopic} 
-          changeMessage={changeMessage} 
-          changeRetries={changeRetries} 
         />
       </Container>
       <Container className={classes.containerVertical}>
@@ -66,7 +54,7 @@ const MessageErrorContainer: FC<Props> = ({changeMessage, changeTopic, updateErr
         >Log
         </Typography>
         <Paper   
-          variant='outlined' 
+          variant='outlined'
           className={classes.paper}>
           <Typography 
             component={'div'} 

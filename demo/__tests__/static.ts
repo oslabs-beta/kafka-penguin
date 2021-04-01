@@ -1,8 +1,6 @@
 import server  from '../server/app';
 import request from 'supertest';
 
-// const server = 'http://localhost:8000'
-
 describe("Static tests", () => {
   //check topic router to topics/getTopics/ end point
   it("Serves html file to '/' endpoint", (done) => {

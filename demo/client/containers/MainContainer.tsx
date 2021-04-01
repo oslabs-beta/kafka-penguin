@@ -9,13 +9,7 @@ import { ErrorProvider } from '../context/ErrorContext'
 import { useBackdropContext, useBackdropUpdateContext } from '../context/BackDropContext'
 import { Container, createStyles, makeStyles, Backdrop, CircularProgress, Theme } from '@material-ui/core';
 
-type Props = {
-  setRedirect: (value: boolean) => void
-};
-
-const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
-
-  const [open, setOpen] = useState(false);
+const MainContainer: FC = () => {
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -40,7 +34,7 @@ const MainContainer: FC<Props> = ({ setRedirect }: Props) => {
   const backdropUpdate = useBackdropUpdateContext()
 
   return (
-    <Container>
+    <Container align='center'>
       <ErrorProvider>
        <MessageProvider>
         <MessageErrorContainer

@@ -3,6 +3,7 @@ import { useState, FC } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import ClientLogin from './components/ClientLogin'
 import MainContainer from './containers/MainContainer';
+import LandingPageContainer from './containers/LandingPageContainer'
 import { createStyles, makeStyles, Typography, Container } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>
@@ -10,7 +11,7 @@ const useStyles = makeStyles(() =>
     container: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'flex-end',
+      // justifyContent: 'flex-end',
       flexDirection: 'column',
     },
   })
@@ -18,14 +19,16 @@ const useStyles = makeStyles(() =>
 
 const App: FC = () => {
   const [redirect, setRedirect] = useState(true);
-  
+    // const setRedirect = true;
   let main
 
-  if (!redirect) {
+  if (redirect) {
     main = (
       <Route exact path='/'>
-        <ClientLogin setRedirect={setRedirect} />
-      </Route>
+      <LandingPageContainer setRedirect = {setRedirect} />
+      <Typography variant='h1' gutterBottom>kafka-penguin<img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img></Typography> 
+        {/* /* <ClientLogin setRedirect={setRedirect} /> */}
+      </Route> 
     );
   } else {
     main = (
@@ -40,13 +43,16 @@ const App: FC = () => {
   return (
 
     <Container className={classes.container} maxWidth='md'>
-      <Typography variant='h1' gutterBottom>kafka-penguin<img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img></Typography>    
       <Switch>
         {main}
         < Route exact path="/" >
-          <ClientLogin setRedirect={setRedirect} />
+          < LandingPageContainer setRedirect ={setRedirect} />
+          {/* <ClientLogin setRedirect={setRedirect} /> */}
+          {/* <Typography variant='h1' gutterBottom>kafka-penguin<img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img></Typography>  */}
         </Route >
+
         <Route exact path='/main'>
+        <Typography variant='h1' gutterBottom>kafka-penguin<img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img></Typography>    
           <MainContainer setRedirect={setRedirect} />
         </Route>
       </Switch>

@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 import { Kafka, logLevel } from 'kafkajs';
-const penguinjs = require('../../../index');
+const kafkaPenguin = require('kafka-penguin');
 import dotenv = require('dotenv')
 dotenv.config();
 //cache to store error logs
@@ -26,7 +26,7 @@ const strategyKafka = new Kafka({
 });
 
 const failfast: RequestHandler = (req, res, next) => { 
-  const strategies = penguinjs.failfast;
+  const strategies = kafkaPenguin.failfast;
   const newStrategy = new strategies.FailFast(req.body.retries - 1, strategyKafka);
   const producer = newStrategy.producer();
   const message = {

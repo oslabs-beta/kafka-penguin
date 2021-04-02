@@ -17,7 +17,7 @@ const makeClient: RequestHandler =  (req, res, next) => {
   res.locals.kafka = kafka;
   return next()  
 }
-
+  
 export default {
   makeClient,
 }

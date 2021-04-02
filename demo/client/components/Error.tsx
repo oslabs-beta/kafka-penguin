@@ -24,4 +24,5 @@ const Error: FC<Props> = ({errorMessage}: Props) => {
   )
 }
 
+
 export default Error

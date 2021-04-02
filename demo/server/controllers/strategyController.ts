@@ -14,6 +14,7 @@ const MyLogCreator = logLevel => ({ namespace, level, label, log }) => {
   }
   
 }
+
 //new kafka instance with logCreator added
 const strategyKafka = new Kafka({
   clientId: 'makeClient',

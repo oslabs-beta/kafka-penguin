@@ -1,17 +1,12 @@
+# Readme
 
-## Kafka-Penguin
-<p align="center"><img src="./demo/client/assets/penguin.svg" width='500' style="margin-top: 10px; margin-bottom: -10px;"></p>
+    ![license](https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af) ![issues](https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow) ![last commit](https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af) [![Repo stars](https://img.shields.io/github/stars/oslabs-beta/kafka-penguin?logoColor=%2334495e&style=social)](https://github.com/oslabs-beta/kafka-penguin/stargazers)
 
 ### About
 
-Kafka-Penguin is an easy-to-use, lightweight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast.  
-  
-For more information on KafkaJS, check out [Getting Started](https://kafka.js.org/docs/getting-started).
-=======
+Kafka-Penguin is an easy-to-use, lightweight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast.
 
-Accelerated by [OS Labs](https://github.com/oslabs-beta/) and developed by [Ziyad El Baz](https://github.com/zelbaz946), [Kushal Talele](https://github.com/ktrane1), [Timeo Williams](https://github.com/timeowilliams), and [Ausar English](https://github.com/ausarenglish).
-
-**WIP: This project is not ready for use as of yet**
+#### For more information on KafkaJS, check out [Getting Started](https://kafka.js.org/docs/getting-started).
 
 ### Getting Started
 
@@ -52,9 +47,7 @@ producer.connect()
   .then(() => console.log('Connected!'))
   .then(() => producer.send(message))
   .catch((e: any) => console.log("error: ", e.message))
-  
 ```
-
 
 ### API
 
@@ -64,6 +57,19 @@ You may use any of the kafka-penguin methods:
 
 `retry`: Pass in the number of retries, which will be used to retry connections and API calls to Kafka \(when using producers or consumers\).
 
-`Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username, and password.  
+`Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username, and password.
 
+## **Contributors**
+
+[Ausar English](https://www.linkedin.com/in/ausarenglish) [@ausarenglish](https://github.com/ausarenglish)
+
+Kushal Talele [@ktrane1](https://github.com/ktrane1)
+
+[Timeo Williams](https://www.linkedin.com/in/timeowilliams/) [@timeowilliams](https://github.com/timeowilliams)
+
+[Ziyad El Baz](https://www.linkedin.com/in/ziyadelbaz) [@zelbaz946](https://github.com/zelbaz946)
+
+### License
+
+This project is licensed under the Apache License - see the [LICENSE.md](https://github.com/oslabs-beta/kafka-penguin/blob/main/LICENSE) file for details.
 

@@ -1,5 +1,5 @@
-const failfast = require('./src/failfast.ts');
-const deadLetterQueueSource = require('./src/deadLetterQueue.ts');
+const failfast = require('./failfast.ts');
+const deadLetterQueueSource = require('./deadLetterQueue.ts');
 
 // Export default strategies
 module.exports = {

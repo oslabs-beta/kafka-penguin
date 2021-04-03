@@ -8,7 +8,7 @@ Kafka-Penguin is an easy-to-use, lightweight KafkaJS library for message process
 
 #### For more information on KafkaJS, check out [Getting Started](https://kafka.js.org/docs/getting-started).
 
-### Getting Started
+### Getting Started . 
 
 Install kafka-penguin as an npm module and save it to your package.json file as a development dependency:
 

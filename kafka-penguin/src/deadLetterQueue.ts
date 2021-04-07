@@ -85,27 +85,20 @@ class DLQ {
             } catch (e) {
 
               console.error('kafka-penguin: is sending invalid message to DLQ');
-              const catchLogic = async () => {
-               await dlqInstance.innerConsumer.connect()
+              
+               dlqInstance.innerProducer.connect()
                   .then(() => console.log('kafka-penguin: Connected to DLQ topic'))
                   .then(() => {
-                    console.log("DLQ message", message)
+                   
                     dlqInstance.innerProducer.send({
                       topic: `${dlqInstance.topic}.deadLetterQueue`,
-                      messages: [
-                        {
-                          key: message.key,
-                          value: message.value
-                        },
-                      ],
+                      messages: [message],
                     })
                   })
                   .then(() => console.log('kafka-penguin: Message published to DLQ'))
-                  // .then(() => dlqInstance.innerProducer.disconnect())
+                  .then(() => dlqInstance.innerProducer.disconnect())
                   .then(() => console.log('kafka-penguin: Producer disconnected'))
                   .catch((e: any) => console.log('ERROR WITH PRODUCING TO DLQ: ', e));
-              }
-              catchLogic();
             }
           },
         });

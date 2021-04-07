@@ -1,5 +1,5 @@
-import DLQ from './DLQ';
-import client from './clientConfig';
+const DLQConsumer =  require('./kafka-penguin/src/deadLetterQueue');
+const client = require('./clientConfig.ts');
 
 // conditional should include ANY error that may occur during consumption
 // pushing fault message to relevant DLQ topic
@@ -30,7 +30,7 @@ const callback2 = (message: any) => (!!Array.isArray(message.value));
 // 3. redefine .run function to include check for faulty messages
 // 4. if doesnt pass test, use adapter to post to DLQ
 // callback is optional
-const dlq = new DLQ(client, topic);
+const dlq = new DLQConsumer(client, topic);
 const consumer = dlq.consumer({ groupId: 'whatever' });
 
 consumer.connect()

@@ -12,7 +12,7 @@ interface input {
     topic: string,
     partitions: number,
     message: any
-  }) => voids
+  }) => void
 }
 
 class DLQ {
@@ -39,6 +39,9 @@ class DLQ {
     const dlqInstance = this;
     // return consumer object;
     return {
+      createDLQ() {
+        return dlqInstance.createDLQ();
+      },
       connect() { 
         return dlqInstance.innerConsumer.connect();
       },
@@ -79,36 +82,7 @@ class DLQ {
       }
     }
   }
-  producer() {
-    return {
-        connect() {
-          // create new client
-          const innerProducer = new Kafka(this.client);
-          
-          // connect to broker
-         
-          return producer.connect()
-      },
-      disconnect(producer = this.innerProducer) {
-        return producer.disconnect();
-      },
-        send(message: any, producer = this.innerProducer) {
-          return producer.send(message: message)
-            .catch((e: any) => {
-              this.innerProducer.disconnect();
-                const newError = new FailFastError(e)   
-             })
-          
-        }
-      }
-
-      
-      
-    }
-  }
-
   
-
   
   // createDLQ will create a topic
   async createDLQ () {

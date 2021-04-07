@@ -14,8 +14,11 @@ app.use(
   '/assets',
   express.static(path.resolve(__dirname, '../client/assets/'))
 );
-
-app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../client/index.html')));
+app.use(
+  '/js',
+  express.static(path.resolve(__dirname, '../build/js/'))
+);
+app.get('/', (req, res) => res.status(200).sendFile(path.join(__dirname, '../build/index.html')));
 
 app.use('/topic', topicRouter)
 app.use('/strategy', strategyRouter)

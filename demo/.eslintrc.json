@@ -1,38 +1,44 @@
-
 {
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
-  "plugins": [
-    "@typescript-eslint",
-    "react-hooks",
-    "plugin:react/recommended",
-    "airbnb",
-    "plugin:@typescript-eslint/eslint-recommended",
+  "root": true,
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
+    "plugin:jest/recommended",
+    "prettier",
+    "prettier/react",
+    "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
-  "extends": [
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "airbnb-typescript"
-  ],
+  "plugins": ["react", "@typescript-eslint", "jest"],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
   "rules": {
     "indent": ["warn", 2],
-    "no-unused-vars": ["off", { "vars": "local" }],
-    "prefer-const": "warn",
     "quotes": ["warn", "single"],
-    "space-infix-ops": "warn"
-  },
-  "settings": {
-    "react": {
-      "pragma": "React",
-      "version": "detect"
-    }
+    "semi": ["warn", "always"],
+    "linebreak-style": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }

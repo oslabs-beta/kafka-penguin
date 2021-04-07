@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "description": "",
   "main": "client/index.tsx",
+  "engines": {
+    "node": "12.18.3"
+  }, 
   "scripts": {
-    "start": "webpack serve --open",
+    "dev": "webpack serve --open",
     "build": "webpack --mode production",
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --config webpack.config.js --mode development\" \"nodemon server/server.ts\"",
+    "start": "concurrently \"cross-env NODE_ENV=development webpack serve --config webpack.config.js --mode development\" \"nodemon server/server.ts\"",
     "test": "jest --detectOpenHandles",
-    "lint": "eslint . --ext .ts"
+    "format": "prettier --write src/**/*.ts{,x}",
+    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -49,7 +53,13 @@
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.7",
     "set-interval": "^2.1.2",
-    "util": "^0.12.3"
+    "util": "^0.12.3",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "ts-loader": "^8.0.18",
+    "typescript": "3.0.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "ts-node": "^9.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.13.13",
@@ -63,8 +73,8 @@
     "@types/react-dom": "^17.0.3",
     "@types/react-router-dom": "^5.1.7",
     "@types/supertest": "^2.0.10",
-    "@typescript-eslint/eslint-plugin": "^4.19.0",
-    "@typescript-eslint/parser": "^4.19.0",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
     "@webpack-cli/serve": "^1.3.0",
     "awesome-typescript-loader": "^5.2.1",
     "babel-cli": "^6.26.0",
@@ -72,13 +82,15 @@
     "babel-preset-env": "^1.7.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
-    "eslint": "^7.23.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.23.1",
-    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "express": "^4.17.1",
     "html-webpack-plugin": "^5.3.1",
     "jest": "^26.6.3",

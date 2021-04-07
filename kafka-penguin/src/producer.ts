@@ -3,7 +3,7 @@ interface messageValue {
   messages: object[],
 }
 
-class DeadLetterQueueError extends Error {
+class OldDLQ extends Error {
   message: any;
   reference: any;
   name: any;

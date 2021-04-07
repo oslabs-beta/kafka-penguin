@@ -58,24 +58,36 @@ class DLQ {
             try {
               //If user doesn't pass in callback, we'll simply listen
               //to and return errors
-              if (dlqInstance.callback) dlqInstance.callback(message);
+              // if (dlqInstance.callback)
+              if (dlqInstance.callback && dlqInstance.callback(message)) {
+                dlqInstance.callback(message)
+              }
               eachMessage({ topic, partitions, message });
 
             } catch (e) {
 
               console.error('kafka-penguin: is sending invalid message to DLQ');
-              dlqInstance.innerConsumer.connect()
-                .then(() => console.log('kafka-penguin: Connected to DLQ topic'))
-                .then(() => dlqInstance.innerProducer.send({
-                  topic: `${dlqInstance.topic}.deadLetterQueue`,
-                  messages: [
-                    message,
-                  ],
-                }))
-                .then(() => console.log('kafka-penguin: Message published to DLQ'))
-                .then(() => dlqInstance.innerProducer.disconnect())
-                .then(() => console.log('kafka-penguin: Producer disconnected'))
-                .catch((e: any) => console.log('ERROR WITH PRODUCING TO DLQ: ', e));
+              const catchLogic = async () => {
+               await dlqInstance.innerConsumer.connect()
+                  .then(() => console.log('kafka-penguin: Connected to DLQ topic'))
+                  .then(() => {
+                    console.log("DLQ message", message)
+                    dlqInstance.innerProducer.send({
+                      topic: `${dlqInstance.topic}.deadLetterQueue`,
+                      messages: [
+                        {
+                          key: message.key,
+                          value: message.value
+                        },
+                      ],
+                    })
+                  })
+                  .then(() => console.log('kafka-penguin: Message published to DLQ'))
+                  // .then(() => dlqInstance.innerProducer.disconnect())
+                  .then(() => console.log('kafka-penguin: Producer disconnected'))
+                  .catch((e: any) => console.log('ERROR WITH PRODUCING TO DLQ: ', e));
+              }
+              catchLogic();
             }
           },
         });
@@ -89,7 +101,7 @@ class DLQ {
 
     const adminCreateDLQ = await this.admin.connect()
       .then( async () => {
-        const topics = await this.admin.createTopics({
+        await this.admin.createTopics({
           topics: [{
             topic: `${this.topic}.deadLetterQueue`,
             numPartitions: 1,

@@ -10,7 +10,7 @@ const client = require('./clientConfig.ts');
 
 // client is used to create new topic => topic.dead-letter-queue
 
-const topic = 'heidi';
+const topic = 'dlq2';
 const callback = (message) => {
   try {
     JSON.parse(message.value);

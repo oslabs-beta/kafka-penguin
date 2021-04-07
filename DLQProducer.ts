@@ -3,7 +3,7 @@ const devClientDLQ = require('./clientConfig.ts')
 // one of those messages will contain a deserialization error
 // this will prevent consumption of said message, and clog data pipeline... hopefullyc
 const producerDLQ = devClientDLQ.producer();
-const topicDLQ = 'heidi';
+const topicDLQ = 'dlq2';
 
 // publishing 3 messages => consumer is expecting JSON as message.value
 // forcing error in second message, which blocks data pipeline and consumption of subsequent message

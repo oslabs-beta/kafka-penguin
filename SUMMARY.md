@@ -4,3 +4,7 @@
 * [Dead Letter Queue README](strategies-readme-dlq.md)
 * [FailFast README](strategies-readme-fail-fast.md)
 
+## Strategies
+
+* [README](strategies/readme.md)
+

@@ -1,20 +1,45 @@
 ---
-description: Strategy to stop processing as soon as an error occurs.
+description: >-
+  The failfast strategy is a pattern to handle message reprocessing more
+  efficiently. It enables the user to retry sending a failed message a
+  predetermined number of times before disconnecting.
 ---
 
 # FailFast README
 
+This strategy allows developers the ability to debug more effectively and discover bugs faster. This in turn allows developers the opportunity to build more fault-tolerant systems.
+
 ## Usage:
 
-#### FailFast\(retries, kafkaJS-client\)
+#### failfast\(retries, kafkaJS-client\)
 
 `retries`: Number of times the producer attempts to send the message before disconnecting and throwing an error.
 
-`kafkaJS-client` :  Passed-in [kafkaJS client](https://kafka.js.org/docs/configuration)  
+`kafkaJS-client` :  Passed-in [kafkaJS client](https://kafka.js.org/docs/configuration).  
   
-  
-  
+failfast creates a producer method similiar to the [producer](https://kafka.js.org/docs/producing) method in kafkJS except for added functionality **w/ send.** 
 
+**Exceptions include:**
+
+* retries are specified to the number passed into the new failfast instance. 
+* It will disconnect the producer once it's hit the set number of retries. 
+
+The **send** method will send the inputted message for the set number of retries which is passed in when creating an instance of the failfast method  
+  
+**send\(message\)**  
+  
+`message` :  A message sent from the producer that holds topic and message data. 
+
+Ex: 
+
+```javascript
+  topic: 'topic-non-existent',
+  messages: [
+    {
+      key: 'hello'
+    }
+  ]
+```
 
 ## Example:
 
@@ -34,8 +59,7 @@ const message = {
   topic: 'topic-non-existent',
   messages: [
     {
-      key: 'hello',
-	const message = {
+      key: 'hello'
   ]
 }
 

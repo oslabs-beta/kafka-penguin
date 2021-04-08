@@ -11,6 +11,6 @@
       "tests",
       "dist",
       "node_modules",
-      "demo",
+      "../demo",
   ]
 }

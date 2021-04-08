@@ -88,7 +88,7 @@ export class DeadLetterQueue {
         .then(() => {
           dlqInstance.createDLQ();
         })
-        .catch(e => console.log(e))
+        .catch((e: Error) => console.log(e))
       },
 
       disconnect() {
@@ -110,7 +110,7 @@ export class DeadLetterQueue {
                 topic: `${dlqInstance.topic}.deadLetterQueue`,
               })
             .then(innerProducer.disconnect())
-            .catch(e => console.log(e))
+            .catch((e: Error) => console.log(e))
             // Print the error to the console
             const newError = new DeadLetterQueueErrorProducer(e);
             console.log(newError);

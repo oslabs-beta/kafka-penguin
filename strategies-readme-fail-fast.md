@@ -6,11 +6,15 @@ description: Strategy to stop processing as soon as an error occurs.
 
 ## Usage:
 
-#### .FailFast\(retry, Kafka-client\)
+#### FailFast\(retries, kafkaJS-client\)
 
-`retry`: Number of times the producer attempts to send the message before disconnecting and throwing an error.
+`retries`: Number of times the producer attempts to send the message before disconnecting and throwing an error.
 
-`kafkaJS-client` :  Passed-in [kafkaJS client](https://kafka.js.org/docs/configuration)
+`kafkaJS-client` :  Passed-in [kafkaJS client](https://kafka.js.org/docs/configuration)  
+  
+  
+  
+
 
 ## Example:
 
@@ -31,7 +35,7 @@ const message = {
   messages: [
     {
       key: 'hello',
-	@@ -17,6 +19,8 @@ const message = {
+	const message = {
   ]
 }
 

@@ -1,5 +1,5 @@
 const devClientDLQ = require('./clientConfig.ts')
-const DLQProd = require('./kafka-penguin/src/deadLetterQueue')
+import { DeadLetterQueue } from './kafka-penguin/src/index'
 
 // produce to valid topic a series of messages
 // one of those messages will contain a deserialization error
@@ -8,22 +8,19 @@ const DLQProd = require('./kafka-penguin/src/deadLetterQueue')
 const topicDLQ = 'heidi';
 const wrongTopicDLQ = "bitcoin"
 
-const producerDLQ = new DLQProd(devClientDLQ, topicDLQ, true).producer();
-
+const exampleDLQProducer = new DeadLetterQueue(devClientDLQ, topicDLQ, true);
+const producerDLQ = exampleDLQProducer.producer();
 
 // publishing 3 messages => consumer is expecting JSON as message.value
 // forcing error in second message, which blocks data pipeline and consumption of subsequent message
 producerDLQ.connect()
   .then(() => console.log('Connected'))
-  .then(() => {
-   return producerDLQ.createDLQ()
-  })
   .then(() => producerDLQ.send({
     topic: topicDLQ,
     messages: [
       {
         key: 'message1',
-        value: JSON.stringify('hello'),
+        value: JSON.stringify('Producer'),
       },
       {
         key: 'message2',
@@ -31,7 +28,7 @@ producerDLQ.connect()
       },
       {
         key: 'message3',
-        value: JSON.stringify('hello'),
+        value: JSON.stringify('Producer'),
       },
       {
         key: 'message1',
@@ -56,7 +53,7 @@ producerDLQ.connect()
     messages: [
       {
         key: 'message 4',
-        value: JSON.stringify('hello'),
+        value: JSON.stringify('bad message'),
       }
     ]
   }))

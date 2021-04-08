@@ -15,7 +15,7 @@ interface input {
   }) => void
 }
 
-class DeadLetterQueueError extends Error {
+class DeadLetterQueueErrorProducer extends Error {
   message: any;
   reference: any;
   name: any;
@@ -27,14 +27,33 @@ class DeadLetterQueueError extends Error {
     Error.captureStackTrace(this, this.constructor)
     this.strategy = 'Dead Letter Queue';
     this.reference = `This error was executed as part of the kafka-penguin Dead Letter Queue message reprocessing strategy. Your producer attempted to deliver a message ${e.retryCount + 1} times but was unsuccessful. As a result, the message was sent to a Dead Letter Queue. Refer to the original error for further information`;
-    this.name = e.name;
+    this.name = e.name + '(Producer Side)';
     this.message = e.message;
     this.originalError = e.originalError;
     this.retryCount = e.retryCount;
   }
 }
 
-class DLQ {
+class DeadLetterQueueErrorConsumer extends Error {
+  message: any;
+  reference: any;
+  name: any;
+  retryCount: number;
+  strategy: string;
+  originalError: any;
+  constructor(e: any) {
+    super(e);
+    Error.captureStackTrace(this, this.constructor)
+    this.strategy = 'Dead Letter Queue';
+    this.reference = `This error was executed as part of the kafka-penguin Dead Letter Queue message reprocessing strategy. Your consumer attempted to receive a message ${e.retryCount + 1} times but was unsuccessful. As a result, the message was sent to a Dead Letter Queue. Refer to the original error for further information`;
+    this.name = e.name + '(Consumer Side)';
+    this.message = e.message;
+    this.originalError = e.originalError;
+    this.retryCount = e.retryCount;
+  }
+}
+
+class DeadLetterQueue {
   client: any;
   topic: string;
   callback?: (message: any) => boolean;
@@ -55,14 +74,14 @@ class DLQ {
     // Reference the DLQ instance for closure in the returned object
     const dlqInstance = this;
     const { innerProducer } = dlqInstance
+  
 
     // Return an object with all Producer methods adapted to execute a dead letter queue strategy
     return {
-      createDLQ() {
-        return dlqInstance.createDLQ();
-      },
       connect() {
-        return innerProducer.connect();
+        return innerProducer.connect().then(() => {
+          dlqInstance.createDLQ();
+        });
       },
       disconnect() {
         return innerProducer.disconnect();
@@ -76,7 +95,7 @@ class DLQ {
             topic: `${dlqInstance.topic}.deadLetterQueue`,
           });
           // Print the error to the console
-          const newError = new DeadLetterQueueError(e);
+          const newError = new DeadLetterQueueErrorProducer(e);
           console.log(newError);
         });   
           }
@@ -90,11 +109,10 @@ class DLQ {
 
     // Returns an object with all Consumer methods adapter to execute a dead letter queue strategy
     return {
-      createDLQ() {
-        return dlqInstance.createDLQ();
-      },
       connect() { 
-        return innerConsumer.connect();
+        return innerConsumer.connect().then(() => {
+          dlqInstance.createDLQ();
+        });
       },
       disconnect () {
         return innerConsumer.disconnect();
@@ -113,7 +131,8 @@ class DLQ {
               }
               eachMessage({ topic, partitions, message });
             } catch (e) {
-              console.error('kafka-penguin: is sending invalid message to DLQ');
+              const newError = new DeadLetterQueueErrorConsumer(e)
+              console.error(newError);
               innerProducer.connect()
                   .then(() => console.log('kafka-penguin: Connected to DLQ topic'))
                   .then(() => {
@@ -154,4 +173,4 @@ class DLQ {
   }
 }
 
-module.exports = DLQ;
+export default DeadLetterQueue;

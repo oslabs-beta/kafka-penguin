@@ -7,9 +7,9 @@ description: >-
 
 # FailFast README
 
-This strategy allows developers the ability to debug more effectively and discover bugs faster. This in turn allows developers the opportunity to build more fault-tolerant systems.
+This strategy allows developers the ability to debug more effectively and discover bugs faster in their message re-processing workflows. This, in turn, allows developers the opportunity to build more fault-tolerant systems.
 
-## Usage:
+## Syntax:
 
 #### failfast\(retries, kafkaJS-client\)
 

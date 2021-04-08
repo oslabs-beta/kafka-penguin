@@ -1,11 +1,11 @@
-const penguinjs = require('./kafka-penguin/src/index')
+import { FailFast } from 'kafka-penguin'
 const devClient = require('./clientConfig.ts')
 
-
-
-const strategies = penguinjs.failfast
 // Initilize strategy-- passing in your kafkjs client and # of retries
-const newStrategy = new strategies.FailFast(2, devClient)
+const exampleFailFast = new FailFast(2, devClient)
+
+// Initialize producer from strategy
+const producer = exampleFailFast.producer();
 
 const message = {
   topic: 'wrong-topic',
@@ -16,9 +16,6 @@ const message = {
     }
   ]
 }
-
-// Initialize producer from strategy
-const producer = newStrategy.producer();
 
 producer.connect()
   .then(() => console.log('Connected!'))

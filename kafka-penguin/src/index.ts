@@ -82,26 +82,40 @@ export class DeadLetterQueue {
 
     // Return an object with all Producer methods adapted to execute a dead letter queue strategy
     return {
+
       connect() {
-        return innerProducer.connect().then(() => {
+        return innerProducer.connect()
+        .then(() => {
           dlqInstance.createDLQ();
-        });
+        })
+        .catch(e => console.log(e))
       },
+
       disconnect() {
         return innerProducer.disconnect();
       },
+
       send(message: messageValue) {
-        return innerProducer.send(message)
+
+        return innerProducer.connect()
+        .then(() => { 
+          innerProducer.send({
+            topic: message.topic, 
+            messages: message.messages
+          })    
           // Upon error, reroute message to DLQ for the strategy topic
-          .catch((e?: any) => {
+          .catch((e?: any) => {           
             innerProducer.send({
-              ...message,
-              topic: `${dlqInstance.topic}.deadLetterQueue`,
-            });
+                messages: message.messages,
+                topic: `${dlqInstance.topic}.deadLetterQueue`,
+              })
+            .then(innerProducer.disconnect())
+            .catch(e => console.log(e))
             // Print the error to the console
             const newError = new DeadLetterQueueErrorProducer(e);
             console.log(newError);
           });
+        })
       }
     }
   }

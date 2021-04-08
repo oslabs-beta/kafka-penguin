@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import { Kafka, logLevel } from 'kafkajs';
 const kafkapenguin = require('kafka-penguin');
+import { FailFast } from 'kafka-penguin'
 import { DeadLetterQueue } from '../../../kafka-penguin/src/index'
 import dotenv = require('dotenv')
 dotenv.config();
@@ -32,8 +33,9 @@ const strategyKafka = new Kafka({
 
 const failfast: RequestHandler = (req, res, next) => {
 
-  const strategies = kafkapenguin.failfast;
-  const newStrategy = new strategies.FailFast(req.body.retries - 1, strategyKafka);
+  // const strategies = kafkapenguin.failfast;
+  // const newStrategy = new strategies.FailFast(req.body.retries - 1, strategyKafka);
+  const newStrategy = new FailFast(req.body.retries - 1, strategyKafka)
   const producer = newStrategy.producer();
   const message = {
     topic: req.body.topic,
@@ -76,26 +78,59 @@ const dlq: RequestHandler = (req, res, next) => {
   }
 
   const faultsIndex = random(faults, retries)
-  const messagesArray = Array.from(message.repeat(retries))
-                             .map((el, i) => {
-                               const message = {
-                                 key: 'hello',
-                                 message: faultsIndex.has(i) ? 'fault' : el
-                               }
-                               return message
-                             })
+
+  const messagesArray = [];
+
+  for (let i = 0; i < retries; i++) {
+    if (faultsIndex.has(i)) messagesArray.push({key: 'test', value: 'fault'})
+    else messagesArray.push({
+      key: 'test',
+      value: message
+    })
+  }
   
   const cb = (message) => {
     if (message === 'fault') return 'kafka-penguin: faulty message has been published to DLQ'
     return true
   }
-  const DLQClient = new DeadLetterQueue(res.locals.kafka, topic, cb)
+  console.log('topic-----------', topic)
+  console.log(messagesArray)
+  const DLQClient = new DeadLetterQueue(strategyKafka, topic, cb)
   // produce message to topic
   const DLQProducer = DLQClient.producer();
+  // const DLQProducer = res.locals.kafka.producer();
   const DLQConsumer = DLQClient.consumer({groupId: 'demo'})
+  const messageLog = [];
 
+ DLQProducer.connect()
+    .then(DLQProducer.send({
+      topic: topic,
+      messages: messagesArray
+    }))
+    .then(() => {
+      res.locals.DLQClients = {
+        consumer: DLQConsumer,
+        producer: DLQProducer
+      };
+
+      return next()
+    })
+    .catch(e => {
+      console.log(e)
+    })
   
-                             
+  // DLQConsumer.connect()
+  //   .then(DLQConsumer.subscribe())
+  //   .then(DLQConsumer.run({
+  //     eachMessage: ({topic, partitions, message}) => {
+  //       console.log(message.value.toString())
+  //     }
+  //   }))
+  //   // .then(DLQConsumer.disconnect())
+  //   .then(() => {
+  //     return next()
+  //   })
+  //   .catch((e: Error) => console.log(e))
 
 }
 

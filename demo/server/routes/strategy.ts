@@ -14,7 +14,7 @@ router.post('/dlq',
   kafkaController.makeClient,
   strategyController.dlq,
   (req, res) => {
-    return res.status(200).json(res.locals.error)
+    return res.status(200).json(res.locals.DLQClients)
   }
 )
 

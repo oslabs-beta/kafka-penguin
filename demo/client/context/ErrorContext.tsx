@@ -58,8 +58,16 @@ const ErrorProvider: FC = ({ children }) => {
       body: JSON.stringify({ topic, message, retries, faults })
     })
       .then(data => data.json())
-      .then(errors => {
-        changeError(errors)
+      .then(clients => {
+        const { producer, consumer } = clients;
+        // const errors = []
+        consumer.connect()
+          .then(consumer.subscribe())
+          .then(consumer.run({
+            eachMessage: ({topic, partitions, message}) => {
+              console.log(message.value.toString())
+            }
+          }))
       })
 
   };

@@ -1,6 +1,6 @@
-# Readme
+# README
 
-    ![license](https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af) ![issues](https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow) ![last commit](https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af) [![Repo stars](https://img.shields.io/github/stars/oslabs-beta/kafka-penguin?logoColor=%2334495e&style=social)](https://github.com/oslabs-beta/kafka-penguin/stargazers)
+  ![license](https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af) ![issues](https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow) ![last commit](https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af) [![Repo stars](https://img.shields.io/github/stars/oslabs-beta/kafka-penguin?logoColor=%2334495e&style=social)](https://github.com/oslabs-beta/kafka-penguin/stargazers)
 
 ### About
 
@@ -52,17 +52,20 @@ producer.connect()
 
 #### FailFast
 
- Stop processing as soon as an error occurs. 
+ Stop processing as soon as an error occurs.   
 
-{% page-ref page="strategies/readme/strategies-readme-fail-fast.md" %}
 
-#### DLQ
+{% page-ref page="strategies-readme-fail-fast.md" %}
+
+  
+**DLQ**
 
 Handle message processing failures by forwarding problematic messages to a dead-letter queue \(DLQ\).
 
-{% page-ref page="strategies/readme/strategies-readme-dlq.md" %}
+{% page-ref page="strategies-readme-dlq.md" %}
 
-## **Contributors**
+  
+**Contributors**
 
 [Ausar English](https://www.linkedin.com/in/ausarenglish) [@ausarenglish](https://github.com/ausarenglish)
 

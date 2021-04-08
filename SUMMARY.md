@@ -1,10 +1,10 @@
 # Table of contents
 
 * [Readme](README.md)
-* [Dead Letter Queue](strategies-readme-dlq.md)
-* [FailFast README](strategies-readme-fail-fast.md)
 
 ## Strategies
 
-* [README](strategies/readme.md)
+* [README](strategies/readme/README.md)
+  * [FailFast README](strategies/readme/strategies-readme-fail-fast.md)
+  * [Dead Letter Queue](strategies/readme/strategies-readme-dlq.md)
 

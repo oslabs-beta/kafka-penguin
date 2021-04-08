@@ -24,7 +24,7 @@ failfast creates a producer method similiar to the [producer](https://kafka.js.o
 * retries are specified to the number passed into the new failfast instance. 
 * It will disconnect the producer once it's hit the set number of retries. 
 
-The **send** method will send the inputted message for the set number of retries which is passed in when creating an instance of the failfast method  
+The **send** method will send the inputted message for the set number of retries which is passed in when creating an instance of the failfast method.  
   
 **send\(message\)**  
   

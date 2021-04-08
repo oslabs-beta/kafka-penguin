@@ -48,9 +48,7 @@ producer.connect()
   .catch((e: any) => console.log('error: ', e.message))
 ```
 
-### API
-
-You may use any of the kafka-penguin strategies and their associated methods:
+### Strategies
 
 #### FailFast
 
@@ -63,16 +61,6 @@ You may use any of the kafka-penguin strategies and their associated methods:
 Handle message processing failures by forwarding problematic messages to a dead-letter queue \(DLQ\).
 
 {% page-ref page="strategies-readme-dlq.md" %}
-
-
-
-#### .FailFast\(retry, Kafka-client\)
-
-`retry`: Pass in the number of retries, which will be used to retry connections and API calls to Kafka \(when using producers or consumers\).
-
-`Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username, and password.
-
-#### 
 
 ## **Contributors**
 

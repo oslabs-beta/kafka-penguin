@@ -8,9 +8,9 @@ description: Strategy to stop processing as soon as an error occurs.
 
 #### .FailFast\(retry, Kafka-client\)
 
-`retry`: Pass in the number of retries, which will be used to retry connections and API calls to Kafka \(when using producers or consumers\).
+`retry`: Number of times the producer attempts to send the message before disconnecting and throwing an error.
 
-`Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username, and password.
+`kafkaJS-client` :  Passed-in [kafkaJS client](https://kafka.js.org/docs/configuration)
 
 ## Example:
 
@@ -41,6 +41,4 @@ producer.connect()
   .then(() => console.log('Connected!'))
   .then(() => producer.send(message))
 ```
-
-\`\`
 

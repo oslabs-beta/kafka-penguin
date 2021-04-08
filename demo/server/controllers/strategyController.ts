@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import { Kafka, logLevel } from 'kafkajs';
 const kafkapenguin = require('kafka-penguin');
+const DLQ =  require('../../../kafka-penguin/src/deadLetterQueue')
 import dotenv = require('dotenv')
 dotenv.config();
 //cache to store error logs
@@ -64,6 +65,38 @@ const failfast: RequestHandler = (req, res, next) => {
     });
 };
 
+const dlq: RequestHandler = (req, res, next) => {
+  //create messages array with specified number of faults
+  const { topic, message, retries, faults } = req.body
+  const random = (count, messages, result = new Set()) => {
+    if (result.size === count) return result;
+    const num = Math.floor(Math.random() * messages)
+    result.add(num);
+    return random(count, messages, result);
+  }
+
+  const faultsIndex = random(faults, retries)
+  const messagesArray = Array.from(message.repeat(retries))
+                             .map((el, i) => {
+                               const message = {
+                                 key: 'hello',
+                                 message: faultsIndex.has(i) ? 'fault' : el
+                               }
+                               return message
+                             })
+  
+  const cb = (message) => {
+    if (message === 'fault') return 'kafka-penguin: faulty message has been published to DLQ'
+    return true
+  }
+  const DLQClient = new DLQ(res.locals.kafka, topic, )
+  // produce message to topic
+
+                             
+
+}
+
 export default {
   failfast,
+  dlq
 }

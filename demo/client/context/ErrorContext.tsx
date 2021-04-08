@@ -42,8 +42,26 @@ const ErrorProvider: FC = ({ children }) => {
       })
   };
 
-  const handleDLQ = (e: { preventDefault: () => void; }) => {
-    e.preventDefault()
+  const handleDLQ = (input: {
+    message: string,
+    topic: string,
+    retries: number,
+    faults: number
+  }) => {
+    console.log(input)
+    const { message, topic, retries, faults } = input   
+    if (!topic || !message) return;
+
+    fetch('/strategy/dlq', {
+      method: 'POST',
+      headers: { 'Content-Type': 'Application/JSON' },
+      body: JSON.stringify({ topic, message, retries, faults })
+    })
+      .then(data => data.json())
+      .then(errors => {
+        changeError(errors)
+      })
+
   };
   const handleIgnore = (e: { preventDefault: () => void; }) => {
     e.preventDefault()

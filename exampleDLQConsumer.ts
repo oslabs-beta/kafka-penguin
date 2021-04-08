@@ -1,5 +1,5 @@
 const client = require('./clientConfig.ts');
-import { DeadLetterQueue } from './kafka-penguin/src/index'
+import { DeadLetterQueue } from 'kafka-penguin'
 
 // conditional should include ANY error that may occur during consumption
 // pushing fault message to relevant DLQ topic

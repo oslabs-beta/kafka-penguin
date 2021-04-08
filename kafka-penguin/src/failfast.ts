@@ -59,5 +59,3 @@ class FailFast {
       })
   } 
 }
-
-export default FailFast

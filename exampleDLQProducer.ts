@@ -1,5 +1,5 @@
 const devClientDLQ = require('./clientConfig.ts')
-import { DeadLetterQueue } from './kafka-penguin/src/index'
+import { DeadLetterQueue } from 'kafka-penguin'
 
 // produce to valid topic a series of messages
 // one of those messages will contain a deserialization error

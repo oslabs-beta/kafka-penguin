@@ -1,4 +1,4 @@
-import { FailFast } from './kafka-penguin/src/index'
+import { FailFast } from 'kafka-penguin'
 const devClient = require('./clientConfig.ts')
 
 // Initilize strategy-- passing in your kafkjs client and # of retries

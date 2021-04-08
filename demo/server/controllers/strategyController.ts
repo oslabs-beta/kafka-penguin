@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import { Kafka, logLevel } from 'kafkajs';
 const kafkapenguin = require('kafka-penguin');
-const DLQ =  require('../../../kafka-penguin/src/deadLetterQueue')
+import { DeadLetterQueue } from '../../../kafka-penguin/src/index'
 import dotenv = require('dotenv')
 dotenv.config();
 //cache to store error logs
@@ -89,9 +89,12 @@ const dlq: RequestHandler = (req, res, next) => {
     if (message === 'fault') return 'kafka-penguin: faulty message has been published to DLQ'
     return true
   }
-  const DLQClient = new DLQ(res.locals.kafka, topic, )
+  const DLQClient = new DeadLetterQueue(res.locals.kafka, topic, cb)
   // produce message to topic
+  const DLQProducer = DLQClient.producer();
+  const DLQConsumer = DLQClient.consumer({groupId: 'demo'})
 
+  
                              
 
 }

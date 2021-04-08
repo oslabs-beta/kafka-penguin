@@ -60,6 +60,4 @@ class FailFast {
   } 
 }
 
-module.exports = {
-  FailFast,
-};
+export default FailFast

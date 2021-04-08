@@ -1,5 +1,5 @@
-const DLQConsumer =  require('./kafka-penguin/src/deadLetterQueue');
 const client = require('./clientConfig.ts');
+import { DeadLetterQueue } from './kafka-penguin/src/index'
 
 // conditional should include ANY error that may occur during consumption
 // pushing fault message to relevant DLQ topic
@@ -21,23 +21,19 @@ const callback = (message) => {
 };
 
 const callback2 = (message: any) => (!!Array.isArray(message.value));
-
-// const strategies = penguinjs.DLQ;
-// const newStrategy = new strategies.DLQ(client, topic, callback);
 // DLQ
 // 1. create new topic with topic.dead-letter-queue
 // 2. create and store producer/adapter which handles callback checks
 // 3. redefine .run function to include check for faulty messages
 // 4. if doesnt pass test, use adapter to post to DLQ
 // callback is optional
-const dlq = new DLQConsumer(client, topic);
-const consumer = dlq.consumer({ groupId: 'whatever' });
+const exampleDLQConsumer = new DeadLetterQueue(client, topic);
+const consumerDLQ = exampleDLQConsumer.consumer({ groupId: 'whatever' });
 
-consumer.connect()
-  .then(consumer.subscribe())
+consumerDLQ.connect()
+  .then(consumerDLQ.subscribe())
   .then(console.log('consumer is subscribed'))
-  .then(consumer.createDLQ())
-  .then(() => consumer.run({
+  .then(() => consumerDLQ.run({
     eachMessage: ({ topic, partitions, message }) => {
       console.log(JSON.parse(message.value));
     },

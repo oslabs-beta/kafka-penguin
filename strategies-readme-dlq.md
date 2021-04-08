@@ -27,82 +27,54 @@ DLQ contains two methods for a KafkaJS producer and consumer respectively-- .pro
   Here is an example of employing DLQ for a producer: 
 
 ```javascript
-const devClientDLQ = require('./clientConfig.ts')
-const DLQProd = require('./kafka-penguin/src/deadLetterQueue')
-
-// produce to valid topic a series of messages
-// one of those messages will contain a deserialization error
-// this will prevent consumption of said message, and clog data pipeline... hopefullyc
-// const producerDLQ = devClientDLQ.producer();
-const topicDLQ = 'heidi';
-const wrongTopicDLQ = "bitcoin"
-
-const producerDLQ = new DLQProd(devClientDLQ, topicDLQ, true).producer();
+const producerClientDLQ = require('./clientConfig.ts')
+import { DeadLetterQueue } from 'kafka-penguin'
 
 
-// publishing 3 messages => consumer is expecting JSON as message.value
-// forcing error in second message, which blocks data pipeline and consumption of subsequent message
+// This example simulates an error where the producer sends to a bad topic
+const topicGood = 'test-topic-DLQ';
+const topicBad = "topic-non-existent"
+
+// Set up the Dead Letter Queue (DLQ) strategy with a configured KafkaJS client, a topic, and a callback that evaluates to a boolean
+const exampleDLQProducer = new DeadLetterQueue(producerClientDLQ, topicGood, true);
+
+// Initialize a producer from the new instance of the Dead Letter Queue strategy
+const producerDLQ = exampleDLQProducer.producer();
+
+// Connecting the producer creates a DLQ topic in case of bad messages
+// If an error occurs, the strategy moves the message to the topic specific DLQ
+// The producer is able to keep publishing good messages to the topic
 producerDLQ.connect()
-  .then(() => console.log('Connected'))
-  .then(() => {
-   return producerDLQ.createDLQ()
-  })
   .then(() => producerDLQ.send({
-    topic: topicDLQ,
+    topic: topicGood,
     messages: [
       {
-        key: 'message1',
-        value: JSON.stringify('hello'),
-      },
-      {
-        key: 'message2',
-        value: 'hey timeo',
-      },
-      {
-        key: 'message3',
-        value: JSON.stringify('hello'),
-      },
-      {
-        key: 'message1',
-        value: JSON.stringify('hello'),
-      },
-      {
-        key: 'message2',
-        value: 'hey timeo',
-      },
-      {
-        key: 'message3',
-        value: JSON.stringify('hello'),
-      },
-      {
-        key: 'message1',
-        value: JSON.stringify('hello'),
+        key: 'message 1',
+        value: 'Good Message',
       },
     ],
   }))
   .then(() => producerDLQ.send ({
-    topic: wrongTopicDLQ,
+    topic: topicBad,
     messages: [
       {
-        key: 'message 4',
-        value: JSON.stringify('hello'),
+        key: 'message 2',
+        value: 'Bad Message',
       }
     ]
   }))
   .then(() => producerDLQ.send ({
-    topic: topicDLQ,
+    topic: topicGood,
     messages: [
       {
-        key: 'message 5',
-        value: JSON.stringify('hello'),
+        key: 'message 3',
+        value: 'Good Message',
       }
     ]
   })) 
-  .then(() => console.log('messages sent'))
   .then(() => producerDLQ.disconnect())
   .catch((e: any) => {
     console.log(e);
-  });
 
 
 ```
@@ -114,51 +86,39 @@ producerDLQ.connect()
 Here is an example of employing DLQ for a consumer: 
 
 ```javascript
-const DLQConsumer =  require('./kafka-penguin/src/deadLetterQueue');
 const client = require('./clientConfig.ts');
+import { DeadLetterQueue } from 'kafka-penguin';
 
-// conditional should include ANY error that may occur during consumption
-// pushing fault message to relevant DLQ topic
+const topic = 'test-topic-DLQ';
 
-// create new topic => topic.dead-letter-queue
-// instantiate consumer with DLQ plugin that takes in a callback, which is a filter for messages
-// consumer should also take in a client which pushes faulty messages to DLQ topic
-
-// client is used to create new topic => topic.dead-letter-queue
-
-const topic = 'heidi';
+// This allows the consumer to evaluate each message according to a condition
+// The callback must return a boolean value
 const callback = (message) => {
   try {
     JSON.parse(message.value);
-  } catch (e) {
-    return false;
-  }
+	const callback = (message) => {
   return true;
 };
 
-const callback2 = (message: any) => (!!Array.isArray(message.value));
+// Set up the Dead Letter Queue (DLQ) strategy with a configured KafkaJS client, a topic, and the evaluating callback
+const exampleDLQConsumer = new DeadLetterQueue(client, topic, callback);
 
-// const strategies = penguinjs.DLQ;
-// const newStrategy = new strategies.DLQ(client, topic, callback);
-// DLQ
-// 1. create new topic with topic.dead-letter-queue
-// 2. create and store producer/adapter which handles callback checks
-// 3. redefine .run function to include check for faulty messages
-// 4. if doesnt pass test, use adapter to post to DLQ
-// callback is optional
-const dlq = new DLQConsumer(client, topic);
-const consumer = dlq.consumer({ groupId: 'whatever' });
+// Initialize a consumer from the new instance of the Dead Letter Queue strategy
+const consumerDLQ = exampleDLQConsumer.consumer({ groupId: 'testID' });
 
-consumer.connect()
-  .then(consumer.subscribe())
-  .then(console.log('consumer is subscribed'))
-  .then(consumer.createDLQ())
-  .then(() => consumer.run({
+
+
+// Connecting the consumer creates a DLQ topic in case of bad messages
+// If the callback returns false, the strategy moves the message to the topic specific DLQ
+// The consumer is able to keep consuming good messages from the topic
+consumerDLQ.connect()
+  .then(consumerDLQ.subscribe())
+  .then(() => consumerDLQ.run({
     eachMessage: ({ topic, partitions, message }) => {
       console.log(JSON.parse(message.value));
     },
   }))
-  .catch((e) => console.log(`Error message from consumer.connect ${e}`));
+  .catch((e) => console.log(`Error message from consumer: ${e}`));
 
 
 

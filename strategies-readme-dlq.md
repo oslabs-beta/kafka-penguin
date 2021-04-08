@@ -6,25 +6,37 @@ description: >-
 
 # Dead Letter Queue README
 
-Dead Letter Queues are message queues that can be produced to when a message on another queue cannot be processed successfully. Dead Letter Queueus allow you to continue processing messages in a stream even if some messages cannot be processed. 
+This strategy creates another topic that acts as a repository for erroneous messages. It works side by side your normal topic and is meant to keep flows from producers or consumers unblocked \(while storing problematic messages for later reprocessing\).  Potential use cases for this strategy include services with data streaming, non-ACID or transactional message flows, or any system that simply needs to "just keep running". 
 
-## Usage:
+## Syntax:
 
-DLQ is a kafka-penguin module class that employs the dead letter queue strategy for the KakfaJS client. It's instantiated with three parameters:
+**DeadLetterQueue\(kafka-client, topic, callback\)**
 
-#### new DLQ\(Kafka-client, topic, boolean\)
+`kafka-client`  A configured KafkaJS client provided by the developer. 
 
-`Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username, and password.
+`topic` The target topic that producers or consumers will publish or subscribe to in this strategy instance. Kafka-penguin currently supports one topic per strategy instance. If a dead letter queue for this topic has not been created, the strategy will automatically create it upon producer or consumer connect. 
 
-`topic`: Kakfa topic form which you wish to produce or consume.
+`callback` A callback that must return a boolean value. The callback will take in one argument: the messages received by the consumer. During execution, the strategy will pass to the callback each message consumed; any message which returns false will be rerouted to the topic-specific dead letter queue. This allows the developer to customize the strategy to catch specific conditions when consuming. 
 
-`boolean`:  
+#### **Producer**
 
-DLQ contains two methods for a KafkaJS producer and consumer respectively-- .producer \( \) and .consumer\( \):
+`DeadLetterQueue.producer` Returns a producer initialized from the strategy instance. The producer has "adapted" methods which execute the strategy under the hood. 
 
-**.producer \(  \)** mimics the KafkaJs' built-in 'producer\( \)' method under the hood.
+`producer.connect`  Connects the producer to the Kafka cluster indicated in the configured KafkaJS client. This method will also create a topic-specific dead letter queue if one does not already exist. 
 
-  Here is an example of employing DLQ for a producer: 
+`producer.send(message)` This method takes in one argument, `messages` that are passed in with the same requirements as the counterpart method on KafkaJS, and sends it to the Kafka cluster. However, this send is adapted to send to the strategy's dead letter queue upon error. 
+
+#### Consumer
+
+`DeadLetterQueue.consumer` Returns a consumer initialized from the strategy instance. The consumer has "adapted" methods which execute the strategy under the hood. 
+
+`consumer.connect`  Connects the consumer to the Kafka cluster indicated in the configured KafkaJS client. This method will also create a topic-specific dead letter queue if one does not already exist. 
+
+`consumer.run` Starts consuming messages from the Kafka cluster to the consumer client. The `run` method also utilizes `eachMessage`to pass each message received through the callback provided at strategy instantiation. If the callback returns false, the `run` method automatically creates a temporary producer, it produces the message to the dead letter queue, and then discards that producer. 
+
+## Usage: 
+
+#### Producer
 
 ```javascript
 const producerClientDLQ = require('./clientConfig.ts')
@@ -79,11 +91,7 @@ producerDLQ.connect()
 
 ```
 
-\*\*\*\*
-
-**.consumer \(  \)** mimics the KafkaJs' built-in 'consumer\( \)' method under the hood.
-
-Here is an example of employing DLQ for a consumer: 
+**Consumer**
 
 ```javascript
 const client = require('./clientConfig.ts');

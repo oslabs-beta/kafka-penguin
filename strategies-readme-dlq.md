@@ -4,7 +4,7 @@ description: >-
   messages to a dead-letter queue.
 ---
 
-# Dead Letter Queue README
+# Dead Letter Queue
 
 This strategy creates another topic that acts as a repository for erroneous messages. It works side by side your normal topic and is meant to keep flows from producers or consumers unblocked \(while storing problematic messages for later reprocessing\).  Potential use cases for this strategy include services with data streaming, non-ACID or transactional message flows, or any system that simply needs to "just keep running". 
 
@@ -34,7 +34,7 @@ This strategy creates another topic that acts as a repository for erroneous mess
 
 `consumer.run` Starts consuming messages from the Kafka cluster to the consumer client. The `run` method also utilizes `eachMessage`to pass each message received through the callback provided at strategy instantiation. If the callback returns false, the `run` method automatically creates a temporary producer, it produces the message to the dead letter queue, and then discards that producer. 
 
-## Usage: 
+## Example: 
 
 #### Producer
 

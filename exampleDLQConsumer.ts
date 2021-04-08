@@ -1,16 +1,10 @@
 const client = require('./clientConfig.ts');
-import { DeadLetterQueue } from 'kafka-penguin'
+import { DeadLetterQueue } from 'kafka-penguin';
 
-// conditional should include ANY error that may occur during consumption
-// pushing fault message to relevant DLQ topic
+const topic = 'test-topic-DLQ';
 
-// create new topic => topic.dead-letter-queue
-// instantiate consumer with DLQ plugin that takes in a callback, which is a filter for messages
-// consumer should also take in a client which pushes faulty messages to DLQ topic
-
-// client is used to create new topic => topic.dead-letter-queue
-
-const topic = 'heidi';
+// This allows the consumer to evaluate each message according to a condition
+// The callback must return a boolean value
 const callback = (message) => {
   try {
     JSON.parse(message.value);
@@ -20,25 +14,25 @@ const callback = (message) => {
   return true;
 };
 
-const callback2 = (message: any) => (!!Array.isArray(message.value));
-// DLQ
-// 1. create new topic with topic.dead-letter-queue
-// 2. create and store producer/adapter which handles callback checks
-// 3. redefine .run function to include check for faulty messages
-// 4. if doesnt pass test, use adapter to post to DLQ
-// callback is optional
-const exampleDLQConsumer = new DeadLetterQueue(client, topic);
-const consumerDLQ = exampleDLQConsumer.consumer({ groupId: 'whatever' });
+// Set up the Dead Letter Queue (DLQ) strategy with a configured KafkaJS client, a topic, and the evaluating callback
+const exampleDLQConsumer = new DeadLetterQueue(client, topic, callback);
 
+// Initialize a consumer from the new instance of the Dead Letter Queue strategy
+const consumerDLQ = exampleDLQConsumer.consumer({ groupId: 'testID' });
+
+
+
+// Connecting the consumer creates a DLQ topic in case of bad messages
+// If the callback returns false, the strategy moves the message to the topic specific DLQ
+// The consumer is able to keep consuming good messages from the topic
 consumerDLQ.connect()
   .then(consumerDLQ.subscribe())
-  .then(console.log('consumer is subscribed'))
   .then(() => consumerDLQ.run({
     eachMessage: ({ topic, partitions, message }) => {
       console.log(JSON.parse(message.value));
     },
   }))
-  .catch((e) => console.log(`Error message from consumer.connect ${e}`));
+  .catch((e) => console.log(`Error message from consumer: ${e}`));
 
 
 

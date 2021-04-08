@@ -23,60 +23,41 @@ Once installed it can now be referenced by simply calling `require('kafka-pengui
 Kafka-penguin works with any Kafka client, here is an example with the client exported from another file:
 
 ```javascript
-import { FailFast } from 'kafka-penguin'
-const exampleClient = require('./clientConfig.ts')
+const kafkaPenguin = require('kafka-penguin')
+const devClient = require('./clientConfig.ts')
 
-// Set up the preferred strategy with a configured KafkaJS client
-const exampleStrategy = new FailFast(2, exampleClient)
+const strategies = kafkaPenguin.failfast
+// Initialize strategy-- passing in your kafkjs client and # of retries
 
-// Initialize a producer or consumer from the instance of the strategy
-const producer = exampleStrategy.producer();
+const newStrategy = new strategies.FailFast(2, devClient) 
 
 const message = {
   topic: 'wrong-topic',
-  messages: [
-    {
-      key: 'hello',
-      value: 'world',
-    }
-  ]
+    messages: [
+      {key: "hello",
+       value: "world",
+      }
+    ]
 }
 
-// Connect, Subscribe, Send, or Run virtually the same as with KafkaJS
+// Initialize producer from strategy
+const producer = newStrategy.producer();
+
 producer.connect()
   .then(() => console.log('Connected!'))
-  // The chosen strategy executes under the hood, like in this send method
   .then(() => producer.send(message))
-  .catch((e: any) => console.log('error: ', e.message))
+  .catch((e: any) => console.log("error: ", e.message))
 ```
 
 ### API
 
-You may use any of the kafka-penguin strategies and their associated methods:
-
-#### FailFast
-
- Stop processing as soon as an error occurs. 
-
-{% page-ref page="strategies-readme-fail-fast.md" %}
-
-#### DLQ
-
-Handle message processing failures by forwarding problematic messages to a dead-letter queue \(DLQ\).
-
-{% page-ref page="strategies-readme-dlq.md" %}
-
-
+You may use any of the kafka-penguin methods:
 
 #### .FailFast\(retry, Kafka-client\)
 
 `retry`: Pass in the number of retries, which will be used to retry connections and API calls to Kafka \(when using producers or consumers\).
 
 `Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username, and password.
-
-#### .\(retry, Kafka-client\)
-
-\`\`
 
 ## **Contributors**
 

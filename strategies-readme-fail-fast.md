@@ -15,30 +15,31 @@ description: Strategy to stop processing as soon as an error occurs.
 ## Example:
 
 ```javascript
-const kafkaPenguin = require('kafka-penguin')
-const devClient = require('./clientConfig.ts')
+import { FailFast } from 'kafka-penguin'
+const FailFastClient = require('./clientConfig.ts')
 
-const strategies = kafkaPenguin.failfast
-// Initialize strategy-- passing in your kafkjs client and # of retries
+// Set up Fail Fast with the number of retried and a configured KafkaJS client
+const exampleFailFast = new FailFast(2, FailFastClient)
 
-const newStrategy = new strategies.FailFast(2, devClient) 
+// Initialize a producer from the new instance of Fail Fast
+const producer = exampleFailFast.producer();
 
+
+// Example error of a producer sending to a non-existent topic
 const message = {
-  topic: 'wrong-topic',
-    messages: [
-      {key: "hello",
-       value: "world",
-      }
-    ]
+  topic: 'topic-non-existent',
+  messages: [
+    {
+      key: 'hello',
+	@@ -17,6 +19,8 @@ const message = {
+  ]
 }
 
-// Initialize producer from strategy
-const producer = newStrategy.producer();
-
+// Fail Fast will attempt to send the message to the Kafka cluster.
+// After the retry count is reached, the producer will automatically disconnect and an error is thrown.
 producer.connect()
   .then(() => console.log('Connected!'))
   .then(() => producer.send(message))
-  .catch((e: any) => console.log("error: ", e.message))
 ```
 
 \`\`

@@ -50,6 +50,37 @@ class DLQ {
     this.innerProducer = this.client.producer();
   }
 
+
+  //producer
+  producer() {
+    // reference our parent class
+    const dlqClass = this;
+    return {
+      createDLQ() {
+        return dlqClass.createDLQ();
+      },
+      connect() {
+        return dlqClass.innerProducer.connect()
+      },
+      disconnect() {
+        return dlqClass.innerProducer.disconnect();
+      },
+      send(message: messageValue) {
+        return dlqClass.innerProducer.send(message)
+              .catch((e?: any) => {
+                console.log("message:", message)
+                dlqClass.innerProducer.send({
+                  ...message,
+                  topic: `${dlqClass.topic}.deadLetterQueue`,
+                })
+                // produce to dlq topic failed message
+                const newError = new DeadLetterQueueError(e)
+                console.log(newError)
+              })   
+          }
+      }
+      }  
+    
   consumer(groupId: {
     groupId: string
   }) {
@@ -106,7 +137,6 @@ class DLQ {
     }
   }
   
-  
   // createDLQ will create a topic
   async createDLQ () {
 
@@ -125,10 +155,6 @@ class DLQ {
       .catch((err:any) => console.log('Error in createDLQ', err));
       return adminCreateDLQ;
   }
-
-  
-
-  
 }
 
 module.exports = DLQ;

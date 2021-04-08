@@ -52,53 +52,35 @@ class DLQ {
 
 
   //producer
-  dlqProducer() {
-    // reference out parent class
+  producer() {
+    // reference our parent class
     const dlqClass = this;
     return {
+        createDLQ() {
+        return dlqClass.createDLQ();
+        },
         connect() {
           return dlqClass.innerProducer.connect()
-          .then(() => {
-            dlqClass.admin.connect();
-          })
       },
       disconnect() {
         return dlqClass.innerProducer.disconnect();
       },
       send(message: messageValue) {
         return dlqClass.innerProducer.send(message)
-          .catch((e: any) => {
-            dlqClass.admin.createTopics({
-              topics: [{
-                topic: `${message.topic}.dlq`,
-                replicationFactor: 1,
-                replicaAssignment: 1,
-                configEntries: [
-                  {
-                    name: 'cleanup.policy',
-                    value: 'compact'
-                  }
-                ]
-              }]
-            })
-              .then(() => {
+              .catch((e?: any) => {
+                console.log("message:", message)
                 dlqClass.innerProducer.send({
                   ...message,
-                  topic: `${message.topic}.dlq`,
+                  topic: `${dlqClass.topic}.deadLetterQueue`,
                 })
-              })
-            // produce to dlq topic failed message
-            const newError = new DeadLetterQueueError(e)
-            console.log(newError)
-          })
+                // produce to dlq topic failed message
+                const newError = new DeadLetterQueueError(e)
+                console.log(newError)
+              })   
+          }
       }
       }  
-    }
-
-
-
-
-
+    
 
 
   consumer(groupId: {

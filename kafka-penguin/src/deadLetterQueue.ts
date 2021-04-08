@@ -98,7 +98,7 @@ class DLQ {
                   .then(() => console.log('kafka-penguin: Message published to DLQ'))
                   .then(() => dlqInstance.innerProducer.disconnect())
                   .then(() => console.log('kafka-penguin: Producer disconnected'))
-                  .catch((e: any) => console.log('ERROR WITH PRODUCING TO DLQ: ', e));
+                  .catch((e: Error) => console.log('ERROR WITH PRODUCING TO DLQ: ', e));
             }
           },
         });
@@ -122,7 +122,7 @@ class DLQ {
         });
       })
       .then(() => this.admin.disconnect())
-      .catch((err:any) => console.log('Error in createDLQ', err));
+      .catch((err: Error) => console.log('Error in createDLQ', err));
       return adminCreateDLQ;
   }
 

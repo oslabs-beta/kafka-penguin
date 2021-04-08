@@ -6,18 +6,22 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   entry: {
     app: ['./client/index.tsx'],
-    vendor: ['react', 'react-dom']
+    vendor: ['react', 'react-dom', 'react-router-dom']
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'js/[name].bundle.js'
+    filename: 'js/[name].bundle.js',
+    publicPath: '/'
   },
   devtool: 'source-map',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
   },
   devServer: {
-    contentBase: './build',
+    historyApiFallback: true,
+    contentBase: './client',
+    hot: true,
+    // contentBase: './build',
     port: 8000,
     proxy: {
       '/': 'http://localhost:3000'

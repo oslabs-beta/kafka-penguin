@@ -1,9 +1,3 @@
----
-description: >-
-  Strategy to handle message processing failures by forwarding problematic
-  messages to a dead-letter queue.
----
-
 # Dead Letter Queue
 
 This strategy creates another topic that acts as a repository for erroneous messages. It works side by side with your normal topic and is meant to keep flows from producers or consumers unblocked \(while storing problematic messages for later reprocessing\).  Potential use cases for this strategy include services with data streaming, non-ACID or transactional message flows, or any system that simply needs to "just keep running". 

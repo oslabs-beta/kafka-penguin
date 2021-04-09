@@ -1,6 +1,6 @@
 # FailFast README
 
-This strategy executes a purposeful disconnect after a producer has sent an erroneous message. The fail-fast strategy is a pattern to handle message reprocessing more efficiently.
+This strategy executes a purposeful disconnect after a producer has sent an erroneous message.  Potential use cases for this strategy include microservices where a high message processing deterioration rate is the norm and where the time to engage in quality assurance is limited.  This strategy also works well in Agile-based workflows. 
 
 ## Syntax:
 

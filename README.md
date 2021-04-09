@@ -9,7 +9,7 @@
 
 ### About
 
-Kafka-Penguin is an easy-to-use, lightweight KafkaJS plugin for message processing. It provides developers with two strategies for setting up message re-processing: Failfast and Dead Letter Queue.
+Kafka-Penguin is an easy-to-use, lightweight KafkaJS plugin for message processing. It provides developers with two strategies for setting up message re-processing: FailFast and Dead Letter Queue.
 
 This strategy allows developers the ability to debug more effectively and discover bugs faster in their message re-processing workflows. This, in turn, allows developers the opportunity to build more fault-tolerant systems.
 
@@ -55,6 +55,12 @@ producer.connect()
   .then(() => producer.send(message))
   .catch((e: any) => console.log('error: ', e.message))
 ```
+
+## Strategies/Documentation
+
+[FailFast  ](strategies/readme/strategies-readme-fail-fast.md)
+
+[Dead Letter Queue](strategies/readme/strategies-readme-dlq.md)
 
 ## **Contributors**
 

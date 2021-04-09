@@ -4,7 +4,7 @@
 
 ### About
 
-kafka-penguin is an easy-to-use, lightweight kafkaJS plugin for message processing. It provides developers with two strategies for setting up message re-processing : Failfast and Dead Letter Queue.
+Kafka-Penguin is an easy-to-use, lightweight KafkaJS plugin for message processing. It provides developers with two strategies for setting up message re-processing: Failfast and Dead Letter Queue.
 
 This strategy allows developers the ability to debug more effectively and discover bugs faster in their message re-processing workflows. This, in turn, allows developers the opportunity to build more fault-tolerant systems.
 
@@ -20,7 +20,7 @@ Once installed it can now be referenced by simply calling `require('kafka-pengui
 
 ### Example
 
-All kafka-penguin needs is a kafkaJS client to run. Start by passing the client for your preferred strategy and kafka-penguin will create bespoke consumers, producers, and admins with built-in functionality to execute the chosen strategy. On the surface, you implement your application exactly as you would with kafkaJS.
+All Kafka-Penguin needs is a KafkaJS client to run. Start by passing the client for your preferred strategy and Kafka-Penguin will create bespoke consumers, producers, and admins with built-in functionality to execute the chosen strategy. On the surface, you implement your application exactly as you would with KafkaJS.
 
 ```javascript
 import { FailFast } from 'kafka-penguin'

@@ -1,7 +1,8 @@
-# Home
+![license](https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af) ![issues](https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow) ![last commit](https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af)[![npm version](https://img.shields.io/npm/v/kafka-penguin?color=%2344cc11&label=stable)](https://www.npmjs.com/package/kafka-penguin)
 
+# Home
 <p align="center"><img src="./demo/client/assets/penguin.svg" width='500' style="margin-top: 10px; margin-bottom: -10px;"></p>
-    ![license](https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af) ![issues](https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow) ![last commit](https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af)[![npm version](https://img.shields.io/npm/v/kafka-penguin?color=%2344cc11&label=stable)](https://www.npmjs.com/package/kafka-penguin)
+
 
 
 ## Kafka-Penguin

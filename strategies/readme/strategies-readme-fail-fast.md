@@ -42,7 +42,7 @@ const message = {
   ]
 }
 
-// Fail Fast will attempt to send the message to the Kafka cluster.
+// FailFast will attempt to send the message to the Kafka cluster.
 // After the retry count is reached, the producer will automatically disconnect and an error is thrown.
 producer.connect()
   .then(() => console.log('Connected!'))

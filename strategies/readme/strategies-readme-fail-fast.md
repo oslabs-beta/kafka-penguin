@@ -1,6 +1,6 @@
 # FailFast
 
- This strategy executes a purposeful disconnect after a producer has sent an erroneous message.  Potential use cases for this strategy include micro-services where there's a low tolerance for failure, acid, and/or transactional workflows. This strategy also works for development environments in Agile-based workflows. 
+This strategy executes a purposeful disconnect after a producer has sent an erroneous message.  Potential use cases for this strategy include micro-services where there's a low tolerance for failure, acid, and/or transactional workflows. This strategy also works for development environments in Agile-based workflows. 
 
 ## Syntax:
 

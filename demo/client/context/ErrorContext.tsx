@@ -1,94 +1,98 @@
 import * as React from 'react';
 import { useState, useContext, FC, createContext, useEffect } from 'react';
-import { useBackdropUpdateContext } from './BackDropContext'
+import { useBackdropUpdateContext } from './BackDropContext';
+
 
 const ErrorContext = createContext(null);
 const ErrorUpdateContext = createContext(null);
 
 const useErrorContext = () => {
-  return useContext(ErrorContext)
-}
+  return useContext(ErrorContext);
+};
 
 const useErrorUpdateContext = () => {
-  return useContext(ErrorUpdateContext)
-}
+  return useContext(ErrorUpdateContext);
+};
 
 const ErrorProvider: FC = ({ children }) => {
-
   const [error, changeError] = useState([]);
 
-  const backdropUpdate = useBackdropUpdateContext()
+  const backdropUpdate = useBackdropUpdateContext();
 
   useEffect(() => {
-    backdropUpdate.handleClose()
-  }, [error])
-  
+    backdropUpdate.handleClose();
+  }, [error]);
+
   const handleFailFast = (input: {
-    message: string,
-    topic: string,
-    retries: number
+    message: string;
+    topic: string;
+    retries: number;
   }) => {
-    const { message, topic, retries } = input
+    const { message, topic, retries } = input;
     if (!topic || !message) return;
 
     fetch('/strategy/failfast', {
       method: 'POST',
       headers: { 'Content-Type': 'Application/JSON' },
-      body: JSON.stringify({ topic: topic, message: message, retries: retries })
+      body: JSON.stringify({
+        topic: topic,
+        message: message,
+        retries: retries,
+      }),
     })
       .then(data => data.json())
       .then(errors => {
-        changeError(errors)
-      })
+        changeError(errors);
+      });
   };
 
   const handleDLQ = (input: {
-    message: string,
-    topic: string,
-    retries: number,
-    faults: number
-  }) => {
-    console.log(input)
-    const { message, topic, retries, faults } = input   
-    if (!topic || !message) return;
+    message: string;
+    topic: string;
+    retries: number;
+    faults: number;
+    }) => {
+      const { message, topic, retries, faults } = input;
+      if (!topic || !message) return;
+
+      const cb = message => {
+       if (message === 'fault') throw Error;
+        return true;
+      };
+
 
     fetch('/strategy/dlq', {
       method: 'POST',
       headers: { 'Content-Type': 'Application/JSON' },
-      body: JSON.stringify({ topic, message, retries, faults })
+      body: JSON.stringify({ topic, message, retries, faults }),
     })
-      .then(data => data.json())
-      .then(clients => {
-        const { producer, consumer } = clients;
-        // const errors = []
-        consumer.connect()
-          .then(consumer.subscribe())
-          .then(consumer.run({
-            eachMessage: ({topic, partitions, message}) => {
-              console.log(message.value.toString())
-            }
-          }))
+      .then(res => res.json())
+      .then(messages => {
+
+        console.log(messages)
+        changeError(messages)
       })
+      .catch(e => console.log(e));
 
   };
-  const handleIgnore = (e: { preventDefault: () => void; }) => {
-    e.preventDefault()
+
+  const handleIgnore = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
   };
-  
+
   return (
     <ErrorContext.Provider value={error}>
-      <ErrorUpdateContext.Provider 
-        value={
-          {
-            handleFailFast: handleFailFast,
-            handleDLQ: handleDLQ,
-            handleIgnore: handleIgnore
-          }
-      }>
+      <ErrorUpdateContext.Provider
+        value={{
+          handleFailFast: handleFailFast,
+          handleDLQ: handleDLQ,
+          handleIgnore: handleIgnore,
+        }}
+      >
         {children}
       </ErrorUpdateContext.Provider>
     </ErrorContext.Provider>
-  )
-}
+  );
+};
 
-export { ErrorProvider, useErrorContext, useErrorUpdateContext}
+export { ErrorProvider, useErrorContext, useErrorUpdateContext }

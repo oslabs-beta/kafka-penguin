@@ -9,13 +9,15 @@
 
 ### About
 
-Kafka-Penguin is an easy-to-use, lightweight KafkaJS plugin for message processing. It provides developers with two strategies for setting up message re-processing: FailFast and Dead Letter Queue.
+Kafka-Penguin is an easy-to-use, lightweight KafkaJS plugin for message re-processing. It provides developers with two strategies for setting up message re-processing: FailFast and Dead Letter Queue.
 
-This strategy allows developers the ability to debug more effectively and discover bugs faster in their message re-processing workflows. This, in turn, allows developers the opportunity to build more fault-tolerant systems.
+The package allows developers to build event-driven applications with dedicated 'fail strategies' modeled after best practices in the field. This in turn allows developers to effectively address bugs in development and deploy more fault-tolerant systems in production. 
 
-#### For more information on kafkaJS, check out [Getting Started](https://kafka.js.org/docs/getting-started).
+This package is meant to work side by side with KafkaJS. For more information on KafkaJS, check out [Getting Started](https://kafka.js.org/docs/getting-started).
 
 ### Getting Started 
+
+Install kakfa-penguin as an npm module and save it to your package.json file as a dependency:
 
 ```bash
 npm install kafka-penguin
@@ -75,4 +77,6 @@ Kushal Talele [@ktrane1](https://github.com/ktrane1)
 ### License
 
 This project is licensed under the Apache License - see the [LICENSE.md](https://github.com/oslabs-beta/kafka-penguin/blob/main/LICENSE) file for details.
+
+This is an open source project. We are not affiliated nor endorsed by either the Apache Software Foundation or KafkaJS. 
 

@@ -1,22 +1,22 @@
-# FailFast README
+# FailFast
 
-This strategy executes a purposeful disconnect after a producer has sent an erroneous message.  Potential use cases for this strategy include microservices where a high message processing deterioration rate is the norm and where the time to engage in quality assurance is limited.  This strategy also works well in Agile-based workflows. 
+This strategy executes a purposeful disconnect after a producer has sent an erroneous message.  Potential use cases for this strategy include micro-services where there is a low tolerance for failure, as well as acid and/or transactional workflows. This strategy also works well for development environments in Agile-based workflows. 
 
 ## Syntax:
 
 #### FailFast\(retries, kafka-client\)
 
-`retries`: Number of times the producer attempts to send the message before disconnecting and throwing an error.
+`retries` Number of times the producer attempts to send the message before disconnecting and throwing an error.
 
-`kafka-client` :  A configured  [KafkaJS client](https://kafka.js.org/docs/configuration) provided by the developer. 
+`kafka-client`  A configured  [KafkaJS client](https://kafka.js.org/docs/configuration) provided by the developer. 
 
 **Producer**
 
 `FailFast.producer` Returns a producer initialized from the strategy instance. The producer has "adapted" methods that execute the strategy under the hood. 
 
-`FailFast.connect`  Connects the producer to the Kafka cluster indicated in the configured KafkaJS client. 
+`producer.connect`  Connects the producer to the Kafka cluster indicated in the configured KafkaJS client. 
 
-`FailFast.send(message)` This method takes in one argument, `message` that is passed in with the same requirements as the counterpart method on KafkaJS, and sends it to the Kafka cluster. However, this send will disconnect the producer once it's hit the set number of retries. 
+`producer.send(message)` This method takes in one argument, `message` that is passed in with the same requirements as the counterpart method on KafkaJS, and sends it to the Kafka cluster. However, this send will disconnect the producer once it's hit the set number of retries. 
 
 ## Example:
 

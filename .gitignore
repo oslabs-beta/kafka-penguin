@@ -6,3 +6,4 @@ package-lock.json
 demo/node_modules
 demo/.env
 demo/package-lock.json
+.DS_Store

@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class FailFastError extends Error {
     constructor(e) {
         super(e);
@@ -42,6 +43,5 @@ class FailFast {
         });
     }
 }
-module.exports = {
-    FailFast,
-};
+
+exports.default = FailFast;

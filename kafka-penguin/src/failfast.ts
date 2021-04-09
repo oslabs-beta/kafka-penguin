@@ -59,7 +59,3 @@ class FailFast {
       })
   } 
 }
-
-module.exports = {
-  FailFast,
-};

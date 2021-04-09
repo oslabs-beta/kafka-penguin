@@ -1,14 +1,16 @@
-const penguinjs = require('./kafka-penguin/src/index')
-const devClient = require('./clientConfig.ts')
+import { FailFast } from 'kafka-penguin'
+const FailFastClient = require('./clientConfig.ts')
+
+// Set up Fail Fast with the number of retried and a configured KafkaJS client
+const exampleFailFast = new FailFast(2, FailFastClient)
+
+// Initialize a producer from the new instance of Fail Fast
+const producer = exampleFailFast.producer();
 
 
-
-const strategies = penguinjs.failfast
-// Initilize strategy-- passing in your kafkjs client and # of retries
-const newStrategy = new strategies.FailFast(2, devClient)
-
+// Example error of a producer sending to a non-existent topic
 const message = {
-  topic: 'wrong-topic',
+  topic: 'topic-non-existent',
   messages: [
     {
       key: 'hello',
@@ -17,9 +19,8 @@ const message = {
   ]
 }
 
-// Initialize producer from strategy
-const producer = newStrategy.producer();
-
+// Fail Fast will attempt to send the message to the Kafka cluster.
+// After the retry count is reached, the producer will automatically disconnect and an error is thrown.
 producer.connect()
   .then(() => console.log('Connected!'))
   .then(() => producer.send(message))

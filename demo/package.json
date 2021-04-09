@@ -5,7 +5,7 @@
   "main": "client/index.tsx",
   "engines": {
     "node": "12.18.3"
-  }, 
+  },
   "scripts": {
     "dev": "webpack serve --open",
     "build": "webpack --mode production",
@@ -39,27 +39,34 @@
     "@babel/plugin-syntax-jsx": "^7.12.13",
     "@babel/plugin-transform-runtime": "^7.13.10",
     "@material-ui/core": "^4.11.3",
+    "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^26.6.3",
+    "browserify-zlib": "^0.2.0",
     "concurrently": "^6.0.0",
     "cookie-parser": "^1.4.5",
     "cross-env": "^7.0.3",
+    "crypto-browserify": "^3.12.0",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "highlight.js": "^10.7.2",
     "kafka-penguin": "^0.2.1",
     "kafkajs": "^1.15.0",
+    "nodemon": "^2.0.7",
+    "prismjs": "^1.23.0",
     "prop-types": "^15.7.2",
     "puppeteer": "^2.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
+    "react-showdown": "^2.3.0",
     "regenerator-runtime": "^0.13.7",
     "set-interval": "^2.1.2",
-    "util": "^0.12.3",
-    "express": "^4.17.1",
-    "nodemon": "^2.0.7",
+    "stream-browserify": "^3.0.0",
+    "tls": "0.0.1",
     "ts-loader": "^8.0.18",
-    "typescript": "3.0.0",
-    "awesome-typescript-loader": "^5.2.1",
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "typescript": "^3.0.0",
+    "util": "^0.12.3"
   },
   "devDependencies": {
     "@babel/core": "^7.13.13",
@@ -106,5 +113,8 @@
     "webpack": "^5.28.0",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
+  },
+  "browsers": {
+    "zlib": false
   }
 }

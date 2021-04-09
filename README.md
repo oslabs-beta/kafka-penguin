@@ -1,6 +1,6 @@
 # Home
 
-    ![license](https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af) ![issues](https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow) ![last commit](https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af) [![Repo stars](https://img.shields.io/github/stars/oslabs-beta/kafka-penguin?logoColor=%2334495e&style=social)](https://github.com/oslabs-beta/kafka-penguin/stargazers)
+    ![license](https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af) ![issues](https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow) ![last commit](https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af)[![npm version](https://img.shields.io/npm/v/kafka-penguin?color=%2344cc11&label=stable)](https://www.npmjs.com/package/kafka-penguin)
 
 ### About
 

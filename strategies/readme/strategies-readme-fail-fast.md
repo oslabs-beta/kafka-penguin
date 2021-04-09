@@ -1,47 +1,26 @@
----
-description: >-
-  The failfast strategy is a pattern to handle message reprocessing more
-  efficiently. It enables the user to retry sending a failed message a
-  predetermined number of times before disconnecting.
----
-
 # FailFast README
 
-This strategy allows developers the ability to debug more effectively and discover bugs faster in their message re-processing workflows. This, in turn, allows developers the opportunity to build more fault-tolerant systems.
+This strategy executes a purposeful disconnect after a producer has sent an erroneous message. The fail-fast strategy is a pattern to handle message reprocessing more efficiently.
 
 ## Syntax:
 
-#### failfast\(retries, kafkaJS-client\)
+#### FailFast\(retries, kafka-client\)
 
 `retries`: Number of times the producer attempts to send the message before disconnecting and throwing an error.
 
-`kafkaJS-client` :  Passed-in [kafkaJS client](https://kafka.js.org/docs/configuration).  
-  
-failfast creates a producer method similiar to the [producer](https://kafka.js.org/docs/producing) method in kafkJS except for added functionality **w/ send.** 
+`kafka-client` :  A configured  [KafkaJS client](https://kafka.js.org/docs/configuration) provided by the developer. 
 
-**Exceptions include:**
+**Producer**
 
-* retries are specified to the number passed into the new failfast instance. 
-* It will disconnect the producer once it's hit the set number of retries. 
+`FailFast.producer` Returns a producer initialized from the strategy instance. The producer has "adapted" methods that execute the strategy under the hood. 
 
-The **send** method will send the inputted message for the set number of retries which is passed in when creating an instance of the failfast method.  
-  
-**send\(message\)**  
-  
-`message` :  A message sent from the producer that holds topic and message data. 
+`FailFast.connect`  Connects the producer to the Kafka cluster indicated in the configured KafkaJS client. 
 
-Ex: 
-
-```javascript
-  topic: 'topic-non-existent',
-  messages: [
-    {
-      key: 'hello'
-    }
-  ]
-```
+`FailFast.send(message)` This method takes in one argument, `message` that is passed in with the same requirements as the counterpart method on KafkaJS, and sends it to the Kafka cluster. However, this send will disconnect the producer once it's hit the set number of retries. 
 
 ## Example:
+
+**FailFast**
 
 ```javascript
 import { FailFast } from 'kafka-penguin'

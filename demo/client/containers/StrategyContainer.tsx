@@ -46,10 +46,7 @@ const StrategyContainer: FC = () => {
         className={classes.button}
         color='primary'
         variant='contained'
-        onClick={() => {
-          if (message.message && message.topic) backdropUpdate.handleToggle()
-          handleClicks.handleDLQ(message);
-        }}
+        onClick={handleClicks.handleDLQ}
       >
         DLQ
       </Button>

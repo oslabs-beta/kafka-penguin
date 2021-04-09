@@ -8,11 +8,11 @@ Kafka-Penguin is an easy-to-use, lightweight KafkaJS plugin for message re-proce
 
 The package allows developers to build event-driven applications with dedicated 'fail strategies' modeled after best practices in the field. This in turn allows developers to effectively address bugs in development and deploy more fault-tolerant systems in production. 
 
-This package is meant to work side by side with KafkaJS. For more information on KafkaJS, check out [Getting Started](https://kafka.js.org/docs/getting-started).
+This package is meant to work in conjunction with with KafkaJS. For more information on KafkaJS, check out [Getting Started with KafkaJS](https://kafka.js.org/docs/getting-started).
 
 ### Getting Started 
 
-Install kakfa-penguin as an npm module and save it to your package.json file as a dependency:
+Install Kafka-Penguin as an npm module and save it to your package.json file as a dependency:
 
 ```bash
 npm install kafka-penguin
@@ -62,7 +62,7 @@ producer.connect()
 
 [Ausar English](https://www.linkedin.com/in/ausarenglish) [@ausarenglish](https://github.com/ausarenglish)
 
-Kushal Talele [@ktrane1](https://github.com/ktrane1)
+[Kushal Talele](https://www.linkedin.com/in/kushal-talele-29040820b/) [@ktrane1](https://github.com/ktrane1)
 
 [Timeo Williams](https://www.linkedin.com/in/timeowilliams/) [@timeowilliams](https://github.com/timeowilliams)
 
@@ -70,7 +70,9 @@ Kushal Talele [@ktrane1](https://github.com/ktrane1)
 
 ### License
 
-This project is licensed under the Apache License - see the [LICENSE.md](https://github.com/oslabs-beta/kafka-penguin/blob/main/LICENSE) file for details.
+This product is licensed under the Apache License - see the [LICENSE.md](https://github.com/oslabs-beta/kafka-penguin/blob/main/LICENSE) file for details.
 
-This is an open source project. We are not affiliated nor endorsed by either the Apache Software Foundation or KafkaJS. 
+This is an open source product. We are not affiliated nor endorsed by either the Apache Software Foundation or KafkaJS. 
+
+This product is accelerated by [OS Labs](https://opensourcelabs.io/).
 

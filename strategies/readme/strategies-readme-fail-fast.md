@@ -16,7 +16,7 @@ This strategy executes a purposeful disconnect after a producer has sent an erro
 
 `producer.connect`  Connects the producer to the Kafka cluster indicated in the configured KafkaJS client. 
 
-`producer.send(message)` This method takes in one argument, `message` that is passed in with the same requirements as the counterpart method on KafkaJS, and sends it to the Kafka cluster. However, this send will disconnect the producer once it's hit the set number of retries. 
+`producer.send(message)` This method takes in one argument, `message` that is passed in with the same requirements as the counterpart method on KafkaJS, and sends it to the Kafka cluster. However, this `send` will disconnect the producer once it reaches the set number of retries. 
 
 ## Example:
 

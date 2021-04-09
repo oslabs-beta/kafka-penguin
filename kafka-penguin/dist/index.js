@@ -1,7 +1,4 @@
 "use strict";
-/*
-~~~~~~~~~~~ Dead Letter Queue ~~~~~~~~~~~~~
-*/
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -53,21 +50,34 @@ class DeadLetterQueue {
         // Return an object with all Producer methods adapted to execute a dead letter queue strategy
         return {
             connect() {
-                return innerProducer.connect().then(() => {
+                return innerProducer.connect()
+                    .then(() => {
                     dlqInstance.createDLQ();
-                });
+                })
+                    .catch((e) => console.log(e));
             },
             disconnect() {
                 return innerProducer.disconnect();
             },
             send(message) {
-                return innerProducer.send(message)
-                    // Upon error, reroute message to DLQ for the strategy topic
-                    .catch((e) => {
-                    innerProducer.send(Object.assign(Object.assign({}, message), { topic: `${dlqInstance.topic}.deadLetterQueue` }));
-                    // Print the error to the console
-                    const newError = new DeadLetterQueueErrorProducer(e);
-                    console.log(newError);
+                return innerProducer.connect()
+                    .then(() => {
+                    innerProducer.send({
+                        topic: message.topic,
+                        messages: message.messages
+                    })
+                        // Upon error, reroute message to DLQ for the strategy topic
+                        .catch((e) => {
+                        innerProducer.send({
+                            messages: message.messages,
+                            topic: `${dlqInstance.topic}.deadLetterQueue`,
+                        })
+                            .then(innerProducer.disconnect())
+                            .catch((e) => console.log(e));
+                        // Print the error to the console
+                        const newError = new DeadLetterQueueErrorProducer(e);
+                        console.log(newError);
+                    });
                 });
             }
         };

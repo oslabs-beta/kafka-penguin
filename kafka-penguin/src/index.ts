@@ -1,12 +1,10 @@
 /*
 ~~~~~~~~~~~ Dead Letter Queue ~~~~~~~~~~~~~
 */
-
 interface messageValue {
   topic: string,
   messages: object[],
 }
-
 interface input {
   eachMessage: ({
     topic,
@@ -18,7 +16,6 @@ interface input {
     message: any
   }) => void
 }
-
 class DeadLetterQueueErrorProducer extends Error {
   message: any;
   reference: any;
@@ -37,7 +34,6 @@ class DeadLetterQueueErrorProducer extends Error {
     this.retryCount = e.retryCount;
   }
 }
-
 class DeadLetterQueueErrorConsumer extends Error {
   message: any;
   reference: any;
@@ -56,7 +52,6 @@ class DeadLetterQueueErrorConsumer extends Error {
     this.retryCount = e.retryCount;
   }
 }
-
 export class DeadLetterQueue {
   client: any;
   topic: string;
@@ -64,7 +59,6 @@ export class DeadLetterQueue {
   innerConsumer: any;
   admin: any;
   innerProducer: any;
-
   constructor(client: any, topic: string, callback?: any) {
     this.topic = topic;
     this.client = client;
@@ -73,44 +67,49 @@ export class DeadLetterQueue {
     this.innerConsumer = null;
     this.innerProducer = this.client.producer();
   }
-
   producer() {
     // Reference the DLQ instance for closure in the returned object
     const dlqInstance = this;
     const { innerProducer } = dlqInstance
-
-
     // Return an object with all Producer methods adapted to execute a dead letter queue strategy
     return {
       connect() {
-        return innerProducer.connect().then(() => {
-          dlqInstance.createDLQ();
-        });
+        return innerProducer.connect()
+          .then(() => {
+            dlqInstance.createDLQ();
+          })
+          .catch((e: Error) => console.log(e))
       },
       disconnect() {
         return innerProducer.disconnect();
       },
       send(message: messageValue) {
-        return innerProducer.send(message)
-          // Upon error, reroute message to DLQ for the strategy topic
-          .catch((e?: any) => {
+        return innerProducer.connect()
+          .then(() => {
             innerProducer.send({
-              ...message,
-              topic: `${dlqInstance.topic}.deadLetterQueue`,
-            });
-            // Print the error to the console
-            const newError = new DeadLetterQueueErrorProducer(e);
-            console.log(newError);
-          });
+              topic: message.topic,
+              messages: message.messages
+            })
+              // Upon error, reroute message to DLQ for the strategy topic
+              .catch((e?: any) => {
+                innerProducer.send({
+                  messages: message.messages,
+                  topic: `${dlqInstance.topic}.deadLetterQueue`,
+                })
+                  .then(innerProducer.disconnect())
+                  .catch((e: Error) => console.log(e))
+                // Print the error to the console
+                const newError = new DeadLetterQueueErrorProducer(e);
+                console.log(newError);
+              });
+          })
       }
     }
   }
-
   consumer(groupId: { groupId: string }) {
     this.innerConsumer = this.client.consumer(groupId);
     const dlqInstance = this;
     const { innerConsumer, innerProducer } = dlqInstance
-
     // Returns an object with all Consumer methods adapter to execute a dead letter queue strategy
     return {
       connect() {
@@ -140,7 +139,6 @@ export class DeadLetterQueue {
               innerProducer.connect()
                 .then(() => console.log('kafka-penguin: Connected to DLQ topic'))
                 .then(() => {
-
                   innerProducer.send({
                     topic: `${dlqInstance.topic}.deadLetterQueue`,
                     messages: [message],
@@ -156,10 +154,8 @@ export class DeadLetterQueue {
       }
     }
   }
-
   // Creates a new DLQ topic with the original topic name
   async createDLQ() {
-
     const adminCreateDLQ = await this.admin.connect()
       .then(async () => {
         await this.admin.createTopics({
@@ -176,16 +172,13 @@ export class DeadLetterQueue {
     return adminCreateDLQ;
   }
 }
-
 /*
 ~~~~~~~~~~~ Fail Fast ~~~~~~~~~~~~~
 */
-
 interface messageValue {
   topic: string,
   messages: object[],
 }
-
 class FailFastError extends Error {
   message: any;
   reference: any;
@@ -213,7 +206,6 @@ export class FailFast {
     this.client = kafkaJSClient;
     this.innerProducer = null;
   }
-
   producer() {
     const options = {
       retry:
@@ -224,9 +216,7 @@ export class FailFast {
     this.innerProducer = this.client.producer(options);
     // Return curr FailFast instance instead of a producer
     return this;
-
   }
-
   connect() {
     return this.innerProducer.connect()
   }
@@ -242,5 +232,3 @@ export class FailFast {
       })
   }
 }
-
-

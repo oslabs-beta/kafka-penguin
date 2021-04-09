@@ -173,4 +173,3 @@ class DeadLetterQueue {
   }
 }
 
-export default DeadLetterQueue;

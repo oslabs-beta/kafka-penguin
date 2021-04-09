@@ -15,16 +15,18 @@ const useMesageUpdateContext = () => {
 const MessageProvider: FC = ({ children }) => {
 
   const [message, changeMessage] = useState('');
-  const [topic, changeTopic] = useState('')
-  const [retries, changeRetries] = useState(2)
- 
+  const [topic, changeTopic] = useState('');
+  const [retries, changeRetries] = useState(2);
+  const [faults, changeFaults] = useState(2);
+
   return (
     <MessageContext.Provider 
       value={
         {
           message: message, 
           topic: topic, 
-          retries: retries
+          retries: retries,
+          faults: faults
         }
       }
     >
@@ -33,7 +35,8 @@ const MessageProvider: FC = ({ children }) => {
           {
             changeMessage: changeMessage,
             changeTopic: changeTopic,
-            changeRetries: changeRetries
+            changeRetries: changeRetries,
+            changeFaults: changeFaults
           }
         }>
         {children}

@@ -1,6 +1,6 @@
 # Dead Letter Queue
 
-This strategy creates another topic that acts as a repository for erroneous messages. It works side by side with your normal topic and is meant to keep flows from producers or consumers unblocked \(while storing problematic messages for later reprocessing\).  Potential use cases for this strategy include services with data streaming, non-ACID or transactional message flows, or any system that simply needs to "just keep running". 
+This strategy creates another topic that acts as a repository for erroneous messages. It works parallel with your normal topic and is meant to keep flows from producers or consumers unblocked \(while storing problematic messages for later reprocessing\).  Potential use cases for this strategy include services with data streaming, non-ACID or transactional message flows, or any system that simply needs to "just keep running". 
 
 ## Syntax:
 
@@ -8,9 +8,9 @@ This strategy creates another topic that acts as a repository for erroneous mess
 
 `kafka-client` A configured  [KafkaJS client](https://kafka.js.org/docs/configuration) provided by the developer.
 
-`topic` The target topic that producers or consumers will publish or subscribe to in this strategy instance. Kafka-penguin currently supports one topic per strategy instance. If a dead letter queue for this topic has not been created, the strategy will automatically create it upon producer or consumer connect. 
+`topic` The target topic that producers or consumers will publish or subscribe to in this strategy instance. Kafka-Penguin currently supports one topic per strategy instance. If a dead letter queue for this topic has not been created, the strategy will automatically create it upon producer or consumer connect. 
 
-`callback` A callback that must return a boolean value. The callback will take in one argument: the messages received by the consumer. During execution, the strategy will pass to the callback each message consumed; any message which returns false will be rerouted to the topic-specific dead letter queue. This allows the developer to customize the strategy to catch specific conditions when consuming. 
+`callback` A callback that must return a boolean value. The callback will take in one argument: the messages received by the consumer. During execution, the strategy will pass to the callback each message consumed; any message which returns `false` will be rerouted to the topic-specific dead letter queue. This allows the developer to customize the strategy to catch specific conditions when consuming. 
 
 #### **Producer**
 
@@ -18,7 +18,7 @@ This strategy creates another topic that acts as a repository for erroneous mess
 
 `producer.connect`  Connects the producer to the Kafka cluster indicated in the configured KafkaJS client. This method will also create a topic-specific dead letter queue if one does not already exist. 
 
-`producer.send(message)` This method takes in one argument, `messages` that are passed in with the same requirements as the counterpart method on KafkaJS, and sends it to the Kafka cluster. However, this send is adapted to send to the strategy's dead letter queue upon error. 
+`producer.send(message)` This method takes in one argument, `messages` that are passed in with the same requirements as the counterpart method on KafkaJS, and sends it to the Kafka cluster. However, this `send` is adapted to send to the strategy's dead letter queue upon error. 
 
 #### Consumer
 
@@ -26,7 +26,7 @@ This strategy creates another topic that acts as a repository for erroneous mess
 
 `consumer.connect`  Connects the consumer to the Kafka cluster indicated in the configured KafkaJS client. This method will also create a topic-specific dead letter queue if one does not already exist. 
 
-`consumer.run` Starts consuming messages from the Kafka cluster to the consumer client. The `run` method also utilizes `eachMessage`to pass each message received through the callback provided at strategy instantiation. If the callback returns false, the `run` method automatically creates a temporary producer, it produces the message to the dead letter queue, and then discards that producer. 
+`consumer.run` Starts consuming messages from the Kafka cluster to the consumer client. The `run` method also utilizes `eachMessage`to pass each message received through the callback provided at strategy instantiation. If the callback returns `false`, the `run` method automatically creates a temporary producer, it produces the message to the dead letter queue, and then discards that producer. 
 
 ## Example: 
 

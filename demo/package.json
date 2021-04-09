@@ -41,9 +41,11 @@
     "@material-ui/core": "^4.11.3",
     "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^26.6.3",
+    "browserify-zlib": "^0.2.0",
     "concurrently": "^6.0.0",
     "cookie-parser": "^1.4.5",
     "cross-env": "^7.0.3",
+    "crypto-browserify": "^3.12.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "highlight.js": "^10.7.2",
@@ -59,6 +61,8 @@
     "react-showdown": "^2.3.0",
     "regenerator-runtime": "^0.13.7",
     "set-interval": "^2.1.2",
+    "stream-browserify": "^3.0.0",
+    "tls": "0.0.1",
     "ts-loader": "^8.0.18",
     "ts-node": "^9.1.1",
     "typescript": "^3.0.0",
@@ -109,5 +113,8 @@
     "webpack": "^5.28.0",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
+  },
+  "browsers": {
+    "zlib": false
   }
 }

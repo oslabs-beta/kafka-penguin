@@ -7,11 +7,11 @@ import { createStyles, makeStyles, Container, Button } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>
   createStyles({
-    container: {
+    topicsContainer: {
       display: 'flex',
+      flexWrap: 'wrap',
       alignItems: 'center',
       justifyContent: 'center',
-
     },
     button: {
       margin: '1rem 1rem 1rem 1rem'
@@ -31,7 +31,7 @@ const TopicsContainer: FC = () => {
 
   return (  
     <Container>
-      <Container className={classes.container}>
+      <Container>
         <Button
           className={classes.button}
           color='secondary'
@@ -43,7 +43,7 @@ const TopicsContainer: FC = () => {
         >Load Demo Topics
         </Button>
       </Container>
-      <Container className = {classes.container}>
+      <Container className = {classes.topicsContainer}>
        {topicsMapped}
       </Container>  
     </Container>

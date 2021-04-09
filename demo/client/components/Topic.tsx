@@ -16,7 +16,8 @@ const Topic: FC<Props> = ({topicInfo, id}: Props) => {
     createStyles({
       root:  {
         display: 'flex',
-        alignItems: 'center',
+        minWidth: '2rem',
+        // alignItems: 'center',
         justifyContent: 'center',
         margin: '1rem 1rem 1rem 1rem'
       },    

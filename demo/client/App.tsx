@@ -33,7 +33,7 @@ const App: FC = () => {
       </Typography> 
         <Switch>      
           <Route 
-            exact path='/demo' 
+            path='/demo' 
             component={ () => {
                 return (
                 <BackdropProvider>
@@ -42,12 +42,12 @@ const App: FC = () => {
             )
             }}></Route>   
           <Route 
-            exact path="/docs" 
+            path="/docs" 
             component={
               () => <DocsContainer/>
           }></Route>      
           <Route 
-            exact path="/" 
+            path="/" 
             component={
               () => <LandingBody/>
             }></Route>     

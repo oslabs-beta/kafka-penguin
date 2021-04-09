@@ -58,9 +58,9 @@ producer.connect()
 
 ## Strategies/Documentation
 
-[FailFast  ](strategies/readme/strategies-readme-fail-fast.md)
+[FailFast  ](strategies/readme/strategies-readme-fail-fast.md) : Executes a purposeful disconnect after a producer has sent an erroneous message. 
 
-[Dead Letter Queue](strategies/readme/strategies-readme-dlq.md)
+[Dead Letter Queue](strategies/readme/strategies-readme-dlq.md): Creates another topic that acts as a repository for erroneous messages.
 
 ## **Contributors**
 

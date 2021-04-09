@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { Kafka, logLevel } from 'kafkajs';
-const kafkapenguin = require('kafka-penguin');
+// const kafkapenguin = require('kafka-penguin');
 import { FailFast, DeadLetterQueue } from 'kafka-penguin';
 // import { DeadLetterQueue } from '../../../kafka-penguin/src/index'
 import dotenv = require('dotenv');

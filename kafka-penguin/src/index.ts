@@ -72,7 +72,7 @@ export class DeadLetterQueue {
     const dlqInstance = this;
     const { innerProducer } = dlqInstance
     // Return an object with all Producer methods adapted to execute a dead letter queue strategy
-    return {
+    return { 
       connect() {
         return innerProducer.connect()
           .then(() => {

@@ -1,5 +1,6 @@
 import { FailFast, DeadLetterQueue } from './index'
 import testClient from './clientConfig'
+import { callbackify } from 'util';
 
 // Fail Fast Tests
 describe("FailFast Tests", () => {
@@ -70,54 +71,58 @@ describe("FailFast Tests", () => {
             disconnect: expect.any(Function)
           }))
         })
-        xit("Configured producer's retries are equal to the retries set in the instance", () => {
-          testingProducer();
-          console.log(testInstance.innerProducer.send)
-          expect(testInstance.innerProducer.retry.retries).toBe(testInstance.retry)
+      })
+    })
+
+    describe("Producer Methods", () => {
+      const { innerProducer } = testInstance
+      const testingProducer = jest.fn(() => testInstance.producer());
+      
+      
+      describe("Connect", () => {
+        describe("Returns/SideEffects", () => {
+          it('returns the client producer connect method', () => {
+            testingProducer();
+            const { client, innerProducer } = testInstance
+            const producer = testInstance.producer();
+            expect(producer.connect).not.toBeNull()
+          })
+          it('connect method resolves', () => {
+            testingProducer();
+            const { client, innerProducer } = testInstance
+            return innerProducer.connect().then((input: any) => expect(input).not.toBeNull())
+          })
         })
       })
-      xdescribe("Error Handling", () => {
-        it('Throws an error if retries is empty')
-        it('Throws an error if client is empty')
-      })
-    })
 
-    xdescribe("Connect", () => {
-      describe("Returns/SideEffects", () => {
-        it('returns the client producer connect method')
+      xdescribe("Send", () => {
+        describe("Inputs", () => {
+          it("takes in a message with the message value interface")
+          it("throws an error if the message is in the incorrect format")
+        })
+        describe("Returns/SideEffects", () => {
+          it("returns the producer sending")
+          it("throws an FailFast Error with a bad message")
+          it("disconnects the producer with an bad message")
+        })
+        describe("Error Handling", () => {
+          it("throws an error if the client is empty")
+        })
       })
-      describe("Error Handling", () => {
-        it("returns an error if the client is empty")
-      })
-    })
 
-    xdescribe("Disconnect", () => {
-      describe("Returns/SideEffects", () => {
-        it('returns the client producer disconnect method')
+      describe("Disconnect", () => {
+        describe("Returns/SideEffects", () => {
+          it('returns the client producer disconnect method', () => {
+            testingProducer();
+            const { client, innerProducer } = testInstance
+            expect(innerProducer.disconnect).toEqual(expect.any(Function))
+            return innerProducer.disconnect().then((input: any) => expect(input).not.toBeNull())
+          })
+        })
       })
-      describe("Error Handling", () => {
-        it("returns an error if the client is empty")
-      })
-    })
 
-    xdescribe("Send", () => {
-      describe("Inputs", () => {
-        it("takes in a message with the message value interface")
-        it("throws an error if the message is in the incorrect format")
-      })
-      describe("Returns/SideEffects", () => {
-        it("returns the producer sending")
-        it("throws an FailFast Error with a bad message")
-        it("disconnects the producer with an bad message")
-      })
-      describe("Error Handling", () => {
-        it("throws an error if the client is empty")
-      })
     })
-
   })
-
-
 })
 
 

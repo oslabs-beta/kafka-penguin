@@ -7,6 +7,7 @@
       "jsx": "react",
       "sourceMap": true,
       "outDir": "./build",
+      "rootDir": "./",
       "removeComments": true,
       "allowSyntheticDefaultImports": true,
       "esModuleInterop": true,

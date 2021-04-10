@@ -39,7 +39,7 @@ module.exports = {
     contentBase: './client',
     hot: true,
     // contentBase: './build',
-    port: 8000,
+    port: 3001,
     proxy: {
       '/': 'http://localhost:3000'
     }

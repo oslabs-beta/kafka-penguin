@@ -75,21 +75,18 @@ describe("FailFast Tests", () => {
     })
 
     describe("Producer Methods", () => {
-      const { innerProducer } = testInstance
       const testingProducer = jest.fn(() => testInstance.producer());
-      
       
       describe("Connect", () => {
         describe("Returns/SideEffects", () => {
           it('returns the client producer connect method', () => {
             testingProducer();
-            const { client, innerProducer } = testInstance
-            const producer = testInstance.producer();
-            expect(producer.connect).not.toBeNull()
+            const { innerProducer } = testInstance
+            expect(testingProducer).toReturn()
           })
           it('connect method resolves', () => {
             testingProducer();
-            const { client, innerProducer } = testInstance
+            const { innerProducer } = testInstance
             return innerProducer.connect().then((input: any) => expect(input).not.toBeNull())
           })
         })
@@ -112,9 +109,9 @@ describe("FailFast Tests", () => {
 
       describe("Disconnect", () => {
         describe("Returns/SideEffects", () => {
-          it('returns the client producer disconnect method', () => {
+          it('returns the client producer disconnect method & disconnects successfully', () => {
             testingProducer();
-            const { client, innerProducer } = testInstance
+            const { innerProducer } = testInstance
             expect(innerProducer.disconnect).toEqual(expect.any(Function))
             return innerProducer.disconnect().then((input: any) => expect(input).not.toBeNull())
           })

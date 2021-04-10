@@ -179,7 +179,7 @@ interface messageValue {
   topic: string,
   messages: object[],
 }
-class FailFastError extends Error {
+export class FailFastError extends Error {
   message: any;
   reference: any;
   name: any;

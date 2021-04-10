@@ -1,4 +1,4 @@
-import { FailFast, DeadLetterQueue } from './index'
+import { FailFast, DeadLetterQueue, FailFastError } from './index'
 import testClient from './clientConfig'
 import { callbackify } from 'util';
 
@@ -92,17 +92,35 @@ describe("FailFast Tests", () => {
         })
       })
 
-      xdescribe("Send", () => {
+      describe("Send", () => {
+        const message = {
+          topic: 'xyz',
+          messages: [{
+            key: 'xyz',
+            value: 'xyz'
+          }]
+        }
+        const send = jest.fn((msg) => { testInstance.send(msg) })
+
         describe("Inputs", () => {
-          it("takes in a message with the message value interface")
-          it("throws an error if the message is in the incorrect format")
+          it("takes in a message with the message value interface", () => {
+            testingProducer();
+            send(message);
+            expect(send).toHaveBeenCalledWith(expect.objectContaining(message))
+          })
+          
         })
         describe("Returns/SideEffects", () => {
-          it("returns the producer sending")
-          it("throws an FailFast Error with a bad message")
-          it("disconnects the producer with an bad message")
+          
+          it("throws a FailFast Error with a bad message", async () => {
+            testingProducer();
+            const {innerProducer} = testInstance
+            const result = await testInstance.send(message)
+            expect(result).toBeInstanceOf(FailFastError)
+          })
+          it.todo("disconnects the producer with an bad message")
         })
-        describe("Error Handling", () => {
+        xdescribe("Error Handling", () => {
           it("throws an error if the client is empty")
         })
       })

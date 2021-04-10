@@ -9,6 +9,26 @@ interface input {
         message: any;
     }) => void;
 }
+
+declare class DeadLetterQueueErrorProducer extends Error {
+    message: any;
+    reference: any;
+    name: any;
+    retryCount: number;
+    strategy: string;
+    originalError: any;
+    constructor(e: any);
+}
+declare class DeadLetterQueueErrorConsumer extends Error {
+    message: any;
+    reference: any;
+    name: any;
+    retryCount: number;
+    strategy: string;
+    originalError: any;
+    constructor(e: any);
+}
+
 declare class DeadLetterQueue {
     client: any;
     topic: string;
@@ -32,4 +52,6 @@ declare class DeadLetterQueue {
     };
     createDLQ(): Promise<any>;
 }
+
 export default DeadLetterQueue;
+

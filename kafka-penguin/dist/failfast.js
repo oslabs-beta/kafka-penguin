@@ -43,4 +43,5 @@ class FailFast {
         });
     }
 }
+
 exports.default = FailFast;

@@ -8,7 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+
 Object.defineProperty(exports, "__esModule", { value: true });
+
 class DeadLetterQueueErrorProducer extends Error {
     constructor(e) {
         super(e);
@@ -137,4 +139,6 @@ class DeadLetterQueue {
         });
     }
 }
+
 exports.default = DeadLetterQueue;
+

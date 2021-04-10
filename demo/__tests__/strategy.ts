@@ -20,7 +20,6 @@ describe("Strategy tests", () => {
   });
   afterAll(done => {
     done()
-    server.
   });
 
   describe('Failfast tests', () => {

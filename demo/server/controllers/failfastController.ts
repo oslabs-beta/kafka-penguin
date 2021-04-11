@@ -11,7 +11,7 @@ let ERROR_LOG = [];
 
 const MyLogCreator = logLevel => ({ namespace, level, label, log }) => {
   //also availabe on log object => timestamp, logger, message and more
-  console.log(log)
+  // console.log(log)
   const { error, correlationId } = log;
   if (correlationId) {
     ERROR_LOG.push(

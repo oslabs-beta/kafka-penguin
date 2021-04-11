@@ -8,7 +8,7 @@ let ERROR_LOG = [];
 
 const MyLogCreator = logLevel => ({ namespace, level, label, log }) => {
   //also availabe on log object => timestamp, logger, message and more
-  // console.log(log)
+  // console.log('this is MyLogCreator', log)
   const { error, correlationId } = log;
   if (correlationId) {
     ERROR_LOG.push(
@@ -26,35 +26,27 @@ const DLQKafka = new Kafka({
     username: process.env.KAFKA_USERNAME,
     password: process.env.KAFKA_PASSWORD,
   },
-  // logLevel: logLevel.ERROR,
-  // logCreator: MyLogCreator,
+  logLevel: logLevel.ERROR,
+  logCreator: MyLogCreator,
 });
 
 const dlqProduce: RequestHandler = (req, res, next) => {
-  //create messages array with specified number of faults
+  
   const { topic, message, retries, faults } = req.body;
-  const random = (count, messages, result = new Set()) => {
-    if (result.size === count) return result;
-    const num = Math.floor(Math.random() * messages);
-    result.add(num);
-    return random(count, messages, result);
+
+  const messagesArray = [];
+  //create messages array with specified number of faults
+  for (let i = 0; i < retries; i++) {
+    if (i < faults) messagesArray.push({ key: 'test', value: 'fault' });
+    else messagesArray.push({
+            key: 'test',
+            value: message,
+          });
   };
 
-  const faultsIndex = random(faults, retries);
-  const messagesArray = [];
-
-  for (let i = 0; i < retries; i++) {
-    if (faultsIndex.has(i)) messagesArray.push({ key: 'test', value: 'fault' });
-    else
-      messagesArray.push({
-        key: 'test',
-        value: message,
-      });
-  }
-
   const cb = message => {
-    if (message === 'fault') {
-      throw new Error
+    if (message.value.toString() === 'fault') {
+      return false
     } else return true;
   };
   
@@ -79,7 +71,6 @@ const dlqProduce: RequestHandler = (req, res, next) => {
     .then(DLQProducer.disconnect())
     .then(admin.connect())
     .then(async () => {
-
       const offsetData = await admin.fetchTopicOffsets(topic)
       res.locals.latestOffset = offsetData[0].offset
     })
@@ -88,7 +79,10 @@ const dlqProduce: RequestHandler = (req, res, next) => {
       return next();
     })
     .catch(e => {
-
+      return next({
+        message: 'Error implementing Dead Letter Queue strategy, producer side:' + e.message,
+        error: e,
+      });
     });
 };
 
@@ -100,14 +94,14 @@ const dlqConsume: RequestHandler = (req, res, next) => {
   consumer.connect()
     .then(consumer.subscribe())
     .then(() => {
+      const latestOffset = Number(res.locals.latestOffset)
       consumer.run({
         eachMessage: ({topic, partitions, message}) => {
-
           const messageOffset = Number(message.offset)
-          const latestOffset = Number(res.locals.latestOffset)
-          if (messageOffset >= latestOffset - retries && message.value.toString() !== 'fault') {
+      
+          if (messageOffset >= latestOffset - retries) {
             messageLog.push(message.value.toString())
-          }     
+          };     
           if (messageLog.length === retries - faults) {
             messageLog.push(`kafka-penguin: Error with message processing, ${faults} ${faults > 1 ? 'messages' : 'message'}
                              sent to DLQ topic ${topic}.deadLetterQueue`)
@@ -116,13 +110,25 @@ const dlqConsume: RequestHandler = (req, res, next) => {
               .then(() => {
                 return res.status(200).json(res.locals.messages)
               })
-          }
-        }
-      })
-  })
+              .catch(e => {
+                return next({
+                  message: 'Error implementing Dead Letter Queue strategy while consuming messages, consumer side: ' + e.message,
+                  error: e
+                });
+              });
+          };
+        },
+      });
+    })
+    .catch(e => {
+      return next({
+        message: 'Error implementing Dead Letter Queue strategy, consumer side: ' + e.message,
+        error: e
+      });
+    });
 };
 
 export default {
   dlqConsume,
   dlqProduce
-}
+};

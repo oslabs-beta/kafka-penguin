@@ -94,6 +94,7 @@ export class DeadLetterQueue {
     const dlqInstance = this;
     const { innerProducer } = dlqInstance
     // Return an object with all Producer methods adapted to execute a dead letter queue strategy
+    console.log('INNER PRODUCER======', innerProducer)
     return {
       ...innerProducer,
       connect() {
@@ -133,6 +134,7 @@ export class DeadLetterQueue {
     const dlqInstance = this;
     const { innerConsumer, innerProducer } = dlqInstance
     // Returns an object with all Consumer methods adapter to execute a dead letter queue strategy
+        
     return {
       ...innerConsumer,
       connect() {

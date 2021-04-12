@@ -1,6 +1,5 @@
-import server  from '../server/app';
+import server  from '../../server/app';
 import request from 'supertest';
-import app from '../server/app';
 
 describe("Strategy tests", () => {
 

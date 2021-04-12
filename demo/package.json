@@ -10,10 +10,11 @@
     "dev": "webpack serve --open",
     "build": "tsc",
     "start": "concurrently \"cross-env NODE_ENV=development webpack serve --config webpack.config.js --mode development\" \"nodemon server/server.ts\"",
-    "test": "jest --detectOpenHandles",
+    "test": "jest --detectOpenHandles --testTimeout=20000",
     "format": "prettier --write /**/*.ts{,x}"
   },
   "jest": {
+    "testTimeout" : 30000,
     "moduleFileExtensions": [
       "ts",
       "tsx",

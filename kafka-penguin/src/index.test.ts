@@ -114,14 +114,24 @@ describe("FailFast Tests", () => {
           
           it("throws a FailFast Error with a bad message", async () => {
             testingProducer();
-            const {innerProducer} = testInstance
-            const result = await testInstance.send(message)
-            expect(result).toBeInstanceOf(FailFastError)
+            const { innerProducer } = testInstance
+            
+            const sendFunc = await innerProducer.send(message)
+              .catch((e: any) => {
+                innerProducer.disconnect();
+                const newError = new FailFastError(e)
+                console.log(newError)
+                expect(newError).toBeInstanceOf(FailFastError)
+              })
+           
           })
-          it.todo("disconnects the producer with an bad message")
-        })
-        xdescribe("Error Handling", () => {
-          it("throws an error if the client is empty")
+          it("disconnects the producer with an bad message", () => {
+            testingProducer();
+            const { innerProducer } = testInstance
+            return innerProducer.send(message).catch((e: any) => {
+              expect(e).toBeInstanceOf(Error)
+            })
+          })
         })
       })
 

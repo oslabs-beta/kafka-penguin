@@ -16,7 +16,7 @@ interface input {
     message: any
   }) => void
 }
-class DeadLetterQueueErrorProducer extends Error {
+export class DeadLetterQueueErrorProducer extends Error {
   message: any;
   reference: any;
   name: any;
@@ -34,7 +34,7 @@ class DeadLetterQueueErrorProducer extends Error {
     this.retryCount = e.retryCount;
   }
 }
-class DeadLetterQueueErrorConsumer extends Error {
+export class DeadLetterQueueErrorConsumer extends Error {
   message: any;
   reference: any;
   name: any;

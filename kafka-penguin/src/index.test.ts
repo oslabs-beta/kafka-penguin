@@ -153,6 +153,8 @@ describe("FailFast Tests", () => {
 
 // Dead Letter Queue Tests
 describe("Dead Letter Queue Tests", () => {
+  
+  //Constructor Tests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   describe("Constructor", () => {
     const testInstance = new DeadLetterQueue(testClient, "test1", () => {true});
     const mockClient = {
@@ -207,6 +209,9 @@ describe("Dead Letter Queue Tests", () => {
       testInstance = new DeadLetterQueue(testClient, 'test1', () => { true });
     });
 
+      //Producer Initialization ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
     describe("Producer", () => {
       const testingProducer = jest.fn(() => testInstance.producer());
 
@@ -229,6 +234,9 @@ describe("Dead Letter Queue Tests", () => {
         })
       })
     })
+
+      //Consumer Initialization  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
     describe("Consumer", () => {
       const id = { groupId: 'Jest Tests' }
@@ -256,6 +264,10 @@ describe("Dead Letter Queue Tests", () => {
       })
     })
 
+
+    //Producer Tests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
     describe("Producer Methods", () => {
       const testingProducer = jest.fn(() => testInstance.producer());
 
@@ -282,13 +294,13 @@ describe("Dead Letter Queue Tests", () => {
             value: 'xyz'
           }]
         }
-        const send = jest.fn((msg) => { testInstance.innerProducer.send(msg) })
+        const send = jest.fn(async (msg) => { await testInstance.innerProducer.connect().then(() => { testInstance.innerProducer.send(msg)}) })
 
         describe("Inputs", () => {
           it("takes in a message with the message value interface", () => {
             testingProducer();
             send(message);
-            expect(send).toHaveBeenCalledWith(expect.objectContaining(message))
+            expect(send).toHaveBeenCalledWith(message)
           })
 
         })
@@ -341,6 +353,96 @@ describe("Dead Letter Queue Tests", () => {
       })
 
     })
+
+    //Consumer Tests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+    describe("Consumer Methods", () => {
+      const group = {groupId: 'JestTests'}
+      const testingConsumer = jest.fn(() => testInstance.consumer(group));
+
+      describe("Connect", () => {
+        describe("Returns/SideEffects", () => {
+          it('returns the client consumer connect method', () => {
+            testingConsumer();
+            const { innerConsumer } = testInstance
+            expect(testingConsumer).toReturn()
+          })
+          it('connect method resolves', () => {
+            testingConsumer();
+            const { innerConsumer } = testInstance
+            return innerConsumer.connect().then((input: any) => expect(input).not.toBeNull())
+          })
+        })
+      })
+
+      describe("Send", () => {
+        const message = {
+          topic: 'xyz',
+          messages: [{
+            key: 'xyz',
+            value: 'xyz'
+          }]
+        }
+        const run = jest.fn((input) => {
+          testInstance.innerConsumer.connect()
+            .then(() => {
+              testInstance.innerConsumer.subscribe({
+                topic: testInstance.topic,
+                fromBeginning: false,
+            })
+            })
+            .then((input: any) => {
+              testInstance.innerConsumer.run(input);
+          })
+        })
+
+        describe("Inputs", () => {
+          it("takes in a message with the message value interface", () => {
+            testingConsumer();
+            run(message);
+            expect(run).toHaveBeenCalledWith(expect.objectContaining(message))
+            testInstance.innerConsumer.disconnect()
+          })
+
+        })
+        describe("Returns/SideEffects", () => {
+
+          it("throws a DLQ Error with a bad message, then sends it to the DLQ", async () => {
+            testingConsumer();
+            const { innerConsumer } = testInstance
+            const message = {
+              topic: 'wrong-topic',
+              messages: [{
+                key: 'value',
+                value: 'key'
+              }]
+            }
+
+            return innerConsumer.run({
+              eachMessage: ({ topic, partitions, message }) => {
+                false;
+              },
+            }).catch((e: any) => expect(e).toBeInstanceOf(Error))
+
+          })
+        
+        })
+      })
+
+      describe("Disconnect", () => {
+        describe("Returns/SideEffects", () => {
+          it('returns the client producer disconnect method & disconnects successfully', () => {
+            testingConsumer();
+            const { innerConsumer } = testInstance
+            expect(innerConsumer.disconnect).toEqual(expect.any(Function))
+            return innerConsumer.disconnect().then((input: any) => expect(input).not.toBeNull())
+          })
+        })
+      })
+
+    })
+    
   })
 })
 

@@ -8,8 +8,8 @@
   },
   "scripts": {
     "dev": "webpack serve --open",
-    "build": "webpack --mode production",
-    "start": "concurrently \"cross-env NODE_ENV=development webpack serve --config webpack.config.js --mode development\" \"nodemon server/server.ts\"",
+    "build":  "webpack serve --config webpack.config.js --mode production",
+    "start": "nodemon server/server.ts",
     "test": "jest --detectOpenHandles",
     "format": "prettier --write src/**/*.ts{,x}",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
@@ -54,7 +54,7 @@
     "nodemon": "^2.0.7",
     "prismjs": "^1.23.0",
     "prop-types": "^15.7.2",
-    "puppeteer": "^2.0.0",
+    "puppeteer": "^2.1.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",

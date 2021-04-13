@@ -1,6 +1,5 @@
-import server  from '../server/app';
+import server  from '../../server/app';
 import request from 'supertest';
-import app from '../server/app';
 
 describe("Strategy tests", () => {
 
@@ -15,12 +14,11 @@ describe("Strategy tests", () => {
     message: 'Hello world',
     retries: 4
   };
-  beforeAll(done => {
+  beforeAll((done: () => void) => {
     done()
   });
-  afterAll(done => {
+  afterAll((done: () => void) => {
     done()
-    server.
   });
 
   describe('Failfast tests', () => {
@@ -78,9 +76,24 @@ describe("Strategy tests", () => {
             expect(res.body[messageValid.retries - messageValid.faults]).toContain('kushal.deadLetterQueue')
             done()
           })
+          .end(done);
+      });
+    });
+    describe('DLQ Producer: non-existent and existent topics', () => {
+      it('Expect kafka-penguin error while posting to non-existent topic', (done: { (): void; ( err: any, res: request.Response ): void; }) => {
+        request(server)
+          .post('/strategy/dlq')
+          .send(messageInvalid)
+          .expect(300)
+          .expect(res => {
+            const error = res.body[0];
+            expect(res.body.length).toBe(1);
+            expect(typeof error).toBe('string');
+            done()
+          })
           .end(done)
-      })
-    })
+      });
+    });
   });
   
-})
+});

@@ -8,7 +8,6 @@ let ERROR_LOG = [];
 
 const MyLogCreator = logLevel => ({ namespace, level, label, log }) => {
   //also availabe on log object => timestamp, logger, message and more
-  // console.log('this is MyLogCreator', log)
   const { error, correlationId } = log;
   if (correlationId) {
     ERROR_LOG.push(
@@ -60,13 +59,15 @@ const dlqProduce: RequestHandler = (req, res, next) => {
     retries: retries,
     faults: faults
   };
-
+  // DLQProducer.logger().info('TEST', {KAFKA_PENGUIN: 'TESTING CUSTOM'})
   DLQProducer.connect()
     .then(() => {
+    
       DLQProducer.send({
         topic: topic,
         messages: messagesArray,
-      })
+      }).catch(e => console.log('this is error in try', e.reference))
+  
     })
     .then(DLQProducer.disconnect())
     .then(admin.connect())
@@ -78,11 +79,18 @@ const dlqProduce: RequestHandler = (req, res, next) => {
     .then(() => {
       return next();
     })
-    .catch(e => {
-      return next({
+    .catch((e: Error) => {
+      if (e.message === 'This server does not host this topic-partition') {
+        return res.status(300).json([`This error was executed as part of the kafka-penguin 
+        Dead Letter Queue message reprocessing strategy. Your producer attempted to deliver
+         a message 6 times but was unsuccessful. As a result, the message was sent to a
+          Dead Letter Queue. Refer to the original error for further information`])
+      }
+        return next({
         message: 'Error implementing Dead Letter Queue strategy, producer side:' + e.message,
         error: e,
       });
+
     });
 };
 

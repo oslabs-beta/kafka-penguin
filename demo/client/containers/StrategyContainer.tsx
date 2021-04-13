@@ -47,7 +47,7 @@ const StrategyContainer: FC = () => {
         color='primary'
         variant='contained'
         onClick={() => {
-          if (message.message && message.topic) backdropUpdate.handleToggle()
+          if (message.message && message.topic && message.retries > message.faults) backdropUpdate.handleToggle();
           handleClicks.handleDLQ(message);
         }}
       >

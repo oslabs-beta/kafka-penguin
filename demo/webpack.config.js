@@ -2,28 +2,23 @@
 
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const webpack = require('webpack');
 
 module.exports = {
   mode: "production",
   entry: {
     app: ['./client/index.tsx'],
-    vendor: ['react', 'react-dom', 'react-router-dom']
+    vendor: ['react', 'react-dom']
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'js/[name].bundle.js',
-    publicPath: '/'
+    filename: 'js/[name].bundle.js'
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
   },
   devServer: {
-    historyApiFallback: true,
-    contentBase: './client',
-    hot: true,
-    // contentBase: './build',
+    contentBase: './build',
     port: 8000,
     proxy: {
       '/': 'http://localhost:3000'
@@ -41,6 +36,6 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './client/index.html')
-    }),
+    })
   ]
 }

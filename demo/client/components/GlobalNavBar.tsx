@@ -3,12 +3,6 @@ import { useState, FC } from 'react';
 import { Link } from 'react-router-dom';
 import { createStyles, makeStyles, withStyles, AppBar, Toolbar, IconButton, Button, Container, Theme, Icon } from '@material-ui/core';
 
-
-const hello = (arg1, argr2) => {
-  return
-}
-
-
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
     root: {
@@ -21,6 +15,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(100),
       marginLeft: theme.spacing(100)
       },
+    logo: {
+      alignSelf: 'flex-start',
+    },
     button: {
       margin: '1rem 1rem 1rem 1rem'
       },  
@@ -41,13 +38,13 @@ const GlobalNavBar: FC = () => {
     <GlobalCss/>
       <AppBar position="static">
         <Toolbar className={classes.landingButtons}>
-          <Container>
-            <IconButton>
+
+            <IconButton className={classes.button}>
             <Icon component={ Link } to="/">
               <img src='/assets/penguin.svg'></img>
             </Icon>
             </IconButton>
-          </Container>
+
           <Button 
             className={classes.button}
             component={ Link } to="/docs"  

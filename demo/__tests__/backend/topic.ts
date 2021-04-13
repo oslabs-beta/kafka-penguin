@@ -1,4 +1,4 @@
-import server  from '../server/app';
+import server  from '../../server/app';
 import request from 'supertest';
 import dotenv = require('dotenv')
 dotenv.config();

@@ -1,11 +1,32 @@
+import { CompressionTypes } from 'kafkajs';
+
 /*
 ~~~~~~~~~~~ Dead Letter Queue ~~~~~~~~~~~~~
 */
+interface consumerSubscribeInput {
+  groupId?: String,
+  partitionAssigners?: any,
+  sessionTimeout?: Number,
+  rebalanceTimeout?: Number,
+  heartbeatInterval?: Number,
+  metadataMaxAge?: Number,
+  allowAutoTopicCreation?: Boolean,
+  maxBytesPerPartition?: Number,
+  minBytes?: Number,
+  maxBytes?: Number,
+  maxWaitTimeInMs?: Number,
+  retry?: Object,
+  maxInFlightRequests?: Number,
+  rackId?: String
+}
 interface messageValue {
+  acks?: Number,
+  timeout?: Number,
+  compression?: CompressionTypes,
   topic: string,
   messages: object[],
 }
-interface input {
+interface consumerRunInput {
   eachMessage: ({
     topic,
     partitions,
@@ -14,7 +35,8 @@ interface input {
     topic: string,
     partitions: number,
     message: any
-  }) => void
+  }) => void,
+  eachBatchAutoResolve: boolean,
 }
 export class DeadLetterQueueErrorProducer extends Error {
   message: any;
@@ -72,7 +94,9 @@ export class DeadLetterQueue {
     const dlqInstance = this;
     const { innerProducer } = dlqInstance
     // Return an object with all Producer methods adapted to execute a dead letter queue strategy
-    return { 
+    console.log('INNER PRODUCER======', innerProducer)
+    return {
+      ...innerProducer,
       connect() {
         return innerProducer.connect()
           .then(() => {
@@ -80,13 +104,11 @@ export class DeadLetterQueue {
           })
           .catch((e: Error) => console.log(e))
       },
-      disconnect() {
-        return innerProducer.disconnect();
-      },
       send(message: messageValue) {
         return innerProducer.connect()
           .then(() => {
             innerProducer.send({
+              ...message,
               topic: message.topic,
               messages: message.messages
             })
@@ -111,28 +133,33 @@ export class DeadLetterQueue {
     const dlqInstance = this;
     const { innerConsumer, innerProducer } = dlqInstance
     // Returns an object with all Consumer methods adapter to execute a dead letter queue strategy
+        
     return {
+      ...innerConsumer,
       connect() {
         return innerConsumer.connect().then(() => {
           dlqInstance.createDLQ();
         });
       },
-      disconnect() {
-        return innerConsumer.disconnect();
+      subscribe(input?: consumerSubscribeInput) {
+        return innerConsumer.subscribe({
+          ...input, 
+          topic: dlqInstance.topic, 
+          fromBeginning: false 
+        });
       },
-      subscribe() {
-        return innerConsumer.subscribe({ topic: dlqInstance.topic, fromBeginning: false });
-      },
-      run(input: input) {
+      run(input: consumerRunInput) {
         const { eachMessage } = input;
         return innerConsumer.run({
+          ...input,
           eachMessage: ({ topic, partitions, message }: { topic: string, partitions: number, message: any }) => {
             try {
               //If user doesn't pass in callback, DLQ simply listens and returns errors
-              if (dlqInstance.callback && dlqInstance.callback(message)) {
-                dlqInstance.callback(message)
+              if (dlqInstance.callback) {
+                if (!dlqInstance.callback(message)) throw Error;
+                eachMessage({ topic, partitions, message });
               }
-              eachMessage({ topic, partitions, message });
+
             } catch (e) {
               const newError = new DeadLetterQueueErrorConsumer(e)
               console.error(newError);

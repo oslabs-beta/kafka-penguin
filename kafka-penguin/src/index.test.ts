@@ -1,6 +1,5 @@
 import { FailFast, DeadLetterQueue, FailFastError, DeadLetterQueueErrorProducer, DeadLetterQueueErrorConsumer } from './index'
 import testClient from './clientConfig'
-import { callbackify } from 'util';
 
 // Fail Fast Tests
 describe("FailFast Tests", () => {
@@ -420,7 +419,7 @@ describe("Dead Letter Queue Tests", () => {
             }
 
             return innerConsumer.run({
-              eachMessage: ({ topic, partitions, message }) => {
+              eachMessage: ({ topic, partitions, message }: {topic: any, partitions: any, message: any}) => {
                 false;
               },
             }).catch((e: any) => expect(e).toBeInstanceOf(Error))
@@ -442,7 +441,7 @@ describe("Dead Letter Queue Tests", () => {
       })
 
     })
-    
+
   })
 })
 

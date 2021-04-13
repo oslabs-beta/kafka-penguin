@@ -17,12 +17,12 @@ const ErrorProvider: FC = ({ children }) => {
 
   const [error, changeError] = useState([]);
 
-  const backdropUpdate = useBackdropUpdateContext()
-
+  const backdropUpdate = useBackdropUpdateContext();
+  // UPDATE BACKDROP STATE
   useEffect(() => {
-    backdropUpdate.handleClose()
-  }, [error])
-  
+    backdropUpdate.handleClose();
+  }, [error]);
+  // FAILFAST POST REQUEST //
   const handleFailFast = (input: {
     message: string,
     topic: string,
@@ -38,13 +38,31 @@ const ErrorProvider: FC = ({ children }) => {
     })
       .then(data => data.json())
       .then(errors => {
-        changeError(errors)
+        changeError(errors);
+      });
+  };
+  // DEAD LETTER QUEUE POST REQUEST //
+  const handleDLQ = (input: {
+    message: string;
+    topic: string;
+    retries: number;
+    faults: number;
+    }) => {
+      const { message, topic, retries, faults } = input;
+      if (!topic || !message || faults >= retries) return;
+
+    fetch('/strategy/dlq', {
+      method: 'POST',
+      headers: { 'Content-Type': 'Application/JSON' },
+      body: JSON.stringify({ topic, message, retries, faults }),
+    })
+      .then(res => res.json())
+      .then(messages => {
+        changeError(messages)
       })
+      .catch(e => console.log(e));
   };
 
-  const handleDLQ = (e: { preventDefault: () => void; }) => {
-    e.preventDefault()
-  };
   const handleIgnore = (e: { preventDefault: () => void; }) => {
     e.preventDefault()
   };

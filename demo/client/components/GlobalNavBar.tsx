@@ -12,6 +12,8 @@ const useStyles = makeStyles((theme: Theme) =>
     landingButtons: {
       display: 'flex',
       justifyContent: 'flex-end',
+      marginRight: theme.spacing(100),
+      marginLeft: theme.spacing(100)
       },
     logo: {
       alignSelf: 'flex-start',

@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { useState, useContext, FC, createContext, useEffect } from 'react';
-import { useBackdropUpdateContext } from './BackDropContext';
-
+import { useBackdropUpdateContext } from './BackDropContext'
 
 const ErrorContext = createContext(null);
 const ErrorUpdateContext = createContext(null);
 
 const useErrorContext = () => {
-  return useContext(ErrorContext);
-};
+  return useContext(ErrorContext)
+}
 
 const useErrorUpdateContext = () => {
-  return useContext(ErrorUpdateContext);
-};
+  return useContext(ErrorUpdateContext)
+}
 
 const ErrorProvider: FC = ({ children }) => {
+
   const [error, changeError] = useState([]);
 
   const backdropUpdate = useBackdropUpdateContext();
@@ -24,21 +24,17 @@ const ErrorProvider: FC = ({ children }) => {
   }, [error]);
   // FAILFAST POST REQUEST //
   const handleFailFast = (input: {
-    message: string;
-    topic: string;
-    retries: number;
+    message: string,
+    topic: string,
+    retries: number
   }) => {
-    const { message, topic, retries } = input;
+    const { message, topic, retries } = input
     if (!topic || !message) return;
 
     fetch('/strategy/failfast', {
       method: 'POST',
       headers: { 'Content-Type': 'Application/JSON' },
-      body: JSON.stringify({
-        topic: topic,
-        message: message,
-        retries: retries,
-      }),
+      body: JSON.stringify({ topic: topic, message: message, retries: retries })
     })
       .then(data => data.json())
       .then(errors => {
@@ -67,23 +63,24 @@ const ErrorProvider: FC = ({ children }) => {
       .catch(e => console.log(e));
   };
 
-  const handleIgnore = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+  const handleIgnore = (e: { preventDefault: () => void; }) => {
+    e.preventDefault()
   };
-
+  
   return (
     <ErrorContext.Provider value={error}>
-      <ErrorUpdateContext.Provider
-        value={{
-          handleFailFast: handleFailFast,
-          handleDLQ: handleDLQ,
-          handleIgnore: handleIgnore,
-        }}
-      >
+      <ErrorUpdateContext.Provider 
+        value={
+          {
+            handleFailFast: handleFailFast,
+            handleDLQ: handleDLQ,
+            handleIgnore: handleIgnore
+          }
+      }>
         {children}
       </ErrorUpdateContext.Provider>
     </ErrorContext.Provider>
-  );
-};
+  )
+}
 
-export { ErrorProvider, useErrorContext, useErrorUpdateContext }
+export { ErrorProvider, useErrorContext, useErrorUpdateContext}

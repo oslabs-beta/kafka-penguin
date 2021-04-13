@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FailFast = exports.DeadLetterQueue = void 0;
+exports.FailFast = exports.FailFastError = exports.DeadLetterQueue = exports.DeadLetterQueueErrorConsumer = exports.DeadLetterQueueErrorProducer = void 0;
 class DeadLetterQueueErrorProducer extends Error {
     constructor(e) {
         super(e);
@@ -22,6 +22,7 @@ class DeadLetterQueueErrorProducer extends Error {
         this.retryCount = e.retryCount;
     }
 }
+exports.DeadLetterQueueErrorProducer = DeadLetterQueueErrorProducer;
 class DeadLetterQueueErrorConsumer extends Error {
     constructor(e) {
         super(e);
@@ -34,6 +35,7 @@ class DeadLetterQueueErrorConsumer extends Error {
         this.retryCount = e.retryCount;
     }
 }
+exports.DeadLetterQueueErrorConsumer = DeadLetterQueueErrorConsumer;
 class DeadLetterQueue {
     constructor(client, topic, callback) {
         this.topic = topic;
@@ -48,24 +50,18 @@ class DeadLetterQueue {
         const dlqInstance = this;
         const { innerProducer } = dlqInstance;
         // Return an object with all Producer methods adapted to execute a dead letter queue strategy
-        return {
-            connect() {
+        console.log('INNER PRODUCER======', innerProducer);
+        return Object.assign(Object.assign({}, innerProducer), { connect() {
                 return innerProducer.connect()
                     .then(() => {
                     dlqInstance.createDLQ();
                 })
                     .catch((e) => console.log(e));
             },
-            disconnect() {
-                return innerProducer.disconnect();
-            },
             send(message) {
                 return innerProducer.connect()
                     .then(() => {
-                    innerProducer.send({
-                        topic: message.topic,
-                        messages: message.messages
-                    })
+                    innerProducer.send(Object.assign(Object.assign({}, message), { topic: message.topic, messages: message.messages }))
                         // Upon error, reroute message to DLQ for the strategy topic
                         .catch((e) => {
                         innerProducer.send({
@@ -79,36 +75,30 @@ class DeadLetterQueue {
                         console.log(newError);
                     });
                 });
-            }
-        };
+            } });
     }
     consumer(groupId) {
         this.innerConsumer = this.client.consumer(groupId);
         const dlqInstance = this;
         const { innerConsumer, innerProducer } = dlqInstance;
         // Returns an object with all Consumer methods adapter to execute a dead letter queue strategy
-        return {
-            connect() {
+        return Object.assign(Object.assign({}, innerConsumer), { connect() {
                 return innerConsumer.connect().then(() => {
                     dlqInstance.createDLQ();
                 });
-            },
-            disconnect() {
-                return innerConsumer.disconnect();
-            },
-            subscribe() {
-                return innerConsumer.subscribe({ topic: dlqInstance.topic, fromBeginning: false });
+            }, subscribe(input) {
+                return innerConsumer.subscribe(Object.assign(Object.assign({}, input), { topic: dlqInstance.topic, fromBeginning: false }));
             },
             run(input) {
                 const { eachMessage } = input;
-                return innerConsumer.run({
-                    eachMessage: ({ topic, partitions, message }) => {
+                return innerConsumer.run(Object.assign(Object.assign({}, input), { eachMessage: ({ topic, partitions, message }) => {
                         try {
                             //If user doesn't pass in callback, DLQ simply listens and returns errors
-                            if (dlqInstance.callback && dlqInstance.callback(message)) {
-                                dlqInstance.callback(message);
+                            if (dlqInstance.callback) {
+                                if (!dlqInstance.callback(message))
+                                    throw Error;
+                                eachMessage({ topic, partitions, message });
                             }
-                            eachMessage({ topic, partitions, message });
                         }
                         catch (e) {
                             const newError = new DeadLetterQueueErrorConsumer(e);
@@ -126,10 +116,8 @@ class DeadLetterQueue {
                                 .then(() => console.log('kafka-penguin: Producer disconnected'))
                                 .catch((e) => console.log('Error with producing to DLQ: ', e));
                         }
-                    },
-                });
-            }
-        };
+                    } }));
+            } });
     }
     // Creates a new DLQ topic with the original topic name
     createDLQ() {
@@ -164,6 +152,7 @@ class FailFastError extends Error {
         this.retryCount = e.retryCount;
     }
 }
+exports.FailFastError = FailFastError;
 class FailFast {
     constructor(num, kafkaJSClient) {
         this.retry = num;

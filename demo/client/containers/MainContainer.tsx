@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, FC } from 'react';
+import { FC } from 'react';
 import TopicsContainer from './TopicsContainer';
 import StrategyContainer from './StrategyContainer';
 import MessageErrorContainer from './MessageErrorContainer'
@@ -7,7 +7,7 @@ import { TopicsProvider } from '../context/TopicContext'
 import { MessageProvider } from '../context/MessageContext'
 import { ErrorProvider } from '../context/ErrorContext'
 import { useBackdropContext, useBackdropUpdateContext } from '../context/BackDropContext'
-import { Container, createStyles, makeStyles, Backdrop, CircularProgress, Theme } from '@material-ui/core';
+import { Container, createStyles, makeStyles, Backdrop, CircularProgress, Theme, Typography, Divider } from '@material-ui/core';
 
 const MainContainer: FC = () => {
 
@@ -34,7 +34,12 @@ const MainContainer: FC = () => {
   const backdropUpdate = useBackdropUpdateContext()
 
   return (
+    <>
     <Container align='center'>
+      <Typography variant='h3' color='textPrimary' align='center' gutterBottom>
+        DEMO
+      </Typography>
+      <Divider variant='middle'/>
       <ErrorProvider>
        <MessageProvider>
         <MessageErrorContainer
@@ -58,6 +63,7 @@ const MainContainer: FC = () => {
         <CircularProgress color='secondary' />
       </Backdrop>
     </Container>
+    </>
   )
 }
 

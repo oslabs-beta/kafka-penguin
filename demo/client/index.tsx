@@ -7,14 +7,10 @@ import theme from './theme'
 import ParticlesBackdrop from './components/ParticlesBackdrop'
 
 ReactDOM.render(
-  <BrowserRouter>
     <ThemeProvider theme={theme}>
       {/* <Documentation /> */}
-
       <App />
-    </ThemeProvider>
-    
-  </BrowserRouter>,
+    </ThemeProvider>,
   document.getElementById('root')
 );
 

@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "webpack serve --open",
     "build": "tsc",
-    "start": "concurrently \"cross-env NODE_ENV=development webpack serve --config webpack.config.js --mode development\" \"nodemon server/server.ts\"",
+    "start": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js --hot --mode development\" \"nodemon server/server.ts\"",
     "test": "jest --detectOpenHandles --testTimeout=20000",
     "format": "prettier --write /**/*.ts{,x}"
   },
@@ -57,6 +57,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
+    "react-scroll": "^1.8.2",
     "react-showdown": "^2.3.0",
     "react-tsparticles": "^1.26.3",
     "regenerator-runtime": "^0.13.7",

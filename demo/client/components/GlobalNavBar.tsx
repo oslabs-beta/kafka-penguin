@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useState, FC } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { createStyles, makeStyles, withStyles, AppBar, Toolbar, IconButton, Button, Container, Theme, Icon } from '@material-ui/core';
-
+import { Link } from 'react-scroll'
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
     root: {
@@ -25,7 +25,7 @@ const GlobalCss = withStyles({
   "@global": {
     "html, body": {
       margin: 0,
-      padding: 0
+      padding: 0,
     },
   }})(() => null);
 
@@ -34,25 +34,41 @@ const GlobalNavBar: FC = () => {
   return (
   <div className={classes.root}>
     <GlobalCss/>
-      <AppBar position="static">
+      <AppBar>
         <Toolbar className={classes.landingButtons}>
-
-            <IconButton className={classes.button}>
-            <Icon component={ Link } to="/">
+          <IconButton className={classes.button}>
+            <Icon 
+              component={ Link } to="top"
+              activeClass='active'
+              spy={true}
+              smooth={true}
+              >
               <img src='/assets/penguin.svg'></img>
             </Icon>
-            </IconButton>
-
+          </IconButton>
           <Button 
-            className={classes.button}
-            component={ Link } to="/docs"  
-            color="inherit">Docs
+            className={classes.button}  
+            component={ Link } to="features" 
+            activeClass='active'
+            spy={true}
+            smooth={true}
+            color="inherit">
+            Features
           </Button>
           <Button 
             className={classes.button}  
-            component={ Link } to="/demo" 
+            component={ Link } to="demo" 
+            activeClass='active'
+            spy={true}
+            smooth={true}
             color="inherit">
             Demo
+          </Button>
+          <Button 
+            className={classes.button}
+            color="inherit" 
+            href="https://app.gitbook.com/@kafka-penguin-1/s/kafka-penguin/">  
+            Docs
           </Button>
           <Button 
             className={classes.button}  

@@ -7,6 +7,7 @@ import { BackdropProvider } from './context/BackDropContext';
 import GlobalNavBar from './components/GlobalNavBar'
 import { createStyles, makeStyles, Typography, Container } from '@material-ui/core';
 import LandingBody from './components/LandingBody';
+import ParticlesBackdrop from './components/ParticlesBackdrop'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -22,13 +23,15 @@ const useStyles = makeStyles(() =>
 const App: FC = () => {
   
   const classes = useStyles();
-
   return (
+    <>
     <Container className={classes.container} maxWidth='md'>
+    
       <GlobalNavBar />
+      <ParticlesBackdrop/>
       <Typography 
         variant='h1' 
-        gutterBottom>kafka-penguin
+        >kafka-penguin
         <img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img>
       </Typography> 
         <Switch>      
@@ -53,6 +56,7 @@ const App: FC = () => {
             }></Route>     
         </Switch>
     </Container>
+    </>
   )
 }
 

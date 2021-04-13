@@ -290,24 +290,20 @@ export class Ignore {
     }
   }
 
-  
   consumer(groupId: { groupId: string }) {
     this.innerConsumer = this.client.consumer(groupId);
-    const dlqInstance = this;
-    const { innerConsumer, innerProducer } = dlqInstance
-    // Returns an object with all Consumer methods adapter to execute a dead letter queue strategy
-        
+    const ignoreInstance = this;
+    const { innerConsumer, innerProducer } = ignoreInstance
+    // Returns an object with all Consumer methods adapter to execute ignore strategy
     return {
       ...innerConsumer,
       connect() {
-        return innerConsumer.connect().then(() => {
-          dlqInstance.createDLQ();
-        });
+        return innerConsumer.connect()
       },
       subscribe(input?: consumerSubscribeInput) {
         return innerConsumer.subscribe({
           ...input, 
-          topic: dlqInstance.topic, 
+          topic: ignoreInstance.topic, 
           fromBeginning: false 
         });
       },
@@ -318,48 +314,18 @@ export class Ignore {
           eachMessage: ({ topic, partitions, message }: { topic: string, partitions: number, message: any }) => {
             try {
               //If user doesn't pass in callback, DLQ simply listens and returns errors
-              if (dlqInstance.callback) {
-                if (!dlqInstance.callback(message)) throw Error;
+              if (ignoreInstance.callback) {
+                if (!ignoreInstance.callback(message)) throw Error;
                 eachMessage({ topic, partitions, message });
               }
-
             } catch (e) {
-              const newError = new DeadLetterQueueErrorConsumer(e)
-              console.error(newError);
-              innerProducer.connect()
-                .then(() => console.log('kafka-penguin: Connected to DLQ topic'))
-                .then(() => {
-                  innerProducer.send({
-                    topic: `${dlqInstance.topic}.deadLetterQueue`,
-                    messages: [message],
-                  })
-                })
-                .then(() => console.log('kafka-penguin: Message published to DLQ'))
-                .then(() => innerProducer.disconnect())
-                .then(() => console.log('kafka-penguin: Producer disconnected'))
-                .catch((e: any) => console.log('Error with producing to DLQ: ', e));
+              const newError = new IgnoreErrorConsumer(e)
+              console.error(newError); 
             }
           },
         });
       }
     }
-  }
-  // Creates a new DLQ topic with the original topic name
-  async createDLQ() {
-    const adminCreateDLQ = await this.admin.connect()
-      .then(async () => {
-        await this.admin.createTopics({
-          topics: [{
-            topic: `${this.topic}.deadLetterQueue`,
-            numPartitions: 1,
-            replicationFactor: 1,
-            replicaAssignment: [{ partition: 0, replicas: [0, 1, 2] }],
-          }],
-        });
-      })
-      .then(() => this.admin.disconnect())
-      .catch((err: any) => console.log('Error from createDLQ', err));
-    return adminCreateDLQ;
   }
 }
 

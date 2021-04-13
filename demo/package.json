@@ -24,14 +24,14 @@
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
     "scripts": {
-        "dev": "webpack serve --open",
-        "build": "webpack ./webpack.config.js",
-        "build2": "webpack",
-        "start": "ts-node ./server/server.ts",
-        "test": "jest --detectOpenHandles",
-        "format": "prettier --write src/**/*.ts{,x}",
-        "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
-        "tsc": "tsc -p tsconfig.json"
+      "dev": "webpack serve --open",
+      "build": "webpack ./webpack.config.js",
+      "build2": "webpack",
+      "start": "ts-node ./server/server.ts",
+      "test": "jest --detectOpenHandles",
+      "format": "prettier --write src/**/*.ts{,x}",
+      "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+      "tsc": "tsc -p tsconfig.json"
     },
     "testMatch": [
       "**/__tests__/*.+(ts|tsx|js)"
@@ -52,7 +52,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "highlight.js": "^10.7.2",
-    "kafka-penguin": "^0.2.6",
+    "kafka-penguin": "^0.2.8",
     "kafkajs": "^1.15.0",
     "nodemon": "^2.0.7",
     "prop-types": "^15.7.2",

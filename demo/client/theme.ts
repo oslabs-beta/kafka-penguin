@@ -1,11 +1,10 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { cyan, amber } from '@material-ui/core/colors'
 
 const theme = createMuiTheme({
   // spacing: factor => `${0.25 * factor}rem`,
   palette: {
     primary: {
-      light: '##72cff8',
+      light: '#72cff8',
       main: '#4fc3f7',
       dark: '#3788ac',
       contrastText: '#fff',

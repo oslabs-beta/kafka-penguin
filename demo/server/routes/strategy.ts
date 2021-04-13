@@ -16,8 +16,8 @@ router.post(
   DLQController.dlqProduce,
   DLQController.dlqConsume,
   (req, res) => {
-    // return res.status(200).json(res.locals.messages);
+    return res.status(200).json(res.locals.error)
   }
-);
+)
 
-export default router;
+export default router

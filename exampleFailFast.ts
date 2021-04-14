@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { FailFast } from 'kafka-penguin';
+import { FailFast } from './kafka-penguin/src/index';
 
 const FailFastClient = require('./clientConfig.ts');
 

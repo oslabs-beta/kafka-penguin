@@ -11,5 +11,7 @@
       "dist",
       "node_modules",
       "../demo",
+      "./src/failfast.test.ts",
+      "./src/deadletterqueue.ts"
   ]
 }

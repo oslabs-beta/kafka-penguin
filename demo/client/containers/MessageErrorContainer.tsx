@@ -17,10 +17,14 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'flex-start',
+      paddingTop: '3vh',
+      // minWidth: '10vw'
     },
     containerHorizontal: {
       display: 'flex',
       justifyContent:'center',
+      flexGrow: 1
+      // flexWrap: 'wrap'
     }
   })
 )
@@ -40,6 +44,7 @@ const MessageErrorContainer: FC = () => {
         <Typography 
           variant='h5' 
           align='center'
+          color='textPrimary'
           gutterBottom
         >Publish
         </Typography>
@@ -50,6 +55,7 @@ const MessageErrorContainer: FC = () => {
         <Typography 
           variant='h5' 
           align='center'
+          color='textPrimary'
           gutterBottom
         >Log
         </Typography>

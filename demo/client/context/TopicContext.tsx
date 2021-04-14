@@ -42,9 +42,17 @@ const TopicsProvider: FC = ({ children }) => {
       })
   };
 
+  const clearTopics = () => {
+    changeTopicsArray([]);
+  }
+
   return (
     <TopicsContext.Provider value={topicsArray}>
-      <TopicsUpdateContext.Provider value={getTopics}>      
+      <TopicsUpdateContext.Provider 
+        value={{
+          getTopics: getTopics,
+          clearTopics: clearTopics
+        }}>      
        {children}
       </TopicsUpdateContext.Provider>
     </TopicsContext.Provider>

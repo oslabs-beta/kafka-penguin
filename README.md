@@ -6,9 +6,11 @@
 
 ### About
 
+
 Kafka-Penguin is an easy-to-use, lightweight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast.  
   
 For more information on KafkaJS, check out [Getting Started](https://kafka.js.org/docs/getting-started).
+
 
 Accelerated by [OS Labs](https://github.com/oslabs-beta/) and developed by [Ziyad El Baz](https://github.com/zelbaz946), [Kushal Talele](https://github.com/ktrane1), [Timeo Williams](https://github.com/timeowilliams) and [Ausar English](https://github.com/ausarenglish).
 
@@ -56,12 +58,28 @@ producer.connect()
   .catch((e: any) => console.log("error: ", e.message))
 ```
 
-### API
 
-You may use any of the kafka-penguin methods:
+## Strategies/Documentation
 
-#### .FailFast\(retry, Kafka-client\)
+[FailFast  ](strategies/readme/strategies-readme-fail-fast.md)
 
-`retry`: Pass in the number of retries, which will be used to retry connections and API calls to Kafka \(when using producers or consumers\).
+[Ignore](strategies/readme/strategies-readme-ignore.md)
 
-`Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username, and password.  
+[Dead Letter Queue](strategies/readme/strategies-readme-dlq.md)
+
+{% page-ref page="./" %}
+
+{% page-ref page="./" %}
+
+
+
+## **Contributors**
+
+[Ausar English](https://www.linkedin.com/in/ausarenglish) [@ausarenglish](https://github.com/ausarenglish)
+
+[Kushal Talele](https://www.linkedin.com/in/kushal-talele-29040820b/) [@ktrane1](https://github.com/ktrane1)
+
+[Timeo Williams](https://www.linkedin.com/in/timeowilliams/) [@timeowilliams](https://github.com/timeowilliams)
+
+[Ziyad El Baz](https://www.linkedin.com/in/ziyadelbaz) [@zelbaz946](https://github.com/zelbaz946)
+

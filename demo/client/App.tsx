@@ -41,7 +41,7 @@ const App: FC = () => {
     <>
       <Container className={classes.container} maxWidth="lg">
         <GlobalNavBar />
-        {/* <ParticlesBackdrop/> */}
+        <ParticlesBackdrop />
         <Container className={classes.titleBox} component={Element} name="top">
           <Typography
             variant="h1"

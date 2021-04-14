@@ -49,7 +49,7 @@
     "kafkajs": "^1.15.0",
     "nodemon": "^2.0.7",
     "prop-types": "^15.7.2",
-    "puppeteer": "^2.0.0",
+    "puppeteer": "^2.1.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",

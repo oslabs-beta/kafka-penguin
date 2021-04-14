@@ -63,5 +63,37 @@ You may use any of the kafka-penguin methods:
 #### .FailFast\(retry, Kafka-client\)
 
 `retry`: Pass in the number of retries, which will be used to retry connections and API calls to Kafka \(when using producers or consumers\).
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 4f3b2d4ab77284eb35ba8283c6fa4f8337dcbff3
 
 `Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username, and password.  
+=======
+
+## Strategies/Documentation
+
+[FailFast  ](strategies/readme/strategies-readme-fail-fast.md)
+
+[Ignore](strategies/readme/strategies-readme-ignore.md)
+
+[Dead Letter Queue](strategies/readme/strategies-readme-dlq.md)
+
+## **Contributors**
+
+[Ausar English](https://www.linkedin.com/in/ausarenglish) [@ausarenglish](https://github.com/ausarenglish)
+
+[Kushal Talele](https://www.linkedin.com/in/kushal-talele-29040820b/) [@ktrane1](https://github.com/ktrane1)
+
+[Timeo Williams](https://www.linkedin.com/in/timeowilliams/) [@timeowilliams](https://github.com/timeowilliams)
+
+[Ziyad El Baz](https://www.linkedin.com/in/ziyadelbaz) [@zelbaz946](https://github.com/zelbaz946)
+
+<<<<<<< HEAD
+>>>>>>> 0e05038572ddbb241f8dafe8815b1ed5e95a5e3c
+
+`Kafka-client` : Pass in the configured KafkaJS client w/ specified brokers, username, and password.  
+=======
+
+>>>>>>> 4f3b2d4ab77284eb35ba8283c6fa4f8337dcbff3

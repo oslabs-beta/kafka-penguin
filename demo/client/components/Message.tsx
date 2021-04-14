@@ -68,7 +68,27 @@ const Message: FC = () => {
         align="center"
         gutterBottom
       >
-        Set retries
+        Set retries / Repeats
+      </Typography>
+      <Slider
+        defaultValue={2}
+        onChange={(event, value: number) => {
+          messageUpdate.changeFaults(value);
+        }}
+        aria-labelledby="discrete-slider"
+        valueLabelDisplay="auto"
+        step={1}
+        marks
+        min={1}
+        max={5}
+      />
+      <Typography
+        variant="body1"
+        color="textSecondary"
+        align="center"
+        gutterBottom
+      >
+        No. of faults for DLQ
       </Typography>
     </form>
   );

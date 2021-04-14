@@ -72,7 +72,7 @@ const dlqProduce: RequestHandler = (req, res, next) => {
       DLQProducer.send({
         topic,
         messages: messagesArray,
-      }).catch((e: Error) => console.log('this is error in try', e.reference));
+      }).catch((e: Error) => console.log('this is error in try', e));
     })
     .then(DLQProducer.disconnect())
     .then(admin.connect())

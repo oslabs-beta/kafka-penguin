@@ -1,33 +1,21 @@
+
 # Create name
 name: CI/CD with Github Actions
 
 # Trigger the workflow on push or pull request,
 # but only for the main branch
-<<<<<<< HEAD
-on: 
-  push:
-    branches:
-      -main
-  pull_request:
-    branches:
-      - main
-=======
 on: [push, pull_request]
->>>>>>> 0cf96479230d05192be90d8e7eeea911ec92198e
 # One main job: to run testing suite after every potential PR.
  # Enter series of terminal CMD's to test application
 jobs:
   build:
         runs-on: ubuntu-latest
-<<<<<<< HEAD
-=======
         defaults:
           run:
             working-directory: ./demo
->>>>>>> 0cf96479230d05192be90d8e7eeea911ec92198e
         strategy:
           matrix:
-            node-version: [12.x, 14.x]
+            node-version: [12.x]
 
         steps:
            #Checkout the source code of our github repo
@@ -39,13 +27,9 @@ jobs:
         - name: npm install, build and test
           run:  |
             npm install
-<<<<<<< HEAD
-            npm run build --if-present
             npm test
-=======
-            npm test
+          env: 
+           KAFKA_BOOTSTRAP_SERVER: ${{secrets.KAFKA_BOOTSTRAP_SERVER}}
+           KAFKA_USERNAME: ${{secrets.KAFKA_USERNAME}}
+           KAFKA_PASSWORD: ${{secrets.KAFKA_PASSWORD}}
         #npm run build --if-present
-            
->>>>>>> 0cf96479230d05192be90d8e7eeea911ec92198e
-
-

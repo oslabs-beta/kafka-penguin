@@ -38,7 +38,7 @@ interface consumerRunInput {
   }) => void,
   eachBatchAutoResolve: boolean,
 }
-class DeadLetterQueueErrorProducer extends Error {
+export class DeadLetterQueueErrorProducer extends Error {
   message: any;
   reference: any;
   name: any;
@@ -56,7 +56,7 @@ class DeadLetterQueueErrorProducer extends Error {
     this.retryCount = e.retryCount;
   }
 }
-class DeadLetterQueueErrorConsumer extends Error {
+export class DeadLetterQueueErrorConsumer extends Error {
   message: any;
   reference: any;
   name: any;
@@ -104,7 +104,6 @@ export class DeadLetterQueue {
           })
           .catch((e: Error) => console.log(e))
       },
-
       send(message: messageValue) {
         return innerProducer.connect()
           .then(() => {
@@ -207,7 +206,7 @@ interface messageValue {
   topic: string,
   messages: object[],
 }
-class FailFastError extends Error {
+export class FailFastError extends Error {
   message: any;
   reference: any;
   name: any;

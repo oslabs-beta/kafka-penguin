@@ -8,15 +8,33 @@ const ParticlesBackdrop: FC = () => {
     <div
     style={{
       position: "absolute",
-      top: 0,
-      left: 0,
-      minWidth: "100vw",
-      minHeight: "100vh",
-      zIndex: -10
+      // top: 0,
+      // left: 0,
+      // minWidth: "98vw",
+      // minHeight: "98vh",
+      // width: '100vw',
+      // height: '100vh',
+      zIndex: -10,
+      margin: 0,
+      padding: 0,
+      overflowX: 'hidden'
     }}
   >
     <Particles
       id="tsparticles"
+      style={{
+        position: "absolute",
+        // top: 0,
+        // left: 0,
+        // minWidth: "98vw",
+        // minHeight: "98vh",
+        // width: '100vw',
+        // height: '100vh',
+        zIndex: -10,
+        margin: 0,
+        padding: 0,
+        overflowX: 'hidden'
+      }}
       options={{
         fullScreen: {
           enable: true,
@@ -34,7 +52,7 @@ const ParticlesBackdrop: FC = () => {
             value: ['#72cff8', '#4fc3f7']
           },
           shape: {
-            type: "edge",
+            type: "circle",
             stroke: {
               width: 0,
               color: "#f4f4f4"

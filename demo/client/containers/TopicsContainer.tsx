@@ -21,7 +21,7 @@ const useStyles = makeStyles(() =>
 
 const TopicsContainer: FC = () => {
   const backdropUpdate = useBackdropUpdateContext()
-  const getTopics = useTopicsContextUpdate()
+  const topicsUpdate = useTopicsContextUpdate()
   const topics = useTopicsContext()
   const topicsMapped = topics.map((topicInfo, i) => {
     return <Topic key={i} topicInfo={topicInfo} id={i} />
@@ -38,9 +38,18 @@ const TopicsContainer: FC = () => {
           variant='outlined'
           onClick={() => {
             backdropUpdate.handleToggle();
-            getTopics()
+            topicsUpdate.getTopics()
           }}
         >Load Demo Topics
+        </Button>
+        <Button
+          className={classes.button}
+          color='secondary'
+          variant='outlined'
+          onClick={() => {
+            topicsUpdate.clearTopics()
+          }}
+        >Clear Topics
         </Button>
       </Container>
       <Container className = {classes.container}>

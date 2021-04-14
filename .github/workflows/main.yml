@@ -19,9 +19,8 @@ jobs:
           matrix:
             node-version: [12.x, 14.x]
 
-    # Install node and then install all application dependencies
         steps:
-      #Checkout the source code of our github repo
+           #Checkout the source code of our github repo
         - uses: actions/checkout@v2
         - name: Set up Node 
           uses: actions/setup-node@v1
@@ -34,10 +33,3 @@ jobs:
             npm test
 
 
-
-
-
-
-# Check setting that if the tests fail, merging
-# the PR will not be possible.
-#https://docs.github.com/en/github/administering-a-repository/managing-a-branch-protection-rule

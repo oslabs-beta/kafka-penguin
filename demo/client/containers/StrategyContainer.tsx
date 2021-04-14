@@ -59,7 +59,12 @@ const StrategyContainer: FC = () => {
         className={classes.button}
         color="primary"
         variant="contained"
-        onClick={handleClicks.handleIgnore}
+        onClick={() => {
+          if (message.message
+            && message.topic
+            && message.retries > message.faults) backdropUpdate.handleToggle();
+          handleClicks.handleIgnore(message);
+        }}
       >
         Ignore
       </Button>

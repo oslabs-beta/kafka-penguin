@@ -9,6 +9,7 @@ import { BackdropProvider } from './context/BackDropContext';
 import GlobalNavBar from './components/GlobalNavBar';
 import LandingBody from './components/LandingBody';
 import TeamContainer from './containers/TeamContainer';
+import GettingStarted from './components/GettingStarted';
 import ParticlesBackdrop from './components/ParticlesBackdrop';
 
 const useStyles = makeStyles(() => createStyles({
@@ -69,6 +70,9 @@ const App: FC = () => {
           <BackdropProvider>
             <MainContainer />
           </BackdropProvider>
+        </Container>
+        <Container className={classes.segment} component={Element} name="getting started">
+          <GettingStarted />
         </Container>
         <Container className={classes.segment} component={Element} name="team">
           <TeamContainer />

@@ -20,43 +20,43 @@ const useStyles = makeStyles(() => createStyles({
 }));
 
 const TopicsContainer: FC = () => {
-  const backdropUpdate = useBackdropUpdateContext()
-  const topicsUpdate = useTopicsContextUpdate()
-  const topics = useTopicsContext()
-  const topicsMapped = topics.map((topicInfo, i) => {
-    return <Topic key={i} topicInfo={topicInfo} id={i} />
-  })
+  const backdropUpdate = useBackdropUpdateContext();
+  const topicsUpdate = useTopicsContextUpdate();
+  const topics = useTopicsContext();
+  const topicsMapped = topics.map((topicInfo, i) => <Topic key="topic" topicInfo={topicInfo} id={i} />);
 
   const classes = useStyles();
 
-  return (  
+  return (
     <Container>
-      <Container>
+      <Container className={classes.topicsContainer}>
         <Button
           className={classes.button}
-          color='secondary'
-          variant='outlined'
+          color="secondary"
+          variant="outlined"
           onClick={() => {
             backdropUpdate.handleToggle();
-            topicsUpdate.getTopics()
+            topicsUpdate.getTopics();
           }}
-        >Load Demo Topics
+        >
+          Load Demo Topics
         </Button>
         <Button
           className={classes.button}
-          color='secondary'
-          variant='outlined'
+          color="secondary"
+          variant="outlined"
           onClick={() => {
-            topicsUpdate.clearTopics()
+            topicsUpdate.clearTopics();
           }}
-        >Clear Topics
+        >
+          Clear Topics
         </Button>
       </Container>
-      <Container className = {classes.topicsContainer}>
-       {topicsMapped}
-      </Container>  
+      <Container className={classes.topicsContainer}>
+        {topicsMapped}
+      </Container>
     </Container>
-  )
-}
+  );
+};
 
 export default TopicsContainer;

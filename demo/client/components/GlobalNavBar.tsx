@@ -87,6 +87,18 @@ const GlobalNavBar: FC = () => {
           </Button>
           <Button
             className={classes.button}
+            component={Link}
+            to="getting started"
+            activeClass="active"
+            spy
+            offset={-75}
+            smooth
+            color="inherit"
+          >
+            Getting Started
+          </Button>
+          {/* <Button
+            className={classes.button}
             color="inherit"
             href="https://app.gitbook.com/@kafka-penguin-1/s/kafka-penguin/"
           >
@@ -98,7 +110,7 @@ const GlobalNavBar: FC = () => {
             href="https://github.com/oslabs-beta/kafka-penguin"
           >
             Github
-          </Button>
+          </Button> */}
         </Toolbar>
       </AppBar>
     </div>

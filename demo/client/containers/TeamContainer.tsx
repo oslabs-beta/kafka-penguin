@@ -1,22 +1,22 @@
 import React, { FC } from 'react';
 import {
-  makeStyles, createStyles, Container, Divider, Theme, Typography,
+  makeStyles, createStyles, Container, Divider, Typography,
 } from '@material-ui/core';
 import TeamMember from '../components/TeamMember';
 
 const TeamContainer: FC = () => {
   const useStyles = makeStyles(() => createStyles({
     containerHorizontal: {
+      height: '80vh',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      alignContent: 'center',
       justifyContent: 'center',
-      paddingTop: '3vh',
     },
     containerVertical: {
       display: 'flex',
       alignItems: 'center',
-      // justifyContent: 'space-around',
       justifyContent: 'center',
 
     },
@@ -53,7 +53,7 @@ const TeamContainer: FC = () => {
       <Typography variant="h3" color="textPrimary" align="center" gutterBottom>
         TEAM
       </Typography>
-      <Divider variant="middle"/>
+      <Divider variant="middle" />
       <Container className={classes.containerHorizontal}>
         <Container className={classes.containerVertical}>
           <TeamMember details={timeo} />

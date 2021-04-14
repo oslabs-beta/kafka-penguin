@@ -11,7 +11,7 @@ const useMessageContext = () => useContext(MessageContext);
 const useMesageUpdateContext = () => useContext(MessageUpdateContext);
 
 interface Props {
-  children: FC
+  children: any
 }
 
 const MessageProvider: FC<Props> = ({ children } : Props) => {

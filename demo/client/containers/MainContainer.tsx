@@ -13,10 +13,18 @@ import { useBackdropContext, useBackdropUpdateContext } from '../context/BackDro
 
 const MainContainer: FC = () => {
   const useStyles = makeStyles((theme: Theme) => createStyles({
+    wrapper: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignContent: 'center',
+    },
     container: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      alignContent: 'center',
       flexDirection: 'column',
     },
     button: {
@@ -34,14 +42,26 @@ const MainContainer: FC = () => {
 
   return (
     <>
-      <Container align="center">
+      <Container className={classes.wrapper}>
         <Typography variant="h3" color="textPrimary" align="center" gutterBottom>
           DEMO
         </Typography>
         <Divider variant="middle" />
+        <Typography variant="h6" color="textSecondary" gutterBottom>
+          Trigger errors to see kafka-penguin in action
+        </Typography>
+        <Typography color="textSecondary">
+          Errors can be triggered by publishing to a non-existent
+          topic or prescribing a number of faults.
+        </Typography>
+        <Typography color="textSecondary" gutterBottom>
+          Enter in a topic, message and choose your strategy to get started.
+        </Typography>
         <ErrorProvider>
           <MessageProvider>
-            <MessageErrorContainer />
+            <Container className={classes.container}>
+              <MessageErrorContainer />
+            </Container>
             <Container className={classes.container}>
               <StrategyContainer />
             </Container>

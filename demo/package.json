@@ -49,7 +49,6 @@
     "kafka-penguin": "^0.2.8",
     "kafkajs": "^1.15.0",
     "nodemon": "^2.0.7",
-    "prismjs": "^1.23.0",
     "prop-types": "^15.7.2",
     "puppeteer": "^2.0.0",
     "react": "^16.14.0",
@@ -61,8 +60,6 @@
     "react-tsparticles": "^1.26.3",
     "regenerator-runtime": "^0.13.7",
     "set-interval": "^2.1.2",
-    "stream-browserify": "^3.0.0",
-    "tls": "0.0.1",
     "ts-loader": "^8.0.18",
     "ts-node": "^9.1.1",
     "typescript": "^3.0.0",
@@ -113,8 +110,5 @@
     "webpack": "^5.28.0",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
-  },
-  "browsers": {
-    "zlib": false
   }
 }

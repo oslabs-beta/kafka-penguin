@@ -5,7 +5,7 @@
 ## Strategies
 
 * [Content](strategies/readme/README.md)
-  * [FailFast](strategies/readme/strategies-readme-fail-fast.md)
-  * [Dead Letter Queue](strategies/readme/strategies-readme-dlq.md)
+  * [FailFast](strategies/readme/failfast.md)
+  * [Dead Letter Queue](strategies/readme/dead-letter-queue.md)
   * [Ignore](strategies/readme/strategies-readme-ignore.md)
 

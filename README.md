@@ -1,16 +1,12 @@
-
-<p align="center"><img src="./demo/client/assets/penguin.svg" width='500' style="margin-top: 10px; margin-bottom: -10px;"></p>
-
+# Home
 
 ## Kafka-Penguin
 
 ### About
 
+Kafka-Penguin is an easy-to-use, lightweight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast.
 
-Kafka-Penguin is an easy-to-use, lightweight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast.  
-  
 For more information on KafkaJS, check out [Getting Started](https://kafka.js.org/docs/getting-started).
-
 
 Accelerated by [OS Labs](https://github.com/oslabs-beta/) and developed by [Ziyad El Baz](https://github.com/zelbaz946), [Kushal Talele](https://github.com/ktrane1), [Timeo Williams](https://github.com/timeowilliams) and [Ausar English](https://github.com/ausarenglish).
 
@@ -58,20 +54,17 @@ producer.connect()
   .catch((e: any) => console.log("error: ", e.message))
 ```
 
-
 ## Strategies/Documentation
 
-[FailFast  ](strategies/readme/strategies-readme-fail-fast.md)
+[FailFast ](https://github.com/timeowilliams/kafka-penguin/tree/b0ca78adbe9f7b4dbb2c4ccd905139ff491f8efa/strategies/readme/strategies-readme-fail-fast.md)
 
 [Ignore](strategies/readme/strategies-readme-ignore.md)
 
-[Dead Letter Queue](strategies/readme/strategies-readme-dlq.md)
+[Dead Letter Queue](https://github.com/timeowilliams/kafka-penguin/tree/b0ca78adbe9f7b4dbb2c4ccd905139ff491f8efa/strategies/readme/strategies-readme-dlq.md)
 
 {% page-ref page="./" %}
 
 {% page-ref page="./" %}
-
-
 
 ## **Contributors**
 

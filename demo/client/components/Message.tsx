@@ -7,6 +7,10 @@ import { useMesageUpdateContext } from '../context/MessageContext';
 
 const useStyles = makeStyles(() => createStyles({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
     '& .MuiTextField-root': {
       // margin: theme.spacing(1),
       width: '25vw',

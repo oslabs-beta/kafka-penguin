@@ -12,7 +12,7 @@ const useErrorContext = () => useContext(ErrorContext);
 const useErrorUpdateContext = () => useContext(ErrorUpdateContext);
 
 interface Props {
-  children: FC
+  children: any
 }
 
 const ErrorProvider: FC = ({ children } : Props) => {
@@ -68,8 +68,29 @@ const ErrorProvider: FC = ({ children } : Props) => {
       .catch((e) => console.log(e));
   };
 
-  const handleIgnore = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
+  const handleIgnore = (input: {
+    message: string;
+    topic: string;
+    retries: number;
+    faults: number;
+    }) => {
+    const {
+      message, topic, retries, faults,
+    } = input;
+    if (!topic || !message || faults >= retries) return;
+
+    fetch('/strategy/ignore', {
+      method: 'POST',
+      headers: { 'Content-Type': 'Application/JSON' },
+      body: JSON.stringify({
+        topic, message, retries, faults,
+      }),
+    })
+      .then((res) => res.json())
+      .then((messages) => {
+        changeError(messages);
+      })
+      .catch((e) => console.log(e));
   };
 
   return (

@@ -11,7 +11,7 @@ const useBackdropContext = () => useContext(BackdropContext);
 const useBackdropUpdateContext = () => useContext(BackdropUpdateContext);
 
 interface Props {
-  children: FC
+  children: any
 }
 
 const BackdropProvider: FC = ({ children } : Props) => {

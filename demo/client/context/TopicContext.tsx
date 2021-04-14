@@ -12,7 +12,7 @@ const useTopicsContext = () => useContext(TopicsContext);
 const useTopicsContextUpdate = () => useContext(TopicsUpdateContext);
 
 interface Props {
-  children: FC
+  children: any
 }
 
 const TopicsProvider: FC<Props> = ({ children } : Props) => {

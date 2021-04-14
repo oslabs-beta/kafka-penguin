@@ -51,6 +51,7 @@ const GlobalNavBar: FC = () => {
             component={ Link } to="features" 
             activeClass='active'
             spy={true}
+            offset={-75}
             smooth={true}
             color="inherit">
             Features
@@ -60,6 +61,7 @@ const GlobalNavBar: FC = () => {
             component={ Link } to="demo" 
             activeClass='active'
             spy={true}
+            offset={-75}
             smooth={true}
             color="inherit">
             Demo

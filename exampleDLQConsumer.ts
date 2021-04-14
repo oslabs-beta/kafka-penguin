@@ -9,7 +9,9 @@ const topic = 'test-topic-DLQ';
 // The callback must return a boolean value
 const callback = (message) => {
   try {
-    JSON.parse(message.value);
+    if (typeof message.value === 'string') {
+      return true;
+    }
   } catch (e) {
     return false;
   }

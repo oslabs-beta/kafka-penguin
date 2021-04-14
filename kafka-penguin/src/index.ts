@@ -399,7 +399,7 @@ interface consumerSubscribeInput {
   rackId?: String
 }
 
-export default class Ignore {
+export class Ignore {
   client: any;
 
   topic: string;
@@ -480,17 +480,17 @@ export default class Ignore {
             }
           ) => {
             try {
-              // If user doesn't pass in callback, DLQ simply listens and returns errors
+              // If user doesn't pass in callback
               if (ignoreInstance.callback) {
                 if (!ignoreInstance.callback(message)) throw Error;
                 eachMessage({ topic, partitions, message });
               }
             } catch (e) {
               const newError = new IgnoreErrorConsumer(e);
-              console.error(newError);
+              console.error("kafka Error:", newError);
             }
           },
-        });
+        })
       },
     };
   }

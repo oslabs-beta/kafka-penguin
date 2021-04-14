@@ -4,7 +4,7 @@ import { DeadLetterQueue } from 'kafka-penguin'
 
 // This example simulates an error where the producer sends to a bad topic
 const topicGood = 'test-topic-DLQ';
-const topicBad = "topic-non-existent"
+const topicBad = 'topic-non-existent';
 
 // Set up the Dead Letter Queue (DLQ) strategy with a configured KafkaJS client, a topic, and a callback that evaluates to a boolean
 const exampleDLQProducer = new DeadLetterQueue(producerClientDLQ, topicGood, true);

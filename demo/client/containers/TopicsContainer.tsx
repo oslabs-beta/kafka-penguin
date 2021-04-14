@@ -7,11 +7,11 @@ import { createStyles, makeStyles, Container, Button } from '@material-ui/core';
 
 const useStyles = makeStyles(() =>
   createStyles({
-    topicsContainer: {
+    container: {
       display: 'flex',
-      flexWrap: 'wrap',
       alignItems: 'center',
       justifyContent: 'center',
+
     },
     button: {
       margin: '1rem 1rem 1rem 1rem'
@@ -21,7 +21,7 @@ const useStyles = makeStyles(() =>
 
 const TopicsContainer: FC = () => {
   const backdropUpdate = useBackdropUpdateContext()
-  const getTopics = useTopicsContextUpdate()
+  const topicsUpdate = useTopicsContextUpdate()
   const topics = useTopicsContext()
   const topicsMapped = topics.map((topicInfo, i) => {
     return <Topic key={i} topicInfo={topicInfo} id={i} />
@@ -31,19 +31,28 @@ const TopicsContainer: FC = () => {
 
   return (  
     <Container>
-      <Container>
+      <Container className={classes.container}>
         <Button
           className={classes.button}
           color='secondary'
           variant='outlined'
           onClick={() => {
             backdropUpdate.handleToggle();
-            getTopics()
+            topicsUpdate.getTopics()
           }}
         >Load Demo Topics
         </Button>
+        <Button
+          className={classes.button}
+          color='secondary'
+          variant='outlined'
+          onClick={() => {
+            topicsUpdate.clearTopics()
+          }}
+        >Clear Topics
+        </Button>
       </Container>
-      <Container className = {classes.topicsContainer}>
+      <Container className = {classes.container}>
        {topicsMapped}
       </Container>  
     </Container>

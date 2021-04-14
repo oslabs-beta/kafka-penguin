@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { FC } from 'react';
-import { Switch, Route} from 'react-router-dom';
-import DocsContainer from './containers/DocsContainer'
 import { MainContainer } from './containers/MainContainer';
 import { BackdropProvider } from './context/BackDropContext';
 import GlobalNavBar from './components/GlobalNavBar'
 import { createStyles, makeStyles, Typography, Container } from '@material-ui/core';
 import LandingBody from './components/LandingBody';
+import ParticlesBackdrop from './components/ParticlesBackdrop'
+import { Element } from 'react-scroll'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -16,43 +16,54 @@ const useStyles = makeStyles(() =>
       justifyContent: 'flex-end',
       flexDirection: 'column',
     },
+    titleBox: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingTop: '30vh',
+      paddingBottom: '15vh'
+    },
+    segment: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingTop: '5vh',
+      paddingBottom: '5vh'
+    }
   })
 );
 
 const App: FC = () => {
   
   const classes = useStyles();
-
   return (
-    <Container className={classes.container} maxWidth='md'>
+    <>
+   
+    <Container className={classes.container} maxWidth='lg'>    
       <GlobalNavBar />
-      <Typography 
-        variant='h1' 
-        gutterBottom>kafka-penguin
-        <img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img>
-      </Typography> 
-        <Switch>      
-          <Route 
-            path='/demo' 
-            component={ () => {
-                return (
-                <BackdropProvider>
-                  <MainContainer />
-                </BackdropProvider>  
-            )
-            }}></Route>   
-          <Route 
-            path="/docs" 
-            component={
-              () => <DocsContainer/>
-          }></Route>      
-          <Route 
-            path="/" 
-            component={
-              () => <LandingBody/>
-            }></Route>     
-        </Switch>
+      {/* <ParticlesBackdrop/> */}
+      <Container className={classes.titleBox} component={ Element } name='top'>
+        <Typography 
+          variant='h1'
+          align='center'
+          color='textPrimary'
+          gutterBottom 
+          >kafka-penguin      
+        </Typography> 
+        <img style={{height: '30vh', paddingBottom:'5vh'}} src='/assets/penguin.svg'></img>
+      </Container>
+      <Container className={classes.segment} component={ Element } name='features'>      
+        <LandingBody/>        
+      </Container>
+      <Container className={classes.segment} component={ Element } name='demo'>
+        <BackdropProvider>
+          <MainContainer />
+        </BackdropProvider>  
+      </Container>
     </Container>
+    </>
   )
 }
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { RequestHandler } from 'express';
 import { Kafka, logLevel } from 'kafkajs';
 import { DeadLetterQueue } from 'kafka-penguin';
@@ -9,7 +8,7 @@ dotenv.config();
 const ERROR_LOG = [];
 
 const MyLogCreator = (logLevel) => ({
-  namespace, label, log,
+  namespace, level, label, log,
 }) => {
   // also availabe on log object => timestamp, logger, message and more
   const { error, correlationId } = log;
@@ -40,7 +39,7 @@ const dlqProduce: RequestHandler = (req, res, next) => {
 
   const messagesArray = [];
   // create messages array with specified number of faults
-  for (let i = 0; i < retries; i += 1) {
+  for (let i = 0; i < retries; i++) {
     if (i < faults) messagesArray.push({ key: 'test', value: 'fault' });
     else {
       messagesArray.push({
@@ -50,8 +49,8 @@ const dlqProduce: RequestHandler = (req, res, next) => {
     }
   }
 
-  const cb = (inputMessage: { value: Buffer }) => {
-    if (inputMessage.value.toString() === 'fault') {
+  const cb = (message) => {
+    if (message.value.toString() === 'fault') {
       return false;
     } return true;
   };
@@ -72,7 +71,7 @@ const dlqProduce: RequestHandler = (req, res, next) => {
       DLQProducer.send({
         topic,
         messages: messagesArray,
-      }).catch((e: Error) => console.log('this is error in try', e));
+      }).catch((e) => console.log('this is error in try', e.reference));
     })
     .then(DLQProducer.disconnect())
     .then(admin.connect())
@@ -104,7 +103,7 @@ const dlqConsume: RequestHandler = (req, res, next) => {
     .then(() => {
       const latestOffset = Number(res.locals.latestOffset);
       consumer.run({
-        eachMessage: ({ topic, message }) => {
+        eachMessage: ({ topic, partitions, message }) => {
           const messageOffset = Number(message.offset);
 
           if (messageOffset >= latestOffset - retries) {
@@ -116,7 +115,7 @@ const dlqConsume: RequestHandler = (req, res, next) => {
             res.locals.messages = messageLog;
             consumer.disconnect()
               .then(() => res.status(200).json(res.locals.messages))
-              .catch((e: { message: any; }) => next({
+              .catch((e) => next({
                 message: `Error implementing Dead Letter Queue strategy while consuming messages, consumer side: ${e.message}`,
                 error: e,
               }));
@@ -124,7 +123,7 @@ const dlqConsume: RequestHandler = (req, res, next) => {
         },
       });
     })
-    .catch((e: Error) => next({
+    .catch((e) => next({
       message: `Error implementing Dead Letter Queue strategy, consumer side: ${e.message}`,
       error: e,
     }));

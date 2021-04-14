@@ -18,6 +18,7 @@ const MessageProvider: FC<Props> = ({ children } : Props) => {
   const [message, changeMessage] = useState('');
   const [topic, changeTopic] = useState('');
   const [retries, changeRetries] = useState(2);
+  const [faults, changeFaults] = useState(2);
 
   return (
     <MessageContext.Provider
@@ -26,6 +27,7 @@ const MessageProvider: FC<Props> = ({ children } : Props) => {
           message,
           topic,
           retries,
+          faults,
         }
       }
     >
@@ -35,6 +37,7 @@ const MessageProvider: FC<Props> = ({ children } : Props) => {
             changeMessage,
             changeTopic,
             changeRetries,
+            changeFaults,
           }
         }
       >

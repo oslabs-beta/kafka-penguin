@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { DeadLetterQueue } from 'kafka-penguin';
+import { DeadLetterQueue } from './index';
 
 const producerClientDLQ = require('./clientConfig.ts');
 

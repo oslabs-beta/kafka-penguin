@@ -16,14 +16,14 @@ const theme = createMuiTheme({
       contrastText: '#000',
     },
     background: {
-      default: '#f4f4f4'
+      default: '#f4f4f4',
     },
     text: {
       primary: '#404040',
       secondary: '#696969',
-      disabled:'#a3a3a3',
-      hint:'#a3a3a3',
-    }
+      disabled: '#a3a3a3',
+      hint: '#a3a3a3',
+    },
   },
   typography: {
     fontSize: 14,
@@ -33,4 +33,4 @@ const theme = createMuiTheme({
   },
 });
 
-export default theme
+export default theme;

@@ -1,10 +1,6 @@
 {
   "name": "kafka-penguin",
-<<<<<<< HEAD
-  "version": "0.2.6",
-=======
   "version": "0.2.8",
->>>>>>> 17ae4e0299acd09d624e1c4568dfe52093a77bae
   "description": "Kafka-Penguin is an easy-to-use, light weight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast. ",
   "main": "./dist/index.js",
   "scripts": {

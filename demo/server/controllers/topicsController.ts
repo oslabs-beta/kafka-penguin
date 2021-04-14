@@ -1,7 +1,7 @@
-import { RequestHandler } from 'express'
+import { RequestHandler } from 'express';
 
 const getTopics: RequestHandler = (req, res, next) => {
-  const kafka = res.locals.kafka;
+  const { kafka } = res.locals;
   const admin = kafka.admin();
   admin.connect()
     .then(() => console.log('Connected'))
@@ -9,19 +9,15 @@ const getTopics: RequestHandler = (req, res, next) => {
     .then((data: {
       name: string,
       partitions: Array<number>
-    }) => res.locals.topicsData = data)
+    }) => { res.locals.topicsData = data; })
     .then(() => admin.disconnect())
-    .then(() => {
-      return next()
-    })
-    .catch(e => {
-      return next({
-        message: 'Error getting topics in topicsController.getTopics ' + e.message,
-        error: e
-      })
-    })
+    .then(() => next())
+    .catch((e) => next({
+      message: `Error getting topics in topicsController.getTopics ${e.message}`,
+      error: e,
+    }));
 };
 
 export default {
   getTopics,
-}
+};

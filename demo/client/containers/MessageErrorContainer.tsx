@@ -10,6 +10,7 @@ import { useErrorContext } from '../context/ErrorContext';
 const useStyles = makeStyles((theme: Theme) => createStyles({
   paper: {
     display: 'flex',
+    minHeight: '70%',
     '& > *': {
       margin: theme.spacing(1),
     },

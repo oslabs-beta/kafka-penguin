@@ -19,19 +19,16 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   inner: {
     display: 'flex',
-    paddingLeft: '5vw',
-    paddingRight: '5vw',
     alignContent: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    height: '30vh',
     marginTop: '3vh',
     marginBottom: '5vh',
     background: theme.palette.background.default,
   },
   icon: {
-    fontSize: '10vh',
-    color: theme.palette.text.secondary,
+    fontSize: '7vh',
+    color: theme.palette.primary.light,
     padding: '2vh',
   },
 }));
@@ -43,41 +40,25 @@ const easyToUseCode = `const producer = failfast.producer();
 producer.connect()
   .then(producer.send(...))`;
 
-const errorHandlingCode = 'import { DeadLetterQueue, FailFast, Ignore } from \'kafka-penguin\';';
+const errorHandlingCode = `import { 
+  DeadLetterQueue, 
+  FailFast, 
+  Ignore 
+} from 'kafka-penguin';`;
 
 const LandingBody: FC = () => {
   const classes = useStyles();
   return (
     <>
-      {/* <Typography variant='button' color='textSecondary' align='center' gutterBottom>
-      plugin for kafkajs
-    </Typography>
-    <Container
-      align='center'
-      maxWidth='md'>
-      <Button
-        className={classes.button}
-        color='secondary'
-        variant='outlined'
-        href='https://www.npmjs.com/package/kafka-penguin'>
-          Download
-      </Button>
-      <Button
-        className={classes.button}
-        color='secondary'
-        component={ Link } to="/demo"
-        variant='outlined'>
-          Demo
-      </Button>
-    </Container> */}
       <Container className={classes.container}>
         <Typography variant="h3" color="textPrimary" align="center" gutterBottom>
           FEATURES
         </Typography>
         <Divider variant="middle" />
         <Container className={classes.inner}>
-          <FitnessCenterRoundedIcon className={classes.icon} fontSize="large" />
           <Typography variant="h5" align="center" color="textSecondary" gutterBottom>
+            <FitnessCenterRoundedIcon className={classes.icon} />
+            <br />
             LIGHT-WEIGHT
             <Typography variant="h6">
               Minimal Configuration
@@ -87,17 +68,25 @@ const LandingBody: FC = () => {
             </Typography>
             <Typography>
               That’s all it takes to implement a strategy.
-              <SyntaxHighlighter
-                language="javascript"
-                style={materialLight}
-              >
-                {lightWeightCode}
-              </SyntaxHighlighter>
             </Typography>
           </Typography>
+          <SyntaxHighlighter
+            language="javascript"
+            style={materialLight}
+          >
+            {lightWeightCode}
+          </SyntaxHighlighter>
         </Container>
         <Container className={classes.inner}>
+          <SyntaxHighlighter
+            language="javascript"
+            style={materialLight}
+          >
+            { easyToUseCode }
+          </SyntaxHighlighter>
           <Typography variant="h5" align="center" color="textSecondary" gutterBottom>
+            <AccessibilityNewRoundedIcon className={classes.icon} />
+            <br />
             EASY-TO-USE
             <Typography variant="h6">
               Plug-and-Play
@@ -106,19 +95,13 @@ const LandingBody: FC = () => {
               Add one line of code on top of your existing
               <br />
               implementation and keep using KafkaJS as normal.
-              <SyntaxHighlighter
-                language="javascript"
-                style={materialLight}
-              >
-                { easyToUseCode }
-              </SyntaxHighlighter>
             </Typography>
           </Typography>
-          <AccessibilityNewRoundedIcon className={classes.icon} fontSize="large" />
         </Container>
         <Container className={classes.inner}>
-          <ErrorOutlineRoundedIcon className={classes.icon} fontSize="large" />
           <Typography variant="h5" align="center" color="textSecondary" gutterBottom>
+            <ErrorOutlineRoundedIcon className={classes.icon} />
+            <br />
             ERROR-HANDLING
             <Typography variant="h6">
               Common, Programmable Strategies
@@ -128,14 +111,14 @@ const LandingBody: FC = () => {
             </Typography>
             <Typography>
               Program them to fit your application’s logic.
-              <SyntaxHighlighter
-                language="javascript"
-                style={materialLight}
-              >
-                { errorHandlingCode }
-              </SyntaxHighlighter>
             </Typography>
           </Typography>
+          <SyntaxHighlighter
+            language="javascript"
+            style={materialLight}
+          >
+            { errorHandlingCode }
+          </SyntaxHighlighter>
         </Container>
       </Container>
     </>

@@ -52,6 +52,14 @@ const App: FC = () => {
             kafka-penguin
           </Typography>
           <img alt="mainLogo" style={{ height: '30vh', paddingBottom: '5vh' }} src="/assets/penguin.svg" />
+          <Typography
+            variant="button"
+            align="center"
+            color="textSecondary"
+            gutterBottom
+          >
+            ERROR HANDLING LIBRARY FOR KAFKAJS
+          </Typography>
         </Container>
         <Container className={classes.segment} component={Element} name="features">
           <LandingBody />

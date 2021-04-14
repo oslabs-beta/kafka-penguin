@@ -23,10 +23,15 @@
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "tsconfig.json"
-      }
+    "scripts": {
+      "dev": "webpack serve --open",
+      "build": "webpack ./webpack.config.js",
+      "build2": "webpack",
+      "start": "ts-node ./server/server.ts",
+      "test": "jest --detectOpenHandles",
+      "format": "prettier --write src/**/*.ts{,x}",
+      "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+      "tsc": "tsc -p tsconfig.json"
     },
     "testMatch": [
       "**/__tests__/*.+(ts|tsx|js)"

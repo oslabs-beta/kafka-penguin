@@ -33,8 +33,8 @@ const MessageErrorContainer: FC = () => {
   const classes = useStyles();
   const updateError = useErrorContext();
 
-  const errors = updateError.map((error: string, i: number) => (
-    <Error key={i} errorMessage={error} />
+  const errors = updateError.map((error: string) => (
+    <Error errorMessage={error} />
   ));
   return (
     <Container className={classes.containerHorizontal}>

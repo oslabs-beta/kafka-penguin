@@ -8,8 +8,8 @@ dotenv.config();
 
 const ERROR_LOG = [];
 
-const MyLogCreator = (logLevel: any) => ({
-  namespace, level, label, log,
+const MyLogCreator = (logLevel) => ({
+  namespace, label, log,
 }) => {
   // also availabe on log object => timestamp, logger, message and more
   const { error, correlationId } = log;
@@ -50,8 +50,8 @@ const dlqProduce: RequestHandler = (req, res, next) => {
     }
   }
 
-  const cb = (message: { value: { toString: () => string; }; }) => {
-    if (message.value.toString() === 'fault') {
+  const cb = (inputMessage: { value: Buffer }) => {
+    if (inputMessage.value.toString() === 'fault') {
       return false;
     } return true;
   };
@@ -72,7 +72,7 @@ const dlqProduce: RequestHandler = (req, res, next) => {
       DLQProducer.send({
         topic,
         messages: messagesArray,
-      }).catch((e: { reference: any; }) => console.log('this is error in try', e.reference));
+      }).catch((e: Error) => console.log('this is error in try', e.reference));
     })
     .then(DLQProducer.disconnect())
     .then(admin.connect())
@@ -104,7 +104,7 @@ const dlqConsume: RequestHandler = (req, res, next) => {
     .then(() => {
       const latestOffset = Number(res.locals.latestOffset);
       consumer.run({
-        eachMessage: ({ topic, partitions, message }) => {
+        eachMessage: ({ topic, message }) => {
           const messageOffset = Number(message.offset);
 
           if (messageOffset >= latestOffset - retries) {
@@ -124,7 +124,7 @@ const dlqConsume: RequestHandler = (req, res, next) => {
         },
       });
     })
-    .catch((e: { message: any; }) => next({
+    .catch((e: Error) => next({
       message: `Error implementing Dead Letter Queue strategy, consumer side: ${e.message}`,
       error: e,
     }));

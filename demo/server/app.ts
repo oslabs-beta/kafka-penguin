@@ -1,7 +1,7 @@
 // routers
-import express = require('express');
-import path = require('path');
-import dotenv = require('dotenv');
+import express from 'express';
+import path from 'path';
+import dotenv from 'dotenv';
 
 import strategyRouter from './routes/strategy';
 import topicRouter from './routes/topic';
@@ -21,7 +21,7 @@ app.use('/strategy', strategyRouter);
 app.get('/*', (req, res) => res.status(200).sendFile(path.resolve(__dirname, '../build/index.html')));
 app.get('*', (req, res) => res.status(404).json());
 
-app.use((err, req, res, _next) => {
+app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,

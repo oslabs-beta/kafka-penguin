@@ -2,7 +2,6 @@
 import { RequestHandler } from 'express';
 import { Kafka, logLevel } from 'kafkajs';
 import { FailFast } from 'kafka-penguin';
-// import { DeadLetterQueue } from '../../../kafka-penguin/src/index'
 import dotenv = require('dotenv');
 
 dotenv.config();
@@ -10,7 +9,7 @@ dotenv.config();
 let ERROR_LOG = [];
 
 const MyLogCreator = (logLevel) => ({
-  namespace, level, label, log,
+  namespace, label, log,
 }) => {
   // also availabe on log object => timestamp, logger, message and more
   // console.log(log)
@@ -66,7 +65,7 @@ const failfast: RequestHandler = (req, res, next) => {
       ERROR_LOG = [];
       return next();
     })
-    .catch((e) => next({
+    .catch((e : Error) => next({
       message: `Error implementing FailFast strategy: ${e.message}`,
       error: e,
     }));

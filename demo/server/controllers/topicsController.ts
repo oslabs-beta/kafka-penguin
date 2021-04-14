@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { RequestHandler } from 'express';
 
 const getTopics: RequestHandler = (req, res, next) => {

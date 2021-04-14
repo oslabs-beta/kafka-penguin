@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { FC } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core';
-import {Typography} from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(() => 
   createStyles({
     root: {
-      padding: '1em 1em 1em 1em'
+      padding: '0em 1em 1em 1em'
     }
   })
 )
@@ -23,5 +23,6 @@ const Error: FC<Props> = ({errorMessage}: Props) => {
     </Typography>
   )
 }
+
 
 export default Error

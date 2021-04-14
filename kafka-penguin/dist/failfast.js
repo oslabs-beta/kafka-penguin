@@ -1,4 +1,16 @@
 "use strict";
+class FailFastError extends Error {
+    constructor(e) {
+        super(e);
+        Error.captureStackTrace(this, this.constructor);
+        this.strategy = 'Fail Fast';
+        this.reference = `This error was executed as part of the kafka-penguin Fail Fast message reprocessing strategy. Your producer attempted to deliver a message ${e.retryCount + 1} times but was unsuccessful. As a result, the producer successfully executed a disconnect operation. Refer to the original error for further information`;
+        this.name = e.name;
+        this.message = e.message;
+        this.originalError = e.originalError;
+        this.retryCount = e.retryCount;
+    }
+}
 class FailFast {
     constructor(num, kafkaJSClient) {
         this.retry = num;
@@ -24,11 +36,9 @@ class FailFast {
     send(message) {
         return this.innerProducer.send(message)
             .catch((e) => {
-            console.log(`FailFast stopped producer after ${this.retry + 1} times!`);
             this.innerProducer.disconnect();
+            const newError = new FailFastError(e);
+            console.log(newError);
         });
     }
 }
-module.exports = {
-    FailFast,
-};

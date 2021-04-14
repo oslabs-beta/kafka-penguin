@@ -1,59 +1,69 @@
 import * as React from 'react';
-import { useState, FC } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import ClientLogin from './components/ClientLogin'
-import MainContainer from './containers/MainContainer';
+import { FC } from 'react';
+import { MainContainer } from './containers/MainContainer';
+import { BackdropProvider } from './context/BackDropContext';
+import GlobalNavBar from './components/GlobalNavBar'
 import { createStyles, makeStyles, Typography, Container } from '@material-ui/core';
+import LandingBody from './components/LandingBody';
+import ParticlesBackdrop from './components/ParticlesBackdrop'
+import { Element } from 'react-scroll'
 
 const useStyles = makeStyles(() =>
   createStyles({
     container: {
       display: 'flex',
       alignItems: 'center',
-      // justifyContent: 'flex-end',
+      justifyContent: 'flex-end',
       flexDirection: 'column',
     },
+    titleBox: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingTop: '30vh',
+      paddingBottom: '15vh'
+    },
+    segment: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingTop: '5vh',
+      paddingBottom: '5vh'
+    }
   })
 );
 
 const App: FC = () => {
-  const [redirect, setRedirect] = useState(true);
   
-  let main
-
-  if (!redirect) {
-    main = (
-      <Route exact path='/'>
-        <ClientLogin setRedirect={setRedirect} />
-      </Route>
-    );
-  } else {
-    main = (
-      <Route exact path='/'>
-        <MainContainer setRedirect={setRedirect} />
-      </Route>
-    );
-  }
-
   const classes = useStyles();
-
   return (
-
-    <Container className={classes.container} maxWidth='md'>
-      <Typography variant='h1' gutterBottom>kafka-penguin<img style={{'maxHeight': '1em'}} src='/assets/penguin.svg'></img></Typography>    
-      <Switch>
-        {main}
-        < Route exact path="/" >
-          <ClientLogin setRedirect={setRedirect} />
-        </Route >
-        <Route exact path='/main'>
-          <MainContainer setRedirect={setRedirect} />
-        </Route>
-      </Switch>
-      {/* <Typography variant='body2' color='textSecondary'> 
-      Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-      </Typography> */}
+    <>
+   
+    <Container className={classes.container} maxWidth='lg'>    
+      <GlobalNavBar />
+      {/* <ParticlesBackdrop/> */}
+      <Container className={classes.titleBox} component={ Element } name='top'>
+        <Typography 
+          variant='h1'
+          align='center'
+          color='textPrimary'
+          gutterBottom 
+          >kafka-penguin      
+        </Typography> 
+        <img style={{height: '30vh', paddingBottom:'5vh'}} src='/assets/penguin.svg'></img>
+      </Container>
+      <Container className={classes.segment} component={ Element } name='features'>      
+        <LandingBody/>        
+      </Container>
+      <Container className={classes.segment} component={ Element } name='demo'>
+        <BackdropProvider>
+          <MainContainer />
+        </BackdropProvider>  
+      </Container>
     </Container>
+    </>
   )
 }
 

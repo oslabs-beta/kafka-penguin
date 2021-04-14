@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+      // "types": ["node"],
+      "typeRoots": ["./types", "./node_modules/@types"],
       "target": "ES5",
       "module": "commonJS",
       "jsx": "react",
@@ -11,6 +13,9 @@
       "preserveConstEnums": true
   },
   "include": [
-      "./client/**/*"
+      "./client/**/*",
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

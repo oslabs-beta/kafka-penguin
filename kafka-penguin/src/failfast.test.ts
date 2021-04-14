@@ -1,7 +1,8 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
-import FailFast from './index';
-import FailFastError from './failfasterror';
+import { FailFast, FailFastError } from './index';
 import testClient from './clientConfig';
 
 // Fail Fast Tests

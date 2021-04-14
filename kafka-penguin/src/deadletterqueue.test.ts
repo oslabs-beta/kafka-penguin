@@ -1,9 +1,10 @@
+/* eslint-disable no-shadow */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
-import DeadLetterQueue from './index';
-import DeadLetterQueueErrorProducer from './deadLetterQueueErrorProducer';
-import DeadLetterQueueErrorConsumer from './deadLetterQueueErrorConsumer';
+import { DeadLetterQueue, DeadLetterQueueErrorConsumer, DeadLetterQueueErrorProducer } from './index';
 import testClient from './clientConfig';
 
 // Dead Letter Queue Tests

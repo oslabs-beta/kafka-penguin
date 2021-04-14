@@ -1,0 +1,147 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
+const index_1 = require("./index");
+const clientConfig_1 = require("./clientConfig");
+// Fail Fast Tests
+describe('FailFast Tests', () => {
+    describe('Constructor', () => {
+        const testInstance = new index_1.FailFast(3, clientConfig_1.default);
+        const mockClient = {
+            retry: expect.any(Number),
+            innerProducer: null,
+            client: expect.any(Object),
+        };
+        describe('Initial State', () => {
+            it('Starts off with retries and client supplied', () => {
+                expect(testInstance).toBeInstanceOf(index_1.FailFast);
+                expect(testInstance).toMatchObject(mockClient);
+            });
+        });
+        describe('Client is live & configured', () => {
+            it('Client is supplying the class with producers', () => {
+                const { client } = testInstance;
+                const producer = jest.fn(() => client.producer());
+                producer();
+                expect(producer).toReturnWith(expect.objectContaining({
+                    send: expect.any(Function),
+                    connect: expect.any(Function),
+                    disconnect: expect.any(Function),
+                }));
+            });
+            it('Client is supplying the class with consumers', () => {
+                const { client } = testInstance;
+                const consumer = jest.fn(() => client.consumer({ groupId: 'my-group' }));
+                consumer();
+                expect(consumer).toReturnWith(expect.objectContaining({
+                    subscribe: expect.any(Function),
+                    run: expect.any(Function),
+                }));
+            });
+            it('Client is supplying the class with admins', () => {
+                const { client } = testInstance;
+                const admin = jest.fn(() => client.admin());
+                admin();
+                expect(admin).toReturnWith(expect.any(Object));
+            });
+        });
+    });
+    describe('Methods', () => {
+        let testInstance = new index_1.FailFast(3, clientConfig_1.default);
+        afterEach(() => {
+            testInstance = new index_1.FailFast(3, clientConfig_1.default);
+        });
+        describe('Producer', () => {
+            const testingProducer = jest.fn(() => testInstance.producer());
+            describe('Returns/SideEffects', () => {
+                it('returns the FailFast instance', () => {
+                    testingProducer();
+                    expect(testInstance.producer()).toBe(testInstance);
+                });
+                it('Assigns the producer to a instance of client producer', () => {
+                    testingProducer();
+                    expect(testInstance.innerProducer).toEqual(expect.objectContaining({
+                        send: expect.any(Function),
+                        connect: expect.any(Function),
+                        disconnect: expect.any(Function),
+                    }));
+                });
+            });
+        });
+        describe('Producer Methods', () => {
+            const testingProducer = jest.fn(() => testInstance.producer());
+            describe('Connect', () => {
+                describe('Returns/SideEffects', () => {
+                    it('returns the client producer connect method', () => {
+                        testingProducer();
+                        expect(testingProducer).toReturn();
+                    });
+                    it('connect method resolves', () => {
+                        testingProducer();
+                        const { innerProducer } = testInstance;
+                        return innerProducer.connect()
+                            .then((input) => expect(input).not.toBeNull())
+                            .finally(() => { innerProducer.disconnect(); });
+                    });
+                });
+            });
+            describe('Send', () => {
+                const message = {
+                    topic: 'xyz',
+                    messages: [{
+                            key: 'xyz',
+                            value: 'xyz',
+                        }],
+                };
+                const send = jest.fn((msg) => { testInstance.send(msg); });
+                describe('Inputs', () => {
+                    it('takes in a message with the message value interface', () => {
+                        testingProducer();
+                        send(message);
+                        expect(send).toHaveBeenCalledWith(expect.objectContaining(message));
+                    });
+                });
+                describe('Returns/SideEffects', () => {
+                    it('throws a FailFast Error with a bad message', () => __awaiter(void 0, void 0, void 0, function* () {
+                        testingProducer();
+                        const { innerProducer } = testInstance;
+                        return innerProducer.send(message)
+                            .catch((e) => {
+                            innerProducer.disconnect();
+                            const newError = new index_1.FailFastError(e);
+                            console.log(newError);
+                            expect(newError).toBeInstanceOf(index_1.FailFastError);
+                        }).finally(() => { innerProducer.disconnect(); });
+                    }));
+                    it('disconnects the producer with an bad message', () => {
+                        testingProducer();
+                        const { innerProducer } = testInstance;
+                        return innerProducer.send(message).catch((e) => {
+                            expect(e).toBeInstanceOf(Error);
+                        }).finally(() => { innerProducer.disconnect(); });
+                    });
+                });
+            });
+            describe('Disconnect', () => {
+                describe('Returns/SideEffects', () => {
+                    it('returns the client producer disconnect method & disconnects successfully', () => {
+                        testingProducer();
+                        const { innerProducer } = testInstance;
+                        expect(innerProducer.disconnect).toEqual(expect.any(Function));
+                        return innerProducer.disconnect().then((input) => expect(input).not.toBeNull());
+                    });
+                });
+            });
+        });
+    });
+});

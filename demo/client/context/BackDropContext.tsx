@@ -1,18 +1,20 @@
 import * as React from 'react';
-import { useState, useContext, FC, createContext } from 'react';
+import {
+  useState, useContext, FC, createContext,
+} from 'react';
 
-const BackdropContext = createContext(null)
-const BackdropUpdateContext = createContext(null)
+const BackdropContext = createContext(null);
+const BackdropUpdateContext = createContext(null);
 
-const useBackdropContext = () => {
-  return useContext(BackdropContext)
+const useBackdropContext = () => useContext(BackdropContext);
+
+const useBackdropUpdateContext = () => useContext(BackdropUpdateContext);
+
+interface Props {
+  children: FC
 }
 
-const useBackdropUpdateContext = () => {
-  return useContext(BackdropUpdateContext)
-}
-
-const BackdropProvider: FC = ({ children }) => {
+const BackdropProvider: FC = ({ children } : Props) => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -25,17 +27,18 @@ const BackdropProvider: FC = ({ children }) => {
 
   return (
     <BackdropContext.Provider value={open}>
-      <BackdropUpdateContext.Provider 
+      <BackdropUpdateContext.Provider
         value={
           {
-            handleClose: handleClose,
-            handleToggle: handleToggle
+            handleClose,
+            handleToggle,
           }
-        }>
+        }
+      >
         {children}
       </BackdropUpdateContext.Provider>
     </BackdropContext.Provider>
-  )
-}
+  );
+};
 
-export { BackdropProvider, useBackdropContext, useBackdropUpdateContext }
+export { BackdropProvider, useBackdropContext, useBackdropUpdateContext };

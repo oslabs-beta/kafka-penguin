@@ -1,23 +1,23 @@
 import * as React from 'react';
 import { FC } from 'react';
+import {
+  createStyles, makeStyles, Container, Button,
+} from '@material-ui/core';
 import Topic from '../components/Topic';
-import { useTopicsContext, useTopicsContextUpdate } from '../context/TopicContext'
-import { useBackdropUpdateContext } from '../context/BackDropContext'
-import { createStyles, makeStyles, Container, Button } from '@material-ui/core';
+import { useTopicsContext, useTopicsContextUpdate } from '../context/TopicContext';
+import { useBackdropUpdateContext } from '../context/BackDropContext';
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    container: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-
-    },
-    button: {
-      margin: '1rem 1rem 1rem 1rem'
-    },
-  })
-);
+const useStyles = makeStyles(() => createStyles({
+  topicsContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    margin: '1rem 1rem 1rem 1rem',
+  },
+}));
 
 const TopicsContainer: FC = () => {
   const backdropUpdate = useBackdropUpdateContext()
@@ -31,7 +31,7 @@ const TopicsContainer: FC = () => {
 
   return (  
     <Container>
-      <Container className={classes.container}>
+      <Container>
         <Button
           className={classes.button}
           color='secondary'
@@ -52,7 +52,7 @@ const TopicsContainer: FC = () => {
         >Clear Topics
         </Button>
       </Container>
-      <Container className = {classes.container}>
+      <Container className = {classes.topicsContainer}>
        {topicsMapped}
       </Container>  
     </Container>

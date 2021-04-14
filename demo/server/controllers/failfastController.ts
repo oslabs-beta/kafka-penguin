@@ -1,26 +1,27 @@
+/* eslint-disable no-console */
 import { RequestHandler } from 'express';
 import { Kafka, logLevel } from 'kafkajs';
 import { FailFast } from 'kafka-penguin';
-// import { DeadLetterQueue } from '../../../kafka-penguin/src/index'
 import dotenv = require('dotenv');
+
 dotenv.config();
-//cache to store error logs
+// cache to store error logs
 let ERROR_LOG = [];
 
-
-
-const MyLogCreator = logLevel => ({ namespace, level, label, log }) => {
-  //also availabe on log object => timestamp, logger, message and more
+const MyLogCreator = (logLevel) => ({
+  namespace, label, log,
+}) => {
+  // also availabe on log object => timestamp, logger, message and more
   // console.log(log)
   const { error, correlationId } = log;
   if (correlationId) {
     ERROR_LOG.push(
-      `[${namespace}] Logger: kafka-penguin ${label}: ${error} correlationId: ${correlationId}`
+      `[${namespace}] Logger: kafka-penguin ${label}: ${error} correlationId: ${correlationId}`,
     );
   }
 };
 
-//new kafka instance with logCreator added
+// new kafka instance with logCreator added
 const failfastKafka = new Kafka({
   clientId: 'makeClient',
   brokers: [process.env.KAFKA_BOOTSTRAP_SERVER],
@@ -54,7 +55,7 @@ const failfast: RequestHandler = (req, res, next) => {
       if (ERROR_LOG.length > 0) {
         const plural = ERROR_LOG.length > 1 ? 'times' : 'time';
         ERROR_LOG.push(
-          `kafka-penguin: FailFast stopped producer after ${ERROR_LOG.length} ${plural}!`
+          `kafka-penguin: FailFast stopped producer after ${ERROR_LOG.length} ${plural}!`,
         );
         res.locals.error = [...ERROR_LOG];
       } else {
@@ -64,14 +65,11 @@ const failfast: RequestHandler = (req, res, next) => {
       ERROR_LOG = [];
       return next();
     })
-    .catch(e => {
-      return next({
-        message: 'Error implementing FailFast strategy: ' + e.message,
-        error: e,
-      });
-    });
+    .catch((e : Error) => next({
+      message: `Error implementing FailFast strategy: ${e.message}`,
+      error: e,
+    }));
 };
-
 
 export default {
   failfast,

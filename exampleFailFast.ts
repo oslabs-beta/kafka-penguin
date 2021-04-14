@@ -1,6 +1,8 @@
-import { FailFast } from 'kafka-penguin';
+/* eslint-disable no-console */
+import { FailFast } from '../src/index';
 
-const FailFastClient = require('./clientConfig.ts');
+const FailFastClient = require('../src/clientConfig.ts');
+
 // Set up Fail Fast with the number of retried and a configured KafkaJS client
 const exampleFailFast = new FailFast(2, FailFastClient);
 

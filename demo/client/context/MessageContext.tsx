@@ -10,7 +10,11 @@ const useMessageContext = () => useContext(MessageContext);
 
 const useMesageUpdateContext = () => useContext(MessageUpdateContext);
 
-const MessageProvider: FC = ({ children }) => {
+interface Props {
+  children: FC
+}
+
+const MessageProvider: FC<Props> = ({ children } : Props) => {
   const [message, changeMessage] = useState('');
   const [topic, changeTopic] = useState('');
   const [retries, changeRetries] = useState(2);

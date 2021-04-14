@@ -11,7 +11,11 @@ const useTopicsContext = () => useContext(TopicsContext);
 
 const useTopicsContextUpdate = () => useContext(TopicsUpdateContext);
 
-const TopicsProvider: FC = ({ children }) => {
+interface Props {
+  children: FC
+}
+
+const TopicsProvider: FC<Props> = ({ children } : Props) => {
   const [topicsArray, changeTopicsArray] = useState([]);
 
   const backdropUpdate = useBackdropUpdateContext();

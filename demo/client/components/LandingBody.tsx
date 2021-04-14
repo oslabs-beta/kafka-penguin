@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     alignItems: 'center',
     marginTop: '3vh',
     marginBottom: '5vh',
+    paddingTop: '5vh',
+    paddingBottom: '5vh',
     background: theme.palette.background.default,
   },
   icon: {
@@ -66,7 +68,7 @@ const LandingBody: FC = () => {
             <Typography>
               A working KafkaJS client and a callback that returns a boolean.
             </Typography>
-            <Typography>
+            <Typography gutterBottom>
               That’s all it takes to implement a strategy.
             </Typography>
           </Typography>
@@ -91,7 +93,7 @@ const LandingBody: FC = () => {
             <Typography variant="h6">
               Plug-and-Play
             </Typography>
-            <Typography>
+            <Typography gutterBottom>
               Add one line of code on top of your existing
               <br />
               implementation and keep using KafkaJS as normal.
@@ -109,7 +111,7 @@ const LandingBody: FC = () => {
             <Typography>
               Choose from some of the most widely used strategies.
             </Typography>
-            <Typography>
+            <Typography gutterBottom>
               Program them to fit your application’s logic.
             </Typography>
           </Typography>

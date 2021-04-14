@@ -8,6 +8,7 @@ import MainContainer from './containers/MainContainer';
 import { BackdropProvider } from './context/BackDropContext';
 import GlobalNavBar from './components/GlobalNavBar';
 import LandingBody from './components/LandingBody';
+import TeamContainer from './containers/TeamContainer';
 import ParticlesBackdrop from './components/ParticlesBackdrop';
 
 const useStyles = makeStyles(() => createStyles({
@@ -53,7 +54,7 @@ const App: FC = () => {
           </Typography>
           <img alt="mainLogo" style={{ height: '30vh', paddingBottom: '5vh' }} src="/assets/penguin.svg" />
           <Typography
-            variant="button"
+            variant="h6"
             align="center"
             color="textSecondary"
             gutterBottom
@@ -68,6 +69,9 @@ const App: FC = () => {
           <BackdropProvider>
             <MainContainer />
           </BackdropProvider>
+        </Container>
+        <Container className={classes.segment} component={Element} name="team">
+          <TeamContainer />
         </Container>
       </Container>
     </>

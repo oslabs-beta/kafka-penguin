@@ -1,6 +1,6 @@
 # Home
 
-![license](https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af) ![issues](https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow) ![last commit](https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af)​[![Actions Status](https://github.com/oslabs-beta/kafka-penguin/workflows/CI/CD%20with%20Github%20Actions/badge.svg)](https://github.com/oslabs-beta/kafka-penguin/actions)[​![npm version](https://img.shields.io/npm/v/kafka-penguin?color=%2344cc11&label=stable)​](https://www.npmjs.com/package/kafka-penguin)​‌
+![license](https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af) ![issues](https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow) ![last commit](https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af)​ [![Actions Status](https://github.com/oslabs-beta/kafka-penguin/workflows/CI/CD%20with%20Github%20Actions/badge.svg)](https://github.com/oslabs-beta/kafka-penguin/actions) [​![npm version](https://img.shields.io/npm/v/kafka-penguin?color=%2344cc11&label=stable)​](https://www.npmjs.com/package/kafka-penguin)​‌
 
 ### About <a id="about"></a>
 

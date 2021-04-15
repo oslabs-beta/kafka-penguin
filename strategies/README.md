@@ -10,7 +10,7 @@ Stops processing as soon as an error occurs.
 
 Handle message processing failures by ignoring. Achieves non-blocking for your queue
 
-{% page-ref page="strategies-readme-ignore.md" %}
+{% page-ref page="strategies-ignore.md" %}
 
 **Dead Letter Queue**
 

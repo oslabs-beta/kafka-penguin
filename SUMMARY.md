@@ -1,8 +1,8 @@
 # Table of contents
 
 * [Home](README.md)
-* [Strategies](strategies-1/README.md)
-  * [FailFast](strategies-1/failfast.md)
-  * [Ignore](strategies-1/strategies-readme-ignore.md)
-  * [Dead Letter Queue](strategies-1/dead-letter-queue.md)
+* [Strategies](strategies/README.md)
+  * [FailFast](strategies/failfast.md)
+  * [Ignore](strategies/strategies-ignore.md)
+  * [Dead Letter Queue](strategies/dead-letter-queue.md)
 

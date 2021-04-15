@@ -30,7 +30,6 @@ const StrategyContainer: FC = () => {
 
   return (
     <Container className={classes.container}>
-
       <Button
         className={classes.button}
         color="primary"

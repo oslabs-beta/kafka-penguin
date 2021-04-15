@@ -76,18 +76,6 @@ const GlobalNavBar: FC = () => {
           <Button
             className={classes.button}
             component={Link}
-            to="team"
-            activeClass="active"
-            spy
-            offset={-75}
-            smooth
-            color="inherit"
-          >
-            Team
-          </Button>
-          <Button
-            className={classes.button}
-            component={Link}
             to="getting started"
             activeClass="active"
             spy
@@ -96,6 +84,18 @@ const GlobalNavBar: FC = () => {
             color="inherit"
           >
             Getting Started
+          </Button>
+          <Button
+            className={classes.button}
+            component={Link}
+            to="team"
+            activeClass="active"
+            spy
+            offset={-75}
+            smooth
+            color="inherit"
+          >
+            Team
           </Button>
           {/* <Button
             className={classes.button}

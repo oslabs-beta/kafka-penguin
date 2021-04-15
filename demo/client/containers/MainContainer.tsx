@@ -69,11 +69,7 @@ const MainContainer: FC = () => {
         Execute strategy
       </Typography>
       <Typography color="textSecondary" variant="subtitle2">
-<<<<<<< HEAD
         * DLQ and Ignore require repeats to be greater than faults
-=======
-        * DLQ requires repeats to be higher than faults
->>>>>>> bfb793082b2408c916e8fa639b904b9a49741a15
       </Typography>
       <ErrorProvider>
         <MessageProvider>

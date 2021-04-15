@@ -9,7 +9,7 @@ describe('Strategy tests', () => {
     faults: 2,
   };
   const messageInvalid = {
-    topic: 'ausar',
+    topic: 'wrongtopic',
     message: 'Hello world',
     retries: 4,
   };

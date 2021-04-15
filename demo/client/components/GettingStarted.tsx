@@ -16,15 +16,9 @@ const GettingStarted: FC = () => {
       alignContent: 'center',
       marginTop: '5vh',
       backgroundColor: theme.palette.background.default,
-<<<<<<< HEAD
       paddingTop: '3vh',
       paddingBottom: '3vh',
       width: 'auto',
-=======
-      maxWidth: '30vw',
-      paddingTop: '3vh',
-      paddingBottom: '3vh',
->>>>>>> bfb793082b2408c916e8fa639b904b9a49741a15
     },
     button: {
       margin: '1rem 1rem 1rem 1rem',

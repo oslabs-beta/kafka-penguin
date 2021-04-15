@@ -1,6 +1,6 @@
 
 <p align="center"><img src="./demo/client/assets/penguin.svg" width='500' style="margin-top: 10px; margin-bottom: -10px;"></p>
-
+[![Actions Status](https://github.com/oslabs-beta/kafka-penguin/workflows/Build%20and%20Test/badge.svg)](https://github.com/oslabs-beta/kafka-penguin/actions)
 
 ## Kafka-Penguin
 
@@ -10,7 +10,7 @@ Kafka-Penguin is an easy-to-use, lightweight KafkaJS library for message process
   
 For more information on KafkaJS, check out [Getting Started](https://kafka.js.org/docs/getting-started).
 
-Accelerated by [OS Labs](https://github.com/oslabs-beta/) and developed by [Ziyad El Baz](https://github.com/zelbaz946), [Kushal Talele](https://github.com/ktrane1), [Timeo Williams](https://github.com/timeowilliams) and [Ausar English](https://github.com/ausarenglish).
+Accelerated by [OS Labs](https://github.com/oslabs-beta/kafka-penguin) and developed by [Ziyad El Baz](https://github.com/zelbaz946), [Kushal Talele](https://github.com/ktrane1), [Timeo Williams](https://github.com/timeowilliams) and [Ausar English](https://github.com/ausarenglish).
 
 **WIP: This project is not ready for use as of yet**
 

@@ -70,7 +70,7 @@ describe('Strategy tests', () => {
             });
             expect(res.body[messageValid.retries - messageValid.faults]).toContain('kafka-penguin');
             expect(res.body[messageValid.retries - messageValid.faults]).toContain('2');
-            expect(res.body[messageValid.retries - messageValid.faults]).toContain('kushal.deadLetterQueue');
+            expect(res.body[messageValid.retries - messageValid.faults]).toContain('testtopic.deadLetterQueue');
             done();
           })
           .end(done);

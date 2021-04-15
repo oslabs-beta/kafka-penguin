@@ -32,7 +32,7 @@ const TopicsContainer: FC = () => {
       <Container className={classes.topicsContainer}>
         <Button
           className={classes.button}
-          color="secondary"
+          color="primary"
           variant="outlined"
           onClick={() => {
             backdropUpdate.handleToggle();
@@ -43,7 +43,7 @@ const TopicsContainer: FC = () => {
         </Button>
         <Button
           className={classes.button}
-          color="secondary"
+          color="primary"
           variant="outlined"
           onClick={() => {
             topicsUpdate.clearTopics();

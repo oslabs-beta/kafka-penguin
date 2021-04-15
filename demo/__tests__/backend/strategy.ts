@@ -3,7 +3,7 @@ import server from '../../server/app';
 
 describe('Strategy tests', () => {
   const messageValid = {
-    topic: 'kushal',
+    topic: 'testtopic',
     message: 'Hello world',
     retries: 4,
     faults: 2,

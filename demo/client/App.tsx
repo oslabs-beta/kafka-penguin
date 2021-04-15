@@ -66,11 +66,11 @@ const App: FC = () => {
         <Container className={classes.segment} component={Element} name="features">
           <LandingBody />
         </Container>
-        <Container className={classes.segment} component={Element} name="demo">
-          <BackdropProvider>
+        <BackdropProvider>
+          <Container className={classes.segment} component={Element} name="demo">
             <MainContainer />
-          </BackdropProvider>
-        </Container>
+          </Container>
+        </BackdropProvider>
         <Container className={classes.segment} component={Element} name="getting started">
           <GettingStarted />
         </Container>

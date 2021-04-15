@@ -34,6 +34,9 @@ const MainContainer: FC = () => {
       zIndex: theme.zIndex.drawer + 1,
       color: '#fff',
     },
+    divider: {
+      height: '1px',
+    },
   }));
 
   const classes = useStyles();
@@ -41,46 +44,56 @@ const MainContainer: FC = () => {
   const backdropUpdate = useBackdropUpdateContext();
 
   return (
-    <>
-      <Container className={classes.wrapper}>
-        <Typography variant="h3" color="textPrimary" align="center" gutterBottom>
-          DEMO
-        </Typography>
-        <Divider variant="middle" />
-        <Typography variant="h6" color="textSecondary" gutterBottom>
-          Trigger errors to see kafka-penguin in action
-        </Typography>
-        <Typography color="textSecondary">
-          Errors can be triggered by publishing to a non-existent
-          topic or prescribing a number of faults.
-        </Typography>
-        <Typography color="textSecondary" gutterBottom>
-          Enter in a topic, message and choose your strategy to get started.
-        </Typography>
-        <ErrorProvider>
-          <MessageProvider>
-            <Container className={classes.container}>
-              <MessageErrorContainer />
-            </Container>
-            <Container className={classes.container}>
-              <StrategyContainer />
-            </Container>
-          </MessageProvider>
-        </ErrorProvider>
-        <TopicsProvider>
+    <Container className={classes.wrapper}>
+      <Typography variant="h3" color="textPrimary" align="center" gutterBottom>
+        DEMO
+      </Typography>
+      <Divider className={classes.divider} variant="middle" flexItem />
+      <Typography variant="h6" color="textSecondary" gutterBottom>
+        Trigger errors to see kafka-penguin in action
+      </Typography>
+      <Typography color="textSecondary">
+        Errors can be triggered by publishing to a non-existent
+        topic or prescribing a number of faults.
+      </Typography>
+      <Typography color="textSecondary" gutterBottom>
+        Enter in a topic, message and choose your strategy to get started.
+      </Typography>
+      <Typography align="center" variant='overline' color="textSecondary" gutterBottom>
+        Load demo topics
+        <br />
+        Publish either to existent topic or non-existent topic
+        <br />
+        Select retries
+        <br />
+        Execute strategy
+      </Typography>
+      <Typography color="textSecondary" variant="subtitle2">
+        * DLQ requires repeats to be higher than faults
+      </Typography>
+      <ErrorProvider>
+        <MessageProvider>
           <Container className={classes.container}>
-            <TopicsContainer />
+            <MessageErrorContainer />
           </Container>
-        </TopicsProvider>
-        <Backdrop
-          className={classes.backdrop}
-          open={backdropContext}
-          onClick={backdropUpdate.handleClose}
-        >
-          <CircularProgress color="secondary" />
-        </Backdrop>
-      </Container>
-    </>
+          <Container className={classes.container}>
+            <StrategyContainer />
+          </Container>
+        </MessageProvider>
+      </ErrorProvider>
+      <TopicsProvider>
+        <Container className={classes.container}>
+          <TopicsContainer />
+        </Container>
+      </TopicsProvider>
+      <Backdrop
+        className={classes.backdrop}
+        open={backdropContext}
+        onClick={backdropUpdate.handleClose}
+      >
+        <CircularProgress color="secondary" />
+      </Backdrop>
+    </Container>
   );
 };
 

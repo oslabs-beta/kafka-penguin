@@ -7,7 +7,8 @@ import TeamMember from '../components/TeamMember';
 const TeamContainer: FC = () => {
   const useStyles = makeStyles(() => createStyles({
     containerHorizontal: {
-      height: '80vh',
+      // height: '80vh',
+      paddingTop: '10vh',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',

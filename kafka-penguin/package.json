@@ -1,7 +1,7 @@
 {
   "name": "kafka-penguin",
-  "version": "0.3.0",
-  "description": "Kafka-Penguin is an easy-to-use, light weight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast. ",
+  "version": "0.3.8",
+  "description": "An easy-to-use, light weight KafkaJS library for message re-processing strategies.",
   "main": "./dist/index.js",
   "scripts": {
     "start": "webpack serve --open",
@@ -12,12 +12,13 @@
   },
   "keywords": [
     "Kafka",
-    "Message Reprocessing",
-    "Fail Fast",
+    "Message Re-processing",
+    "Micro-services",
+    "Event-driven",
     "Dead Letter Queue"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/oslabs-beta/kafka-penguin"

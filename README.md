@@ -1,6 +1,7 @@
 
 <p align="center"><img src="./demo/client/assets/penguin.svg" width='500' style="margin-top: 10px; margin-bottom: -10px;"></p>
-[![Actions Status](https://github.com/oslabs-beta/kafka-penguin/workflows/Build%20and%20Test/badge.svg)](https://github.com/oslabs-beta/kafka-penguin/actions)
+
+[![Actions Status](https://github.com/oslabs-beta/kafka-penguin/workflows/CI/CD%20with%20Github%20Actions/badge.svg)](https://github.com/oslabs-beta/kafka-penguin/actions)
 
 ## Kafka-Penguin
 

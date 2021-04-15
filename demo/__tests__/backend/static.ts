@@ -6,7 +6,7 @@ describe('Static tests', () => {
   it("Serves html file to '/' endpoint", (done) => {
     request(server)
       .get('/')
-      .expect('Content-Type', /html/)
+      .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(200)
       .end(done);
   });

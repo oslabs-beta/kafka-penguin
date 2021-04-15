@@ -1,10 +1,10 @@
 # FailFast
 
-
+## About
 
 This strategy executes a purposeful disconnect after a producer has sent an erroneous message.  Potential use cases for this strategy include micro-services where there is a low tolerance for failure, as well as acid and/or transactional workflows. This strategy also works well for development environments in Agile-based workflows. 
 
-## Syntax:
+## Syntax
 
 #### FailFast\(retries, kafka-client\)
 
@@ -20,9 +20,9 @@ This strategy executes a purposeful disconnect after a producer has sent an erro
 
 `producer.send(message)` This method takes in one argument, `message` that is passed in with the same requirements as the counterpart method on KafkaJS, and sends it to the Kafka cluster. However, this `send` will disconnect the producer once it reaches the set number of retries. 
 
-## Example:
+## Example
 
-**FailFast**
+**Producer**
 
 ```javascript
 import { FailFast } from 'kafka-penguin'
@@ -41,7 +41,7 @@ const message = {
   messages: [
     {
       key: 'hello'
-  ]
+  }]
 }
 
 // FailFast will attempt to send the message to the Kafka cluster.

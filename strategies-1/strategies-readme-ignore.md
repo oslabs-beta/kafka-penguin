@@ -1,8 +1,10 @@
 # Ignore
 
+## About
+
 This strategy enables you to continuously process messages even if some messages are erroneous, problematic, or fail for some reason. It is meant to keep flows from producers or consumers unblocked even if there are failures.  Potential use cases for this strategy include services and systems that rely upon a constant stream of data.
 
-## Syntax:
+## Syntax
 
 **Ignore\(kafka-client, topic, callback\)**
 
@@ -10,7 +12,7 @@ This strategy enables you to continuously process messages even if some messages
 
 `topic` The target topic that producers or consumers will publish or subscribe to in this strategy instance. Kafka-Penguin currently supports one topic per strategy instance. 
 
-`callback` A callback that must return a boolean value. The callback will take in one argument: the messages received by the consumer. During execution, the strategy will pass to the callback each message consumed; Even if a message which returns `false`  , the producer or consumer will continue to produce or consume messages uninterrupted.  
+`callback` A callback that must return a boolean value. The callback will take in one argument: the messages received by the consumer. During execution, the strategy will pass to the callback each message consumed; Even if a message which returns `false`, the producer or consumer will continue to produce or consume messages uninterrupted.  
 
 #### **Producer**
 

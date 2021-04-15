@@ -67,7 +67,7 @@ const Message: FC = () => {
         max={5}
       />
       <Typography
-        variant="body1"
+        variant="button"
         color="textSecondary"
         align="center"
         gutterBottom
@@ -87,12 +87,12 @@ const Message: FC = () => {
         max={5}
       />
       <Typography
-        variant="body1"
+        variant="button"
         color="textSecondary"
         align="center"
         gutterBottom
       >
-        No. of faults for DLQ
+        Faults for DLQ and Ignore
       </Typography>
     </form>
   );

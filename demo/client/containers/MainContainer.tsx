@@ -57,9 +57,9 @@ const MainContainer: FC = () => {
         topic or prescribing a number of faults.
       </Typography>
       <Typography color="textSecondary" gutterBottom>
-        Enter in a topic, message and choose your strategy to get started.
+        Enter in a topic, message and choose your strategy to test with our sample cluster.
       </Typography>
-      <Typography align="center" variant='overline' color="textSecondary" gutterBottom>
+      <Typography align="center" variant="overline" color="textSecondary" gutterBottom>
         Load demo topics
         <br />
         Publish either to existent topic or non-existent topic
@@ -69,7 +69,7 @@ const MainContainer: FC = () => {
         Execute strategy
       </Typography>
       <Typography color="textSecondary" variant="subtitle2">
-        * DLQ requires repeats to be higher than faults
+        * DLQ and Ignore require repeats to be greater than faults
       </Typography>
       <ErrorProvider>
         <MessageProvider>

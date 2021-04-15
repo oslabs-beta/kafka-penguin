@@ -1,3 +1,4 @@
+
 # Create name
 name: CI/CD with Github Actions
 
@@ -14,7 +15,7 @@ jobs:
             working-directory: ./demo
         strategy:
           matrix:
-            node-version: [12.x, 14.x]
+            node-version: [12.x]
 
         steps:
            #Checkout the source code of our github repo
@@ -27,7 +28,8 @@ jobs:
           run:  |
             npm install
             npm test
+          env: 
+           KAFKA_BOOTSTRAP_SERVER: ${{secrets.KAFKA_BOOTSTRAP_SERVER}}
+           KAFKA_USERNAME: ${{secrets.KAFKA_USERNAME}}
+           KAFKA_PASSWORD: ${{secrets.KAFKA_PASSWORD}}
         #npm run build --if-present
-            
-
-

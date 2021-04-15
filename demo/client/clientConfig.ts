@@ -1,4 +1,5 @@
-const { Kafka } = require('kafkajs')
+import { Kafka } from 'kafkajs';
+
 require('dotenv').config();
 
 // Create the client with the broker list
@@ -11,7 +12,6 @@ const kafka = new Kafka({
     username: process.env.KAFKA_USERNAME,
     password: process.env.KAFKA_PASSWORD,
   },
-})
+});
 
 module.exports = kafka;
-

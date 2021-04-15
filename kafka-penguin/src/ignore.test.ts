@@ -4,14 +4,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
-import { DeadLetterQueue, DeadLetterQueueErrorConsumer, DeadLetterQueueErrorProducer } from './index';
+import { Ignore, IgnoreErrorConsumer, IgnoreErrorProducer} from './index';
 import testClient from './clientConfig';
 
 // Dead Letter Queue Tests
 describe('Dead Letter Queue Tests', () => {
   // Constructor Tests ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   describe('Constructor', () => {
-    const testInstance = new DeadLetterQueue(testClient, 'test1', () => true);
+    const testInstance = new Ignore(testClient, 'test1', () => true);
     const mockClient = {
       topic: expect.any(String),
       innerProducer: expect.any(Object),
@@ -23,7 +23,7 @@ describe('Dead Letter Queue Tests', () => {
 
     describe('Initial State', () => {
       it('Starts off with callback, topic, and client supplied', () => {
-        expect(testInstance).toBeInstanceOf(DeadLetterQueue);
+        expect(testInstance).toBeInstanceOf(Ignore);
         expect(testInstance).toMatchObject(mockClient);
       });
     });
@@ -58,10 +58,10 @@ describe('Dead Letter Queue Tests', () => {
   });
 
   describe('Methods', () => {
-    let testInstance = new DeadLetterQueue(testClient, 'test1', () => true);
+    let testInstance = new Ignore(testClient, 'test1', () => true);
 
     afterEach(() => {
-      testInstance = new DeadLetterQueue(testClient, 'test1', () => true);
+      testInstance = new Ignore(testClient, 'test1', () => true);
     });
 
     // Producer Initialization ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -155,12 +155,12 @@ describe('Dead Letter Queue Tests', () => {
               .catch((e?: any) => {
                 innerProducer.send({
                   messages: message.messages,
-                  topic: `${testInstance.topic}.deadLetterQueue`,
+                  topic: `${testInstance.topic}`,
                 })
                   .then(innerProducer.disconnect())
                   .catch((e: Error) => console.log(e));
                 // Print the error to the console
-                const newError = new DeadLetterQueueErrorProducer(e);
+                const newError = new IgnoreErrorProducer(e);
                 console.log(newError);
               }).finally(() => { innerProducer.disconnect(); });
           });

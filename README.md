@@ -2,11 +2,16 @@
 
 ![license](https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af) ![issues](https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow) ![last commit](https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af)​[![Actions Status](https://github.com/oslabs-beta/kafka-penguin/workflows/CI/CD%20with%20Github%20Actions/badge.svg)](https://github.com/oslabs-beta/kafka-penguin/actions)[​![npm version](https://img.shields.io/npm/v/kafka-penguin?color=%2344cc11&label=stable)​](https://www.npmjs.com/package/kafka-penguin)​‌
 
+
 ### About <a id="about"></a>
+=======
+[![Actions Status](https://github.com/oslabs-beta/kafka-penguin/workflows/CI/CD%20with%20Github%20Actions/badge.svg)](https://github.com/oslabs-beta/kafka-penguin/actions)
+
 
 Kafka-Penguin is an easy-to-use, lightweight KafkaJS plugin for message re-processing. It provides developers with three strategies for setting up message re-processing: FailFast, Ignore, and Dead Letter Queue.‌
 
 The package allows developers to build event-driven applications with dedicated "fail strategies" modeled after best practices in the field. This in turn allows developers to effectively address bugs in development and deploy more fault-tolerant systems in production.‌
+
 
 This package is meant to work in conjunction with with KafkaJS. For more information on KafkaJS, check out [Getting Started with KafkaJS](https://kafka.js.org/docs/getting-started).‌
 
@@ -15,6 +20,21 @@ This package is meant to work in conjunction with with KafkaJS. For more informa
 Install Kafka-Penguin as an npm module and save it to your package.json file as a dependency:
 
 ```text
+
+Kafka-Penguin is an easy-to-use, lightweight KafkaJS library for message processing. It provides developers with a single strategy for handling message processing failures by failing fast.  
+  
+For more information on KafkaJS, check out [Getting Started](https://kafka.js.org/docs/getting-started).
+
+Accelerated by [OS Labs](https://github.com/oslabs-beta/kafka-penguin) and developed by [Ziyad El Baz](https://github.com/zelbaz946), [Kushal Talele](https://github.com/ktrane1), [Timeo Williams](https://github.com/timeowilliams) and [Ausar English](https://github.com/ausarenglish).
+
+**WIP: This project is not ready for use as of yet**
+
+### Getting Started
+
+Install kafka-penguin as an npm module and save it to your package.json file as a development dependency:
+
+```bash
+
 npm install kafka-penguin
 ```
 
@@ -53,6 +73,7 @@ producer.connect()
   .then(() => producer.send(message))
   .catch((e: any) => console.log('error: ', e.message));
 ```
+
 
 ## Strategies
 

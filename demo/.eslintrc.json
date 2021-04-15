@@ -11,7 +11,8 @@
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
-            "jsx": true
+            "jsx": true,
+            "tsx": true
         },
         "ecmaVersion": 12,
         "sourceType": "module"
@@ -21,5 +22,16 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+        "import/extensions": "off",
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": ["error"]
+    },
+    "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          }
+        }
     }
 }

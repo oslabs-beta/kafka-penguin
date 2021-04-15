@@ -1,5 +1,7 @@
-const client = require('./clientConfig.ts');
+/* eslint-disable no-console */
 import { DeadLetterQueue } from 'kafka-penguin';
+
+const client = require('./clientConfig.ts');
 
 const topic = 'test-topic-DLQ';
 
@@ -7,20 +9,21 @@ const topic = 'test-topic-DLQ';
 // The callback must return a boolean value
 const callback = (message) => {
   try {
-    JSON.parse(message.value);
+    if (typeof message.value === 'string') {
+      return true;
+    }
   } catch (e) {
     return false;
   }
   return true;
 };
 
-// Set up the Dead Letter Queue (DLQ) strategy with a configured KafkaJS client, a topic, and the evaluating callback
+// Set up the Dead Letter Queue (DLQ) strategy
+// with a configured KafkaJS client, a topic, and the evaluating callback
 const exampleDLQConsumer = new DeadLetterQueue(client, topic, callback);
 
 // Initialize a consumer from the new instance of the Dead Letter Queue strategy
 const consumerDLQ = exampleDLQConsumer.consumer({ groupId: 'testID' });
-
-
 
 // Connecting the consumer creates a DLQ topic in case of bad messages
 // If the callback returns false, the strategy moves the message to the topic specific DLQ
@@ -28,11 +31,9 @@ const consumerDLQ = exampleDLQConsumer.consumer({ groupId: 'testID' });
 consumerDLQ.connect()
   .then(consumerDLQ.subscribe())
   .then(() => consumerDLQ.run({
-    eachMessage: ({ topic, partitions, message }) => {
-      console.log(JSON.parse(message.value));
+    eachMessage: ({ message }) => {
+      if (message.value.length < 5) return true;
+      return false;
     },
   }))
   .catch((e) => console.log(`Error message from consumer: ${e}`));
-
-
-

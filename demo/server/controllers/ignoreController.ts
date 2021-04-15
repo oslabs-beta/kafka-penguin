@@ -8,7 +8,7 @@ dotenv.config();
 const ERROR_LOG = [];
 
 const MyLogCreator = (logLevel) => ({
-  namespace, level, label, log,
+  namespace, label, log,
 }) => {
   // also availabe on log object => timestamp, logger, message and more
   const { error, correlationId } = log;
@@ -19,7 +19,7 @@ const MyLogCreator = (logLevel) => ({
   }
 };
 
-const DLQKafka = new Kafka({
+const ignoreKafka = new Kafka({
   clientId: 'makeClient',
   brokers: [process.env.KAFKA_BOOTSTRAP_SERVER],
   ssl: true,
@@ -32,7 +32,7 @@ const DLQKafka = new Kafka({
   logCreator: MyLogCreator,
 });
 
-const dlqProduce: RequestHandler = (req, res, next) => {
+const ignoreProduce: RequestHandler = (req, res, next) => {
   const {
     topic, message, retries, faults,
   } = req.body;
@@ -55,25 +55,25 @@ const dlqProduce: RequestHandler = (req, res, next) => {
     } return true;
   };
 
-  const admin = DLQKafka.admin();
-  const DLQClient = new DeadLetterQueue(DLQKafka, topic, cb);
-  const DLQProducer = DLQClient.producer();
-  const DLQConsumer = DLQClient.consumer({ groupId: 'demo' });
+  const admin = ignoreKafka.admin();
+  const ignoreClient = new DeadLetterQueue(ignoreKafka, topic, cb);
+  const ignoreProducer = ignoreClient.producer();
+  const ignoreConsumer = ignoreClient.consumer({ groupId: 'demo' });
 
-  res.locals.DLQClients = {
-    consumer: DLQConsumer,
+  res.locals.ignoreClients = {
+    consumer: ignoreConsumer,
     retries,
     faults,
   };
-  // DLQProducer.logger().info('TEST', {KAFKA_PENGUIN: 'TESTING CUSTOM'})
-  DLQProducer.connect()
+  // ignoreProducer.logger().info('TEST', {KAFKA_PENGUIN: 'TESTING CUSTOM'})
+  ignoreProducer.connect()
     .then(() => {
-      DLQProducer.send({
+      ignoreProducer.send({
         topic,
         messages: messagesArray,
       }).catch((e) => console.log('this is error in try', e.reference));
     })
-    .then(DLQProducer.disconnect())
+    .then(ignoreProducer.disconnect())
     .then(admin.connect())
     .then(async () => {
       const offsetData = await admin.fetchTopicOffsets(topic);
@@ -84,19 +84,17 @@ const dlqProduce: RequestHandler = (req, res, next) => {
     .catch((e: Error) => {
       if (e.message === 'This server does not host this topic-partition') {
         return res.status(300).json([`This error was executed as part of the kafka-penguin 
-        Dead Letter Queue message reprocessing strategy. Your producer attempted to deliver
-         a message 6 times but was unsuccessful. As a result, the message was sent to a
-          Dead Letter Queue. Refer to the original error for further information`]);
+        Ignore message reprocessing strategy.`]);
       }
       return next({
-        message: `Error implementing Dead Letter Queue strategy, producer side:${e.message}`,
+        message: `Error implementing Ignore strategy, producer side:${e.message}`,
         error: e,
       });
     });
 };
 
-const dlqConsume: RequestHandler = (req, res, next) => {
-  const { faults, consumer, retries } = res.locals.DLQClients;
+const ignoreConsume: RequestHandler = (req, res, next) => {
+  const { faults, consumer, retries } = res.locals.ignoreClients;
   const messageLog = [];
   consumer.connect()
     .then(consumer.subscribe())
@@ -111,12 +109,12 @@ const dlqConsume: RequestHandler = (req, res, next) => {
           }
           if (messageLog.length === retries - faults) {
             messageLog.push(`kafka-penguin: Error with message processing, ${faults} ${faults > 1 ? 'messages' : 'message'}
-                             sent to DLQ topic ${topic}.deadLetterQueue`);
+                             ignored.`);
             res.locals.messages = messageLog;
             consumer.disconnect()
               .then(() => res.status(200).json(res.locals.messages))
               .catch((e) => next({
-                message: `Error implementing Dead Letter Queue strategy while consuming messages, consumer side: ${e.message}`,
+                message: `Error implementing Ignore strategy while consuming messages, consumer side: ${e.message}`,
                 error: e,
               }));
           }
@@ -124,12 +122,12 @@ const dlqConsume: RequestHandler = (req, res, next) => {
       });
     })
     .catch((e) => next({
-      message: `Error implementing Dead Letter Queue strategy, consumer side: ${e.message}`,
+      message: `Error implementing Ignore strategy, consumer side: ${e.message}`,
       error: e,
     }));
 };
 
 export default {
-  dlqConsume,
-  dlqProduce,
+  ignoreConsume,
+  ignoreProduce,
 };

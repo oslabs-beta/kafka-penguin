@@ -1,6 +1,6 @@
 
 # Create name
-name: CI/CD with Github Actions
+name: CI/CD 
 
 # Trigger the workflow on push or pull request,
 # but only for the main branch

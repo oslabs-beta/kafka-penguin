@@ -1,6 +1,29 @@
 # Home
+<p align="center">
+  <a href="https://www.kafka-penguin.io">
+ <img src=".github/penguin.png" width="400" height="420"></p>
+<h1 align="center"><strong>Kafka-Penguin</strong></h1></a>
 
-![license](https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af) ![issues](https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow) ![last commit](https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af)​ [![Actions Status](https://github.com/oslabs-beta/kafka-penguin/workflows/CI/CD%20with%20Github%20Actions/badge.svg)](https://github.com/oslabs-beta/kafka-penguin/actions) [​![npm version](https://img.shields.io/npm/v/kafka-penguin?color=%2344cc11&label=stable)​](https://www.npmjs.com/package/kafka-penguin)​‌
+
+<p align="center">An open source monitoring tool for Apache Kafka</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af"/>
+  <img src="https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow"/>
+  <img alt="license" src="https://img.shields.io/github/license/oslabs-beta/klustr?color=%2357d3af">
+  <img alt="NPM" src="https://img.shields.io/npm/v/kafka-penguin?color=%2344cc11&label=stable">
+  <img alt="last commit" src="https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af">
+  <img alt="Repo stars" src="https://img.shields.io/github/stars/oslabs-beta/klustr?logoColor=%2334495e&style=social"> 
+</p>
+
+## Table of Contents
+
+* [About](#About)
+* [Getting Started](#Getting-Started)
+* [Example](#Example)
+* [Strategies](#Strategies)
+* [Contributors](#Contributors)
+* [License](#License)
 
 ### About <a id="about"></a>
 
@@ -10,7 +33,7 @@ The package allows developers to build event-driven applications with dedicated 
 
 This package is meant to work in conjunction with with KafkaJS. For more information on KafkaJS, check out [Getting Started with KafkaJS](https://kafka.js.org/docs/getting-started).‌
 
-### Getting Started  <a id="getting-started"></a>
+### Getting Started <a id="getting-started"></a>
 
 Install Kafka-Penguin as an npm module and save it to your package.json file as a dependency:
 

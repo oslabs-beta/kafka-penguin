@@ -5,7 +5,7 @@
 <h1 align="center"><strong>Kafka-Penguin</strong></h1></a>
 
 
-<p align="center">An open source monitoring tool for Apache Kafka</p>
+<p align="center">An easy-to-use, lightweight KafkaJS library for message re-processing.</p>
 
 <p align="center">
   <img src="https://github.com/oslabs-beta/kafka-penguin/actions/workflows/main.yml/badge.svg"/>

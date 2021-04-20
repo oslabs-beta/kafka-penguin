@@ -8,7 +8,7 @@
 <p align="center">An open source monitoring tool for Apache Kafka</p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af"/>
+  <img src="https://github.com/oslabs-beta/kafka-penguin/actions"/>
   <img src="https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow"/>
   <img alt="license" src="https://img.shields.io/github/license/oslabs-beta/klustr?color=%2357d3af">
   <img alt="NPM" src="https://img.shields.io/npm/v/kafka-penguin?color=%2344cc11&label=stable">

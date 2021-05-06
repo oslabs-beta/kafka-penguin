@@ -81,11 +81,11 @@ producer.connect()
 
 Dive in deeper to any of the strategies for set up, execution, and implementation.
 
-​[FailFast](https://app.gitbook.com/@kafka-penguin-1/s/kafka-penguin/~/drafts/-MYCUDw3CJmXz95ljr5N/strategies/readme/strategies-readme-fail-fast/@merged) ​‌
+​[FailFast](https://kafkapenguin.gitbook.io/kafka-penguin/strategies/failfast) ​‌
 
-​[Ignore](https://app.gitbook.com/@kafka-penguin-1/s/kafka-penguin/~/drafts/-MYCUDw3CJmXz95ljr5N/strategies/readme/strategies-readme-ignore/@merged)​‌
+​[Ignore](https://kafkapenguin.gitbook.io/kafka-penguin/strategies/strategies-ignore)​‌
 
-​[Dead Letter Queue](https://app.gitbook.com/@kafka-penguin-1/s/kafka-penguin/~/drafts/-MYCUDw3CJmXz95ljr5N/strategies/readme/strategies-readme-dlq/@merged)​‌
+​[Dead Letter Queue](https://kafkapenguin.gitbook.io/kafka-penguin/strategies/dead-letter-queue)​‌
 
 ## **Contributors** <a id="contributors"></a>
 

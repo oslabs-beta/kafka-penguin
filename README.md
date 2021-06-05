@@ -10,10 +10,10 @@
 <p align="center">
   <img src="https://github.com/oslabs-beta/kafka-penguin/actions/workflows/main.yml/badge.svg"/>
   <img src="https://img.shields.io/github/issues-raw/oslabs-beta/kafka-penguin?color=yellow"/>
-  <img alt="license" src="https://img.shields.io/github/license/oslabs-beta/klustr?color=%2357d3af">
+  <img alt="license" src="https://img.shields.io/github/license/oslabs-beta/kafka-penguin?color=%2357d3af">
   <img alt="NPM" src="https://img.shields.io/npm/v/kafka-penguin?color=%2344cc11&label=stable">
   <img alt="last commit" src="https://img.shields.io/github/last-commit/oslabs-beta/kafka-penguin?color=%2357d3af">
-  <img alt="Repo stars" src="https://img.shields.io/github/stars/oslabs-beta/klustr?logoColor=%2334495e&style=social"> 
+  <img alt="Repo stars" src="https://img.shields.io/github/stars/oslabs-beta/kafka-penguin?logoColor=%2334495e&style=social"> 
 </p>
 
 ## Table of Contents

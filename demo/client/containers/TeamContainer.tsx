@@ -38,7 +38,7 @@ const TeamContainer: FC = () => {
     name: 'Ziyad Elbaz',
     linkedIn: 'https://www.linkedin.com/in/ziyadelbaz/',
     github: 'https://github.com/zelbaz946',
-    photo: '/assets/ziyad.png',
+    photo: '/assets/ziyad.jpeg',
   };
   const kushal = {
     name: 'Kushal Talele',

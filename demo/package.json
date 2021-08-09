@@ -13,7 +13,7 @@
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
     "tsc": "tsc -p tsconfig.json",
     "build": "tsc",
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js --hot --mode development\" \"nodemon server/server.ts\"",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --config webpack.config.js --hot --mode development\" \"nodemon server/server.ts\"",
     "test": "jest --detectOpenHandles --testTimeout=20000"
   },
   "jest": {

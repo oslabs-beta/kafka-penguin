@@ -4,6 +4,7 @@ import {
   createStyles, makeStyles, Typography, Container,
 } from '@material-ui/core';
 import { Element } from 'react-scroll';
+import { sizing } from '@material-ui/system';
 import MainContainer from './containers/MainContainer';
 import { BackdropProvider } from './context/BackDropContext';
 import GlobalNavBar from './components/GlobalNavBar';
@@ -11,6 +12,8 @@ import LandingBody from './components/LandingBody';
 import TeamContainer from './containers/TeamContainer';
 import GettingStarted from './components/GettingStarted';
 import ParticlesBackdrop from './components/ParticlesBackdrop';
+import Footer from './components/Footer';
+
 
 const useStyles = makeStyles(() => createStyles({
   container: {
@@ -53,7 +56,7 @@ const App: FC = () => {
           >
             kafka-penguin
           </Typography>
-          <img alt="mainLogo" style={{ height: '30vh', paddingBottom: '5vh' }} src="/assets/penguin.svg" />
+          <img alt="mainLogo" style={{ height: '30vh', paddingBottom: '5vh' }} src="/assets/penguinCompressed.svg" />
           <Typography
             variant="h6"
             align="center"
@@ -77,6 +80,7 @@ const App: FC = () => {
         <Container className={classes.segment} component={Element} name="team">
           <TeamContainer />
         </Container>
+        <Footer height="25%" />
       </Container>
     </>
   );

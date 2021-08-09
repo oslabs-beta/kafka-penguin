@@ -22,6 +22,8 @@ const TeamContainer: FC = () => {
 
     },
   }));
+
+  //Add alt tags for images
   const timeo = {
     name: 'Timeo Williams',
     linkedIn: 'https://www.linkedin.com/in/timeowilliams/',

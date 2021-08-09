@@ -4,11 +4,13 @@ import {
   createStyles, makeStyles, withStyles, AppBar, Toolbar, IconButton, Button, Icon,
 } from '@material-ui/core';
 import { Link } from 'react-scroll';
+import { sizing } from '@material-ui/system';
 
 const useStyles = makeStyles(() => createStyles({
   root: {
     width: '100vw',
     padding: 0,
+    bottom: '0',
   },
   landingButtons: {
     display: 'flex',
@@ -20,24 +22,28 @@ const useStyles = makeStyles(() => createStyles({
   button: {
     margin: '1rem 1rem 1rem 1rem',
   },
+  toolbarStyle: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: '70px',
+  },
 }));
 
-const GlobalCss = withStyles({
-  '@global': {
-    'html, body': {
-      margin: 0,
-      padding: 0,
-    },
-  },
-})(() => null);
+const toolbarStyle = {
+  minHeight: '200px',
+};
 
-const GlobalNavBar: FC = () => {
+const Footer: FC = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <GlobalCss />
-      <AppBar position="sticky">
-        <Toolbar className={classes.landingButtons}>
+      {/* <GlobalCss /> */}
+      {/* className={classes.toolbarStyle} */}
+      <AppBar position="sticky" style={toolbarStyle}>
+        <Toolbar
+          className={classes.toolbarStyle}
+       // style={classes.toolbarStyle}
+        >
           <IconButton className={classes.button}>
             <Icon
               component={Link}
@@ -117,4 +123,4 @@ const GlobalNavBar: FC = () => {
   );
 };
 
-export default GlobalNavBar;
+export default Footer;

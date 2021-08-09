@@ -53,7 +53,7 @@ const App: FC = () => {
           >
             kafka-penguin
           </Typography>
-          <img alt="mainLogo" style={{ height: '30vh', paddingBottom: '5vh' }} src="/assets/penguin.svg" />
+          <img alt="mainLogo" style={{ height: '30vh', paddingBottom: '5vh' }} src="/assets/penguinCompressed.svg" />
           <Typography
             variant="h6"
             align="center"

@@ -1,6 +1,6 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-
-const theme = createMuiTheme({
+import { createTheme } from '@material-ui/core/styles';
+//import {createMuiTheme} to {createTheme}
+const theme = createTheme({
   // spacing: factor => `${0.25 * factor}rem`,
   palette: {
     primary: {
@@ -28,7 +28,8 @@ const theme = createMuiTheme({
   typography: {
     fontSize: 14,
     fontFamily: [
-      'Montserrat',
+      // 'Montserrat', 'Gotham',
+      'Nexa', 'sans-serif',
     ].join(','),
   },
 });
